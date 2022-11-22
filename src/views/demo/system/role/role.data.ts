@@ -29,6 +29,7 @@ export const columns: BasicColumn[] = [
       if (!Reflect.has(record, 'pendingStatus')) {
         record.pendingStatus = false;
       }
+      // console.log(record);
       return h(Switch, {
         checked: record.status === '1',
         checkedChildren: '已启用',
@@ -85,7 +86,16 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
+const isUpd = (id: string) => id === null || id === '';
+
 export const formSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '角色id',
+    dynamicDisabled: true,
+    show: ({ values }) => !isUpd(values.id),
+    component: 'Input',
+  },
   {
     field: 'roleName',
     label: '角色名称',

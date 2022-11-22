@@ -39,7 +39,7 @@ export const columns: BasicColumn[] = [
     width: 80,
     customRender: ({ record }) => {
       const status = record.status;
-      const enable = ~~status === 0;
+      const enable = ~~status === 1;
       const color = enable ? 'green' : 'red';
       const text = enable ? '启用' : '停用';
       return h(Tag, { color: color }, () => text);
@@ -52,9 +52,10 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-const isDir = (type: string) => type === '0';
-const isMenu = (type: string) => type === '1';
-const isButton = (type: string) => type === '2';
+const isDir = (type: string) => type === '1';
+const isMenu = (type: string) => type === '2';
+const isButton = (type: string) => type === '3';
+const isUpd = (id: string) => id === null || id === '';
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -69,8 +70,8 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: '1' },
+        { label: '停用', value: '0' },
       ],
     },
     colProps: { span: 8 },
@@ -79,22 +80,29 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
+    field: 'id',
+    label: 'ID',
+    dynamicDisabled: true,
+    show: ({ values }) => !isUpd(values.id),
+    component: 'Input',
+  },
+  {
     field: 'type',
     label: '菜单类型',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: '1',
     componentProps: {
       options: [
-        { label: '目录', value: '0' },
-        { label: '菜单', value: '1' },
-        { label: '按钮', value: '2' },
+        { label: '目录', value: '1' },
+        { label: '菜单', value: '2' },
+        { label: '按钮', value: '3' },
       ],
     },
     colProps: { lg: 24, md: 24 },
   },
   {
     field: 'menuName',
-    label: '菜单名称',
+    label: '名称',
     component: 'Input',
     required: true,
   },
@@ -111,6 +119,7 @@ export const formSchema: FormSchema[] = [
       },
       getPopupContainer: () => document.body,
     },
+    ifShow: ({ values }) => !isDir(values.type),
   },
 
   {
@@ -153,8 +162,8 @@ export const formSchema: FormSchema[] = [
     defaultValue: '0',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
+        { label: '启用', value: '1' },
+        { label: '禁用', value: '0' },
       ],
     },
   },
@@ -193,8 +202,8 @@ export const formSchema: FormSchema[] = [
     defaultValue: '0',
     componentProps: {
       options: [
-        { label: '是', value: '0' },
-        { label: '否', value: '1' },
+        { label: '是', value: '1' },
+        { label: '否', value: '0' },
       ],
     },
     ifShow: ({ values }) => !isButton(values.type),

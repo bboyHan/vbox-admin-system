@@ -59,7 +59,16 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
+const isUpd = (id: string) => id === null || id === '';
+
 export const formSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'ID',
+    dynamicDisabled: true,
+    show: ({ values }) => !isUpd(values.id),
+    component: 'Input',
+  },
   {
     field: 'deptName',
     label: '部门名称',
@@ -79,7 +88,7 @@ export const formSchema: FormSchema[] = [
       },
       getPopupContainer: () => document.body,
     },
-    required: true,
+    required: false,
   },
   {
     field: 'orderNo',

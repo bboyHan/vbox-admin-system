@@ -22,13 +22,13 @@
   </BasicDrawer>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref } from 'vue';
+  import { defineComponent, ref, computed, unref, toRaw } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuList, createRole } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -69,6 +69,10 @@
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
+          let arr = toRaw(values.menu);
+          console.log(arr);
+          let ret = await createRole(values);
+          console.log(ret);
           closeDrawer();
           emit('success');
         } finally {

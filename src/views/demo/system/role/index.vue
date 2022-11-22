@@ -33,12 +33,13 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getRoleListByPage } from '/@/api/demo/system';
+  import { getRoleListByPage, deleteRole } from '/@/api/demo/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
 
   import { columns, searchFormSchema } from './role.data';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'RoleManagement',
@@ -79,12 +80,22 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
-      }
-
       function handleSuccess() {
         reload();
+      }
+
+      function handleDelete(record: Recordable) {
+        const { createMessage } = useMessage();
+        try {
+          console.log(record);
+          let ret = deleteRole(record.id);
+          console.log(ret);
+          createMessage.success(`删除角色成功`);
+        } catch (e) {
+          createMessage.error('删除角色失败');
+        } finally {
+          reload();
+        }
       }
 
       return {

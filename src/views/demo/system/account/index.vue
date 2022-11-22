@@ -41,7 +41,7 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
+  import { deleteAccount, getAccountList } from '/@/api/demo/system';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
@@ -50,6 +50,7 @@
 
   import { columns, searchFormSchema } from './account.data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -99,6 +100,17 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        const { createMessage } = useMessage();
+        console.log(record.id);
+        try {
+          let ret = deleteAccount(record.id);
+          console.log(ret);
+          createMessage.success(`删除账户成功`);
+        } catch (e) {
+          createMessage.error('删除账户失败');
+        } finally {
+          reload();
+        }
       }
 
       function handleSuccess({ isUpdate, values }) {

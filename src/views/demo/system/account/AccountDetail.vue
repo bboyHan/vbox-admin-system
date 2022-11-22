@@ -17,7 +17,7 @@
     </template>
     <div class="pt-4 m-4 desc-wrap">
       <template v-if="currentKey == 'detail'">
-        <div v-for="i in 10" :key="i">这是用户{{ userId }}资料Tab</div>
+        <BasicForm @register="register" />
       </template>
       <template v-if="currentKey == 'logs'">
         <div v-for="i in 10" :key="i">这是用户{{ userId }}操作日志Tab</div>
@@ -26,16 +26,19 @@
   </PageWrapper>
 </template>
 
-<script>
-  import { defineComponent, ref } from 'vue';
+<script lang="ts">
+  import { defineComponent, onMounted, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import { PageWrapper } from '/@/components/Page';
   import { useGo } from '/@/hooks/web/usePage';
   import { useTabs } from '/@/hooks/web/useTabs';
   import { Tabs } from 'ant-design-vue';
+  import { getUserInfo } from '/@/api/sys/user';
+  import { BasicForm, useForm } from '/@/components/Form';
+  import { userInfo1Schema } from '/@/views/demo/system/account/account.data';
   export default defineComponent({
     name: 'AccountDetail',
-    components: { PageWrapper, ATabs: Tabs, ATabPane: Tabs.TabPane },
+    components: { BasicForm, PageWrapper, ATabs: Tabs, ATabPane: Tabs.TabPane },
     setup() {
       const route = useRoute();
       const go = useGo();
@@ -45,7 +48,17 @@
       const { setTitle } = useTabs();
       // TODO
       // 本页代码仅作演示，实际应当通过userId从接口获得用户的相关资料
+      const [register, { setFieldsValue }] = useForm({
+        labelWidth: 200,
+        schemas: userInfo1Schema,
+        disabled: true,
+        showActionButtonGroup: false,
+      });
 
+      onMounted(async () => {
+        const data = await getUserInfo();
+        setFieldsValue(data);
+      });
       // 设置Tab的标题（不会影响页面标题）
       setTitle('详情：用户' + userId.value);
 
@@ -54,7 +67,7 @@
         // 本例的效果时点击返回始终跳转到账号列表页，实际应用时可返回上一页
         go('/system/account');
       }
-      return { userId, currentKey, goBack };
+      return { register, userId, currentKey, goBack };
     },
   });
 </script>

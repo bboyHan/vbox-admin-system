@@ -174,7 +174,7 @@ export interface FormSchema {
   colProps?: Partial<ColEx>;
 
   // 默认值
-  defaultValue?: any;
+  defaultValue?: ((renderCallbackParams: RenderCallbackParams) => any) | any;
   isAdvanced?: boolean;
 
   // Matching details components

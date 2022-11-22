@@ -33,12 +33,13 @@
   import { defineComponent, nextTick } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
+  import { deleteMenu, getMenuList } from '/@/api/demo/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
 
   import { columns, searchFormSchema } from './menu.data';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -85,6 +86,17 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        const { createMessage } = useMessage();
+        console.log(record.id);
+        try {
+          let ret = deleteMenu(record.id);
+          console.log(ret);
+          createMessage.success(`删除菜单成功`);
+        } catch (e) {
+          createMessage.error('删除菜单失败');
+        } finally {
+          reload();
+        }
       }
 
       function handleSuccess() {

@@ -8,7 +8,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList } from '/@/api/demo/system';
+  import { createAccount, getDeptList } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -43,7 +43,7 @@
         const treeData = await getDeptList();
         updateSchema([
           {
-            field: 'pwd',
+            field: 'pass',
             show: !unref(isUpdate),
           },
           {
@@ -61,6 +61,8 @@
           setModalProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
+          let ret = await createAccount(values);
+          console.log(ret);
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

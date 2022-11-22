@@ -33,12 +33,13 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getDeptList } from '/@/api/demo/system';
+  import { deleteDept, getDeptList } from '/@/api/demo/system';
 
   import { useModal } from '/@/components/Modal';
   import DeptModal from './DeptModal.vue';
 
   import { columns, searchFormSchema } from './dept.data';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'DeptManagement',
@@ -84,6 +85,17 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        const { createMessage } = useMessage();
+        console.log(record.id);
+        try {
+          let ret = deleteDept(record.id);
+          console.log(ret);
+          createMessage.success(`删除部门成功`);
+        } catch (e) {
+          createMessage.error('删除部门失败');
+        } finally {
+          reload();
+        }
       }
 
       function handleSuccess() {

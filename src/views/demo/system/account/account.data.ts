@@ -1,6 +1,7 @@
 import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { DescItem } from '/@/components/Description';
 
 export const columns: BasicColumn[] = [
   {
@@ -14,8 +15,13 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '邮箱',
-    dataIndex: 'email',
+    title: '性别',
+    dataIndex: 'gender',
+    width: 80,
+  },
+  {
+    title: '头像',
+    dataIndex: 'avatar',
     width: 120,
   },
   {
@@ -25,8 +31,8 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '角色',
-    dataIndex: 'role',
-    width: 200,
+    dataIndex: 'roles',
+    // width: 120,
   },
   {
     title: '备注',
@@ -74,20 +80,26 @@ export const accountFormSchema: FormSchema[] = [
     ],
   },
   {
-    field: 'pwd',
+    field: 'pass',
     label: '密码',
     component: 'InputPassword',
     required: true,
     ifShow: false,
   },
   {
+    field: 'avatar',
+    label: '头像',
+    component: 'Input',
+    required: true,
+  },
+  {
     label: '角色',
-    field: 'role',
+    field: 'roles',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
       labelField: 'roleName',
-      valueField: 'roleValue',
+      valueField: 'id',
     },
     required: true,
   },
@@ -111,10 +123,9 @@ export const accountFormSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
-
   {
-    label: '邮箱',
-    field: 'email',
+    label: '性别',
+    field: 'gender',
     component: 'Input',
     required: true,
   },
@@ -125,3 +136,93 @@ export const accountFormSchema: FormSchema[] = [
     component: 'InputTextArea',
   },
 ];
+
+export const userInfoColumn: DescItem[] = [
+  {
+    field: 'username',
+    label: '用户姓名',
+  },
+  {
+    field: 'realName',
+    label: '联系电话',
+  },
+  {
+    field: 'avatar',
+    label: '常用快递',
+  },
+  {
+    field: 'desc',
+    label: '取货地址',
+  },
+  {
+    field: 'userId',
+    label: '备注',
+  },
+];
+export const userInfoSchema: BasicColumn[] = [
+  {
+    title: '用户姓名',
+    dataIndex: 'username',
+    width: 160,
+    align: 'left',
+  },
+  {
+    title: '联系电话',
+    dataIndex: 'realName',
+    width: 160,
+    align: 'left',
+  },
+  {
+    title: '常用快递',
+    dataIndex: 'avatar',
+  },
+  {
+    title: '取货地址',
+    dataIndex: 'desc',
+  },
+  {
+    title: '用户id',
+    dataIndex: 'userId',
+  },
+];
+
+export const userInfo1Schema: FormSchema[] = [
+  {
+    field: 'username',
+    label: '用户姓名',
+    component: 'Input',
+    required: false,
+  },
+  {
+    field: 'realName',
+    label: '联系电话',
+    component: 'Input',
+    required: false,
+  },
+  {
+    field: 'avatar',
+    label: '常用快递',
+    component: 'Input',
+    required: false,
+  },
+  {
+    field: 'desc',
+    label: '取货地址',
+    component: 'Input',
+    required: false,
+  },
+  {
+    field: 'userId',
+    label: '用户id',
+    component: 'Input',
+    required: false,
+  },
+];
+
+export const userInfoData = {
+  b1: '付小小',
+  b2: '18100000000',
+  b3: '菜鸟仓储',
+  b4: '浙江省杭州市西湖区万塘路18号',
+  b5: '无',
+};

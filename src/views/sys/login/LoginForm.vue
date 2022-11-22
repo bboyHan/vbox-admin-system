@@ -121,6 +121,7 @@
   const formData = reactive({
     account: 'vben',
     password: '123456',
+    loginType: '0',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -137,6 +138,7 @@
       const userInfo = await userStore.login({
         password: data.password,
         username: data.account,
+        loginType: 0,
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
