@@ -89,12 +89,14 @@ export default [
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
-      if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
-      if (!checkUser) {
-        return resultError('Invalid token!');
-      }
-      const codeList = fakeCodeList[checkUser.userId];
+      console.log(token);
+      // if (!token) return resultError('Invalid token');
+      // const checkUser = createFakeUserList().find((item) => item.token === token);
+      // if (!checkUser) {
+      //   return resultError('Invalid token!');
+      // }
+      // const codeList = fakeCodeList[checkUser.userId];
+      const codeList = fakeCodeList[1];
 
       return resultSuccess(codeList);
     },
@@ -105,12 +107,12 @@ export default [
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
-      if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
-      if (!checkUser) {
-        return resultError('Invalid token!');
-      }
-      return resultSuccess(undefined, { message: 'Token has been destroyed' });
+      // if (!token) return resultError('Invalid token');
+      // const checkUser = createFakeUserList().find((item) => item.token === token);
+      // if (!checkUser) {
+      //   return resultError('Invalid token!');
+      // }
+      return resultSuccess(token, { message: 'Token has been destroyed' });
     },
   },
   {

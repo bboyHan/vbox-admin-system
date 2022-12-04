@@ -119,6 +119,7 @@ function promoteRouteLevel(routeModule: AppRouteModule) {
   // Use vue-router to splice menus
   // 使用vue-router拼接菜单
   // createRouter 创建一个可以被 Vue 应用程序使用的路由实例
+  // @ts-ignore
   let router: Router | null = createRouter({
     routes: [routeModule as unknown as RouteRecordNormalized],
     history: createWebHashHistory(),

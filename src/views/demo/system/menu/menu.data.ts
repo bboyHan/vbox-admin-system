@@ -106,7 +106,19 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
-
+  {
+    field: 'hideChildrenInMenu',
+    label: '子菜单',
+    component: 'RadioButtonGroup',
+    defaultValue: '1',
+    componentProps: {
+      options: [
+        { label: '隐藏', value: '1' },
+        { label: '显示', value: '0' },
+      ],
+    },
+    ifShow: ({ values }) => isDir(values.type),
+  },
   {
     field: 'parentMenu',
     label: '上级菜单',
@@ -132,6 +144,13 @@ export const formSchema: FormSchema[] = [
     field: 'icon',
     label: '图标',
     component: 'IconPicker',
+    required: false,
+    ifShow: ({ values }) => !isButton(values.type),
+  },
+  {
+    field: 'title',
+    label: '标题',
+    component: 'Input',
     required: true,
     ifShow: ({ values }) => !isButton(values.type),
   },
@@ -146,6 +165,18 @@ export const formSchema: FormSchema[] = [
   {
     field: 'component',
     label: '组件路径',
+    component: 'Input',
+    ifShow: ({ values }) => !isButton(values.type),
+  },
+  {
+    field: 'redirect',
+    label: '重定向',
+    component: 'Input',
+    required: false,
+  },
+  {
+    field: 'currentActiveMenu',
+    label: '当前隶属组件',
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
   },
@@ -168,6 +199,19 @@ export const formSchema: FormSchema[] = [
     },
   },
   {
+    field: 'isBreadcrumb',
+    label: '面包屑',
+    component: 'RadioButtonGroup',
+    defaultValue: '0',
+    componentProps: {
+      options: [
+        { label: '启用', value: '1' },
+        { label: '禁用', value: '0' },
+      ],
+    },
+    ifShow: ({ values }) => !isDir(values.type),
+  },
+  {
     field: 'isExt',
     label: '是否外链',
     component: 'RadioButtonGroup',
@@ -178,11 +222,11 @@ export const formSchema: FormSchema[] = [
         { label: '是', value: '1' },
       ],
     },
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => isButton(values.type),
   },
 
   {
-    field: 'keepalive',
+    field: 'keepAlive',
     label: '是否缓存',
     component: 'RadioButtonGroup',
     defaultValue: '0',
@@ -196,7 +240,7 @@ export const formSchema: FormSchema[] = [
   },
 
   {
-    field: 'show',
+    field: 'isShow',
     label: '是否显示',
     component: 'RadioButtonGroup',
     defaultValue: '0',
@@ -206,6 +250,6 @@ export const formSchema: FormSchema[] = [
         { label: '否', value: '0' },
       ],
     },
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => !isDir(values.type),
   },
 ];
