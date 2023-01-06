@@ -12,6 +12,11 @@ export const EXCEPTION_COMPONENT = () => import('/@/views/sys/exception/Exceptio
 export const LAYOUT = () => import('/@/layouts/default/index.vue');
 
 /**
+ * @description: home layout
+ */
+export const HOME_LAYOUT = () => import('/@/views/home/index.vue');
+
+/**
  * @description: parent-layout
  */
 export const getParentLayout = (_name?: string) => {

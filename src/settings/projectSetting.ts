@@ -24,8 +24,8 @@ const setting: ProjectConfig = {
   settingButtonPosition: SettingButtonPositionEnum.AUTO,
 
   // Permission mode
-  // permissionMode: PermissionModeEnum.ROUTE_MAPPING,
-  permissionMode: PermissionModeEnum.BACK,
+  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+  // permissionMode: PermissionModeEnum.BACK,
 
   // Permission-related cache is stored in sessionStorage or localStorage
   permissionCacheType: CacheTypeEnum.LOCAL,
@@ -52,7 +52,7 @@ const setting: ProjectConfig = {
   showLogo: true,
 
   // Whether to show footer
-  showFooter: false,
+  showFooter: true,
 
   // Header configuration
   headerSetting: {
@@ -79,7 +79,7 @@ const setting: ProjectConfig = {
   // Menu configuration
   menuSetting: {
     // sidebar menu bg color
-    bgColor: SIDE_BAR_BG_COLOR_LIST[0],
+    bgColor: SIDE_BAR_BG_COLOR_LIST[3],
     //  Whether to fix the left menu
     fixed: true,
     // Menu collapse
@@ -102,7 +102,7 @@ const setting: ProjectConfig = {
     // Menu type
     type: MenuTypeEnum.SIDEBAR,
     // Menu theme
-    theme: ThemeEnum.DARK,
+    theme: ThemeEnum.LIGHT,
     // Split menu
     split: false,
     // Top menu layout

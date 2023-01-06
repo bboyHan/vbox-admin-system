@@ -44,7 +44,6 @@ const system: AppRouteModule = {
       },
       component: () => import('/@/views/demo/system/role/index.vue'),
     },
-
     {
       path: 'menu',
       name: 'MenuManagement',

@@ -92,7 +92,7 @@
           // 设置外观主题
           theme: getTheme(getDarkMode.value) as any,
           lang: unref(getCurrentLang),
-          mode: 'sv',
+          mode: 'sv', //sv,ir,wysiwyg
           fullscreen: {
             index: 520,
           },

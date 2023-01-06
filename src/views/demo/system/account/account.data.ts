@@ -55,6 +55,8 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
+const isUpd = (id: string) => id === null || id === '';
+
 export const accountFormSchema: FormSchema[] = [
   {
     field: 'account',
@@ -78,18 +80,12 @@ export const accountFormSchema: FormSchema[] = [
         },
       },
     ],
-  },
-  {
-    field: 'pass',
-    label: '密码',
-    component: 'InputPassword',
-    required: true,
-    ifShow: false,
+    show: ({ values }) => !isUpd(values.id),
   },
   {
     field: 'avatar',
     label: '头像',
-    component: 'Input',
+    component: 'Upload',
     required: true,
   },
   {

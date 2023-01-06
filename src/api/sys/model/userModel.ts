@@ -29,7 +29,7 @@ export interface GetUserInfoModel {
   // 用户id
   userId: string | number;
   // 用户名
-  username: string;
+  account: string;
   // 真实名字
   realName: string;
   // 头像

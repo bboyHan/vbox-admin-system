@@ -5,12 +5,14 @@ interface GroupItem {
   desc: string;
   date: string;
   group: string;
+  link: string;
 }
 
 interface NavItem {
   title: string;
   icon: string;
   color: string;
+  link: string;
 }
 
 interface DynamicInfoItem {
@@ -25,31 +27,37 @@ export const navItems: NavItem[] = [
     title: '首页',
     icon: 'ion:home-outline',
     color: '#1fdaca',
-  },
-  {
-    title: '仪表盘',
-    icon: 'ion:grid-outline',
-    color: '#bf0c2c',
-  },
-  {
-    title: '组件',
-    icon: 'ion:layers-outline',
-    color: '#e18525',
+    link: '/dashboard/workbench',
   },
   {
     title: '系统管理',
     icon: 'ion:settings-outline',
     color: '#3fb27f',
+    link: '/system/account',
   },
   {
-    title: '权限管理',
+    title: '工具集',
+    icon: 'ion:grid-outline',
+    color: '#bf0c2c',
+    link: '/util/picture',
+  },
+  {
+    title: '角色管理',
+    icon: 'ion:layers-outline',
+    color: '#e18525',
+    link: '/system/role',
+  },
+  {
+    title: '消息中心',
     icon: 'ion:key-outline',
     color: '#4daf1bc9',
+    link: '/message/publish',
   },
   {
-    title: '图表',
+    title: '文档处理',
     icon: 'ion:bar-chart-outline',
     color: '#00d8ff',
+    link: '/util/document',
   },
 ];
 
@@ -109,48 +117,72 @@ export const groupItems: GroupItem[] = [
     title: 'Github',
     icon: 'carbon:logo-github',
     color: '',
-    desc: '不要等待机会，而要创造机会。',
-    group: '开源组',
-    date: '2021-04-01',
+    desc: 'Build software better, together.',
+    group: '开源社区',
+    date: '2022-12-21',
+    link: 'https://github.com/bboyHan/',
   },
   {
     title: 'Vue',
     icon: 'ion:logo-vue',
     color: '#3fb27f',
-    desc: '现在的你决定将来的你。',
-    group: '算法组',
-    date: '2021-04-01',
+    desc: '渐进式 JavaScript 框架',
+    group: 'Vue.js',
+    date: '2022-12-21',
+    link: 'https://cn.vuejs.org/',
   },
   {
     title: 'Html5',
     icon: 'ion:logo-html5',
     color: '#e18525',
-    desc: '没有什么才能比努力更重要。',
-    group: '上班摸鱼',
-    date: '2021-04-01',
+    desc: 'HyperText Markup Language 5',
+    group: 'HTML5',
+    date: '2022-12-21',
+    link: 'https://html5.org/',
   },
   {
     title: 'Angular',
     icon: 'ion:logo-angular',
     color: '#bf0c2c',
-    desc: '热情和欲望可以突破一切难关。',
-    group: 'UI',
-    date: '2021-04-01',
+    desc: 'AngularJS是一个应用设计框架与开发平台。',
+    group: 'AngularJS',
+    date: '2022-12-21',
+    link: 'https://angular.cn/',
   },
   {
     title: 'React',
     icon: 'bx:bxl-react',
     color: '#00d8ff',
-    desc: '健康的身体是实目标的基石。',
-    group: '技术牛',
-    date: '2021-04-01',
+    desc: '用于构建用户界面的JavaScript库',
+    group: 'Web框架',
+    date: '2022-12-21',
+    link: 'https://reactjs.org/',
   },
   {
     title: 'Js',
     icon: 'ion:logo-javascript',
     color: '#4daf1bc9',
-    desc: '路是走出来的，而不是空想出来的。',
-    group: '架构组',
-    date: '2021-04-01',
+    desc: '一种具有函数优先的轻量级，解释型或即时编译型的编程语言。',
+    group: 'Java Script',
+    date: '2022-12-21',
+    link: 'https://www.javascript.com/',
+  },
+  {
+    title: 'Tencent',
+    icon: 'tencent|svg',
+    color: '#4daf1bc9',
+    desc: '中国领先的在线视频媒体平台。',
+    group: '腾讯视频',
+    date: '2022-12-21',
+    link: 'https://v.qq.com/',
+  },
+  {
+    title: 'iQiYi',
+    icon: 'iQiYi|svg',
+    color: '#4daf1bc9',
+    desc: '拥有海量、优质、高清的网络视频的大型视频网站。',
+    group: '爱奇艺视频',
+    date: '2022-12-21',
+    link: 'https://www.iqiyi.com/',
   },
 ];

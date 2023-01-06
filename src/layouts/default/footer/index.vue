@@ -24,7 +24,7 @@
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
   import { useRouter } from 'vue-router';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { useLayoutHeight } from '../content/useContentViewHeight';
+  import { useLayoutHeight } from '/@/layouts/default/content/useContentViewHeight';
 
   export default defineComponent({
     name: 'LayoutFooter',

@@ -1,10 +1,12 @@
 <template>
   <Card title="快捷导航" v-bind="$attrs">
     <CardGrid v-for="item in navItems" :key="item">
-      <span class="flex flex-col items-center">
-        <Icon :icon="item.icon" :color="item.color" size="20" />
-        <span class="text-md mt-2">{{ item.title }}</span>
-      </span>
+      <router-link :to="item.link">
+        <span class="flex flex-col items-center">
+          <Icon :icon="item.icon" :color="item.color" size="20" />
+          <span class="text-md mt-2">{{ item.title }}</span>
+        </span>
+      </router-link>
     </CardGrid>
   </Card>
 </template>
@@ -15,3 +17,13 @@
 
   const CardGrid = Card.Grid;
 </script>
+<style>
+  .router-link-active {
+    text-decoration: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: grey;
+  }
+</style>

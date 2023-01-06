@@ -1,0 +1,60 @@
+<template>
+  <ScrollContainer>
+    <div ref="wrapperRef" :class="prefixCls">
+      <Tabs tab-position="left" :tabBarStyle="tabBarStyle">
+        <template v-for="item in editList" :key="item.key">
+          <TabPane :tab="item.name">
+            <component :is="item.component" />
+          </TabPane>
+        </template>
+      </Tabs>
+    </div>
+  </ScrollContainer>
+</template>
+
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  import { Tabs } from 'ant-design-vue';
+
+  import { ScrollContainer } from '/@/components/Container/index';
+  import { editList } from './msg.data';
+
+  import MsgList from './MsgList.vue';
+  import EmailEdit from './EmailEdit.vue';
+  import MessageEdit from './MessageEdit.vue';
+
+  export default defineComponent({
+    name: `MsgManagement`,
+    components: {
+      ScrollContainer,
+      Tabs,
+      TabPane: Tabs.TabPane,
+      MsgList,
+      EmailEdit,
+      MessageEdit,
+    },
+    setup() {
+      return {
+        prefixCls: 'account-setting',
+        editList,
+        tabBarStyle: {
+          width: '220px',
+        },
+      };
+    },
+  });
+</script>
+<style lang="less">
+  .account-setting {
+    margin: 12px;
+    background-color: @component-background;
+
+    .base-title {
+      padding-left: 0;
+    }
+
+    .ant-tabs-tab-active {
+      background-color: @item-active-bg;
+    }
+  }
+</style>
