@@ -2,6 +2,7 @@
   <Content>
     <home-carousel />
     <home-product />
+    <home-advantage />
   </Content>
 </template>
 
@@ -12,6 +13,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import HomeCarousel from '/@/views/home/carousel/index.vue';
   import HomeProduct from '/@/views/home/product/index.vue';
+  import HomeAdvantage from '/@/views/home/advantage/index.vue';
 
   export default defineComponent({
     name: 'HomeContent',
@@ -19,6 +21,7 @@
       Content: Layout.Content,
       HomeCarousel,
       HomeProduct,
+      HomeAdvantage,
     },
     setup() {
       const { t } = useI18n();

@@ -2,7 +2,7 @@
   <div id="home-product">
     <div id="home-product-introduce">
       <a-divider style="font-size: x-large">安全、可靠的产品</a-divider>
-      <p style="font-size: x-large; text-align: center">
+      <p style="font-size: large; text-align: center">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mini
         ista ista ista probare, quae sunt a te dicta? Refert tamen, quo modo.
       </p>
@@ -10,58 +10,18 @@
     <div id="home-product-content">
       <a-row justify="center">
         <a-space :size="40">
-          <a-col :span="6">
-            <a-card hoverable style="width: 240px">
-              <template #cover>
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              </template>
-              <a-card-meta title="Europe Street beat">
-                <template #description>www.instagram.com</template>
-              </a-card-meta>
-            </a-card>
-          </a-col>
-          <a-col :span="6">
-            <a-card hoverable style="width: 240px">
-              <template #cover>
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              </template>
-              <a-card-meta title="Europe Street beat">
-                <template #description>www.instagram.com</template>
-              </a-card-meta>
-            </a-card>
-          </a-col>
-          <a-col :span="6">
-            <a-card hoverable style="width: 240px">
-              <template #cover>
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              </template>
-              <a-card-meta title="Europe Street beat">
-                <template #description>www.instagram.com</template>
-              </a-card-meta>
-            </a-card>
-          </a-col>
-          <a-col :span="6">
-            <a-card hoverable style="width: 240px">
-              <template #cover>
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              </template>
-              <a-card-meta title="Europe Street beat">
-                <template #description>www.instagram.com</template>
-              </a-card-meta>
-            </a-card>
-          </a-col>
+          <div v-for="(item, index) in prodDescList" :key="index">
+            <a-col :span="6">
+              <a-card hoverable style="width: 240px">
+                <template #cover>
+                  <img alt="example" :src="item.url" />
+                </template>
+                <a-card-meta :title="item.title">
+                  <template #description>{{ item.p }}</template>
+                </a-card-meta>
+              </a-card>
+            </a-col>
+          </div>
         </a-space>
       </a-row>
     </div>
@@ -70,9 +30,10 @@
 
 <script>
   import { openWindow } from '/@/utils';
-  import { defineComponent } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { Card, Divider, Row, Col, Space } from 'ant-design-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { getProductDescList } from '/@/api/home/product';
 
   export default defineComponent({
     name: 'HomeProduct',
@@ -86,9 +47,20 @@
     },
     setup() {
       const { t } = useI18n();
+      const prodDescList = ref();
+      onMounted(() => {
+        getProductList();
+      });
+      function getProductList() {
+        getProductDescList().then((res) => {
+          console.log(res);
+          prodDescList.value = res;
+        });
+      }
       return {
         t,
         openWindow,
+        prodDescList,
       };
     },
   });
@@ -101,6 +73,7 @@
     position: relative;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 5%;
   }
 
   #home-product-introduce {
