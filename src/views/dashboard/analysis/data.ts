@@ -9,7 +9,7 @@ export interface GrowCardItem {
 
 export const growCardList: GrowCardItem[] = [
   {
-    title: '访问数',
+    title: '昨日订单',
     icon: 'visit-count|svg',
     value: 1980,
     total: 120000,

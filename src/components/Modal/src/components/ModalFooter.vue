@@ -18,7 +18,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
 
   import { basicProps } from '../props';
   export default defineComponent({
@@ -26,7 +26,13 @@
     props: basicProps,
     emits: ['ok', 'cancel'],
     setup(_, { emit }) {
+      const confirmLoading = ref<boolean>(false);
+
       function handleOk(e: Event) {
+        confirmLoading.value = true;
+        setTimeout(() => {
+          confirmLoading.value = false;
+        }, 1500);
         emit('ok', e);
       }
 
@@ -34,7 +40,7 @@
         emit('cancel', e);
       }
 
-      return { handleOk, handleCancel };
+      return { handleOk, handleCancel, confirmLoading };
     },
   });
 </script>

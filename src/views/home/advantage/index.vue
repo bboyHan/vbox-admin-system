@@ -5,7 +5,7 @@
       <p style="font-size: large; text-align: center"> 数字化运营平台 </p>
     </div>
     <div id="home-advantage-content">
-      <a-row justify="space-around" type="flex" bordered="false" :gutter="[0, 16]">
+      <a-row justify="center" bordered="false" :gutter="[16, 16]">
         <div v-for="(item, index) in advantageList" :key="index">
           <a-col :span="6">
             <a-card hoverable style="width: 340px">
@@ -65,21 +65,21 @@
 
   #home-advantage-introduce {
     /*子元素绝对定位*/
-    position: absolute;
+    /*position: absolute;*/
     /*子元素分别相对top,left偏移50%*/
     /*vertical-align: middle;*/
     width: 100%;
     height: 100px;
   }
 
-  #home-advantage-content {
-    /*子元素绝对定位*/
-    position: relative;
-    width: 80%;
-    height: 400px;
-    top: 30%;
-    left: 5%;
-    right: 5%;
-    vertical-align: middle;
-  }
+  /*#home-advantage-content {*/
+  /*  !*子元素绝对定位*!*/
+  /*  !*position: relative;*!*/
+  /*  width: 80%;*/
+  /*  height: 400px;*/
+  /*  !*top: 30%;*!*/
+  /*  !*left: 5%;*!*/
+  /*  right: 5%;*/
+  /*  vertical-align: middle;*/
+  /*}*/
 </style>

@@ -205,6 +205,9 @@
 
       function handleOk(e: Event) {
         emit('ok', e);
+        setTimeout(() => {
+          visibleRef.value = false;
+        }, 1500);
       }
 
       function handleHeightChange(height: string) {

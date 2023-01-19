@@ -15,6 +15,7 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
   item.align = item.align || DEFAULT_ALIGN;
   if (ellipsis) {
     if (!key) {
+      // @ts-ignore
       item.key = dataIndex;
     }
     if (!isBoolean(item.ellipsis)) {
@@ -151,11 +152,12 @@ export function useColumns(
       .filter((column) => {
         return hasPermission(column.auth) && isIfShow(column);
       })
-      .map((column) => {
+      .map((column: BasicColumn) => {
         const { slots, customRender, format, edit, editRow, flag } = column;
 
         if (!slots || !slots?.title) {
           // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
+          // @ts-ignore
           column.customTitle = column.title;
           Reflect.deleteProperty(column, 'title');
         }
