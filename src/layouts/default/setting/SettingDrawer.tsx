@@ -400,27 +400,27 @@ export default defineComponent({
       <BasicDrawer
         {...attrs}
         title={t('layout.setting.drawerTitle')}
-        width={330}
+        width={230}
         class="setting-drawer"
       >
         {unref(getShowDarkModeToggle) && <Divider>{() => t('layout.setting.darkMode')}</Divider>}
         {unref(getShowDarkModeToggle) && <AppDarkModeToggle class="mx-auto" />}
         <Divider>{() => t('layout.setting.navMode')}</Divider>
         {renderSidebar()}
-        <Divider>{() => t('layout.setting.sysTheme')}</Divider>
-        {renderMainTheme()}
-        <Divider>{() => t('layout.setting.headerTheme')}</Divider>
-        {renderHeaderTheme()}
-        <Divider>{() => t('layout.setting.sidebarTheme')}</Divider>
-        {renderSiderTheme()}
-        <Divider>{() => t('layout.setting.interfaceFunction')}</Divider>
-        {renderFeatures()}
-        <Divider>{() => t('layout.setting.interfaceDisplay')}</Divider>
-        {renderContent()}
-        <Divider>{() => t('layout.setting.animation')}</Divider>
-        {renderTransition()}
-        <Divider />
-        <SettingFooter />
+        {/*<Divider>{() => t('layout.setting.sysTheme')}</Divider>*/}
+        {/*{renderMainTheme()}*/}
+        {/*<Divider>{() => t('layout.setting.headerTheme')}</Divider>*/}
+        {/*{renderHeaderTheme()}*/}
+        {/*<Divider>{() => t('layout.setting.sidebarTheme')}</Divider>*/}
+        {/*{renderSiderTheme()}*/}
+        {/*<Divider>{() => t('layout.setting.interfaceFunction')}</Divider>*/}
+        {/*{renderFeatures()}*/}
+        {/*<Divider>{() => t('layout.setting.interfaceDisplay')}</Divider>*/}
+        {/*{renderContent()}*/}
+        {/*<Divider>{() => t('layout.setting.animation')}</Divider>*/}
+        {/*{renderTransition()}*/}
+        {/*<Divider />*/}
+        {/*<SettingFooter />*/}
       </BasicDrawer>
     );
   },

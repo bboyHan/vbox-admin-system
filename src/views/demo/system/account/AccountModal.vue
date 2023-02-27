@@ -47,7 +47,7 @@
             show: !unref(isUpdate),
           },
           {
-            field: 'dept',
+            field: 'deptId',
             componentProps: { treeData },
           },
         ]);

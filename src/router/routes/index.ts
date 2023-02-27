@@ -38,10 +38,20 @@ export const LoginRoute: AppRouteRecordRaw = {
   },
 };
 
+export const CodeRoute: AppRouteModule = {
+  path: '/code/pay',
+  name: 'OrderCodeDetail',
+  component: () => import('/@/views/order/resource/components/OrderCodeDetail.vue'),
+  meta: {
+    title: 'Code',
+  },
+};
+
 // Basic routing without permission
 // 未经许可的基本路由
 export const basicRoutes = [
   LoginRoute,
+  CodeRoute,
   RootRoute,
   ...mainOutRoutes,
   REDIRECT_ROUTE,

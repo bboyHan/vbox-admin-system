@@ -5,7 +5,7 @@
     </template>
 
     <!--<CardGrid v-for="item in items" :key="item" class="!md:w-1/3 !w-full">-->
-    <CardGrid v-for="item in items" :key="item" class="">
+    <CardGrid v-for="item in items" :key="item" class="!md:w-1/3 !w-full">
       <router-link to="" @click="jumpTo(item.link)">
         <span class="flex">
           <Icon :icon="item.icon" :color="item.color" size="30" />

@@ -2,8 +2,8 @@ import { Result } from '../utils';
 
 const fakeUserInfo = {
   userId: '1',
-  username: 'vben',
-  realName: 'Vben Admin',
+  username: 'zhangsan',
+  realName: 'Vbox Admin',
   desc: 'manager',
   password: '123456',
   token: 'fakeToken1',

@@ -11,9 +11,11 @@ import { RootRoute } from '/@/router/routes';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 
+const CODE_PAY = PageEnum.CODE_PAY;
+
 const ROOT_PATH = RootRoute.path;
 
-const whitePathList: PageEnum[] = [LOGIN_PATH];
+const whitePathList: PageEnum[] = [LOGIN_PATH, CODE_PAY];
 
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStoreWithOut();

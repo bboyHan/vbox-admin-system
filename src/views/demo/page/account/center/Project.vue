@@ -5,7 +5,7 @@
         <a-col :span="6">
           <ListItem>
             <Card :hoverable="true" :class="`${prefixCls}__card`">
-              <img :src="demoImg" />
+<!--              <img :src="demoImg" />-->
               <div :class="`${prefixCls}__card-title`">
                 {{ item.title }}
               </div>
@@ -22,7 +22,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { List, Card, Row, Col } from 'ant-design-vue';
-  import demoImg from '/@/assets/images/demo.png';
+  // import demoImg from '/@/assets/images/demo.png';
   import { projectList } from './data';
 
   export default defineComponent({
@@ -37,7 +37,7 @@
       return {
         prefixCls: 'account-center-project',
         list: projectList,
-        demoImg,
+        // demoImg,
       };
     },
   });

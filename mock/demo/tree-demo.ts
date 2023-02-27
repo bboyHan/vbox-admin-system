@@ -36,3 +36,5 @@ export default [
     },
   },
 ] as MockMethod[];
+
+console.log(resultSuccess(demoTreeList('')));

@@ -1,13 +1,9 @@
 <template>
-  <PageWrapper title="modal组件使用示例">
-    <Alert
-      message="使用 useModal 进行弹窗操作，默认可以拖动，可以通过 draggable
-    参数进行控制是否可以拖动/全屏，并演示了在Modal内动态加载内容并自动调整高度"
-      show-icon
-    />
+  <PageWrapper title="通道管理">
+    <Alert message="通道列表内容管理，可在此添加通道帐号，目前只支持剑网情缘3" show-icon />
     <Card title="通道列表" v-bind="$attrs">
       <template #extra>
-        <a-button type="link" size="small">更多</a-button>
+        <a-button type="text" size="middle">更多</a-button>
       </template>
 
       <!--<CardGrid v-for="item in items" :key="item" class="!md:w-1/3 !w-full">-->
@@ -15,13 +11,15 @@
         <a-space class="text-lg ml-4">{{ item.title }}</a-space>
         <div>
           <span class="flex">
-            <img :src="item.icon" alt="" style="width: 100%; height: 150px" />
+            <img :src="item.icon" alt="" style="height: 150px" />
           </span>
         </div>
         <div class="flex justify-between text-secondary">
-          <a-button type="text" @click="send(item.title)"> 添加帐号 </a-button>
-          <a-button type="text" @click="send(item.title)"> 帐号管理 </a-button>
-          <a-button type="text" @click="send(item.title)"> 设置倍率 </a-button>
+          <a-button type="text" @click="send(item.title, item.channel_id)"> 添加帐号 </a-button>
+          <a-button type="text">
+            <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+          </a-button>
+          <!--<a-button type="text" @click="send(item.title)"> 设置倍率 </a-button>-->
         </div>
       </CardGrid>
     </Card>
@@ -37,15 +35,16 @@
   import CreateU from '/@/views/channel/resource/components/CreateU.vue';
   import { PageWrapper } from '/@/components/Page';
 
+  // const go = useGo();
   export default defineComponent({
     components: { Alert, CreateU, Card, CardGrid: Card.Grid, PageWrapper, ASpace: Space },
     setup() {
       const [register, { openModal: openM }] = useModal();
 
-      function send(regionTitle) {
+      function send(title, channel_id) {
         openM(true, {
-          title: regionTitle,
-          info: 'Info',
+          title: title,
+          channel_id: channel_id,
         });
       }
 

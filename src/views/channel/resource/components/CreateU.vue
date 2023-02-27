@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { columns } from '/@/views/channel/resource/data';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { accountInfoApi } from '/@/api/demo/account';
+  import { createCAccount } from '/@/api/channel/channel';
 
   export default defineComponent({
     components: { BasicModal, BasicForm },
@@ -25,58 +25,73 @@
       userData: { type: Object },
     },
     setup(props) {
+      // let columns = ;
       const { createMessage } = useMessage();
 
       const modelRef = ref({});
       const formTitle = ref('');
+      const channelId = ref('');
       const [
         registerForm,
         {
           // setFieldsValue,
           // setProps,
           validate,
+          updateSchema,
         },
       ] = useForm({
-        labelWidth: 120,
+        labelWidth: 100,
         layout: 'horizontal',
         schemas: columns,
         showActionButtonGroup: false,
-        // actionColOptions: {
-        //   span: 24,
-        // },
-        // submitButtonOptions: {
-        //   text: '提交',
-        // },
-        // submitFunc: customSubmitFunc,
       });
 
+      const [register, { setModalProps, closeModal }] = useModalInner(async (data) => {
+        data && onDataReceive(data);
+        setModalProps({ confirmLoading: false });
+        updateSchema({
+          field: 'c_gateway',
+          componentProps: {
+            params: {
+              c_channel_id: channelId.value,
+            },
+          },
+        });
+      });
       async function customSubmitFunc() {
         try {
           const values = await validate();
-          handleDelete(values);
-        } catch (error) {}
+          setModalProps({ confirmLoading: true });
+          let ret = await handleCreate(values);
+          console.log(ret);
+          closeModal();
+        } catch (error) {
+        } finally {
+          setModalProps({ confirmLoading: false });
+        }
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
-        console.log(record.id);
+      function handleCreate(record: Recordable) {
         try {
-          let ret = accountInfoApi();
+          record.c_channel_id = channelId.value;
+          console.log(record);
+          let ret = createCAccount(record);
           console.log(ret);
-          createMessage.success(`添加账户成功`);
+          createMessage.success(`添加通道账户成功`);
         } catch (e) {
-          createMessage.error('添加账户失败');
+          createMessage.error('添加通道账户失败');
         } finally {
         }
       }
 
-      const [register] = useModalInner((data) => {
-        data && onDataReceive(data);
-      });
+      // const [register] = useModalInner((data) => {
+      //   data && onDataReceive(data);
+      // });
 
       function onDataReceive(data) {
         console.log('Data Received', data);
         formTitle.value = data.title;
+        channelId.value = data.channel_id;
       }
 
       function handleVisibleChange(v) {
@@ -86,7 +101,7 @@
 
       return {
         register,
-        columns,
+        // columns,
         registerForm,
         model: modelRef,
         handleVisibleChange,

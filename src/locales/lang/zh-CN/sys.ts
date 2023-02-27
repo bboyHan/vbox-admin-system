@@ -65,8 +65,8 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: '中台管理系统',
-    signInDesc: '欢迎使用！',
+    signInTitle: '测试、学习',
+    signInDesc: '仅供测试学习！',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 

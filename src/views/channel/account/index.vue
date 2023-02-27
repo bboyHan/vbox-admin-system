@@ -1,9 +1,6 @@
 <template>
   <div>
     <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增码商 </a-button>
-      </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
@@ -13,14 +10,15 @@
                 icon: 'clarity:note-edit-line',
                 color: 'success',
                 onClick: prodCodeSetting.bind(null, record),
+                ifShow: false,
               },
               {
-                label: '产码',
+                label: '修改',
                 icon: 'clarity:note-edit-line',
                 onClick: handleEdit.bind(null, record),
               },
               {
-                label: '测试',
+                label: '删除',
                 icon: 'ant-design:thunderbolt-outlined',
                 color: 'error',
                 popConfirm: {
@@ -34,8 +32,8 @@
         </template>
       </template>
     </BasicTable>
-    <AccountDrawer @register="registerDrawer" @success="handleSuccess" />
-    <ProdCodeSetting @register="registerModal" />
+    <ProdCodeSetting @register="registerPCModal" />
+    <ChannelAccountUpd @register="registerUpdModal" />
   </div>
 </template>
 <script lang="ts">
@@ -43,25 +41,23 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
-  import { useDrawer } from '/@/components/Drawer';
-  import AccountDrawer from './components/AccountDrawer.vue';
-
   import { columns, searchFormSchema } from '/@/views/channel/account/data';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { deleteCodeSales, getCodeSalesListByPage } from '/@/api/channel/codesales';
   import { useModal } from '/@/components/Modal';
   import ProdCodeSetting from '/@/views/channel/account/components/ProdCodeSetting.vue';
+  import ChannelAccountUpd from '/@/views/channel/account/components/ChannelAccountUpd.vue';
+  import { deleteCAccount, getCAccountListByPage } from '/@/api/channel/channel';
 
   export default defineComponent({
-    name: 'CodeAccountManagement',
-    components: { BasicTable, AccountDrawer, TableAction, ProdCodeSetting },
+    components: { BasicTable, TableAction, ProdCodeSetting, ChannelAccountUpd },
     setup() {
-      const [registerModal, { openModal: openM }] = useModal();
-      const [registerDrawer, { openDrawer }] = useDrawer();
+      const [registerPCModal, { openModal: openPCM }] = useModal();
+      const [registerUpdModal, { openModal: openUpdM }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: '',
-        api: getCodeSalesListByPage,
+        title: '全部帐号',
+        api: getCAccountListByPage,
         columns,
+        scroll: { x: 1500, y: 500 },
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
@@ -69,34 +65,35 @@
         useSearchForm: true,
         showTableSetting: true,
         bordered: true,
-        showIndexColumn: false,
+        showIndexColumn: true,
         actionColumn: {
-          width: 80,
+          width: 160,
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
-          fixed: undefined,
+          fixed: 'right',
         },
       });
 
       function prodCodeSetting(record: Recordable) {
-        const titleDesc = '帐号产码设置：' + record.name + '（当前帐号）';
-        openM(true, {
+        const titleDesc = '产码设置：' + record.ac_remark + '（当前帐号）';
+        openPCM(true, {
           title: titleDesc,
-          info: 'Info',
-        });
-      }
-
-      function handleCreate() {
-        openDrawer(true, {
-          isUpdate: false,
+          id: record.id,
+          acid: record.acid,
         });
       }
 
       function handleEdit(record: Recordable) {
-        openDrawer(true, {
-          record,
-          isUpdate: true,
+        const titleDesc = '通道帐号：' + record.ac_remark + '（当前帐号）';
+        openUpdM(true, {
+          title: titleDesc,
+          id: record.id,
+          acid: record.acid,
+          ac_remark: record.ac_remark,
+          ac_account: record.ac_account,
+          daily_limit: record.daily_limit,
+          total_limit: record.total_limit,
         });
       }
 
@@ -108,11 +105,11 @@
         const { createMessage } = useMessage();
         try {
           console.log(record);
-          let ret = deleteCodeSales(record.id);
+          let ret = deleteCAccount(record.id);
           console.log(ret);
-          createMessage.success(`删除码商成功`);
+          createMessage.success(`删除账户成功`);
         } catch (e) {
-          createMessage.error('删除码商失败');
+          createMessage.error('删除账户失败');
         } finally {
           reload();
         }
@@ -120,9 +117,8 @@
 
       return {
         registerTable,
-        registerDrawer,
-        registerModal,
-        handleCreate,
+        registerPCModal,
+        registerUpdModal,
         handleEdit,
         handleDelete,
         handleSuccess,

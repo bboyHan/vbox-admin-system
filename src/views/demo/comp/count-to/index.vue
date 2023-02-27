@@ -38,7 +38,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { Card } from 'ant-design-vue';
-  import { CountTo } from '/@/components/CountTo/index';
+  import { CountTo } from '/@/components/CountTo';
   import { PageWrapper } from '/@/components/Page';
 
   export default defineComponent({

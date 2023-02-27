@@ -6,4 +6,4 @@ export const GITHUB_URL = 'https://github.com/bboyhan/vue-vben-admin';
 export const DOC_URL = 'https://doc.vvbin.cn/';
 
 // site url
-export const SITE_URL = 'https://vvbin.cn/next/';
+export const SITE_URL = 'https://vben.vvbin.cn/';

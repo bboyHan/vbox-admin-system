@@ -20,13 +20,19 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '权限标识',
-    dataIndex: 'permission',
-    width: 180,
-  },
-  {
     title: '组件',
     dataIndex: 'component',
+    width: 160,
+  },
+  {
+    title: '标题',
+    dataIndex: 'title',
+    width: 260,
+  },
+  {
+    title: '路由地址',
+    dataIndex: 'routePath',
+    width: 80,
   },
   {
     title: '排序',

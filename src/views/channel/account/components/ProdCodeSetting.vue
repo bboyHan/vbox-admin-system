@@ -17,7 +17,6 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formModalSchema } from '/@/views/channel/account/data';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { accountInfoApi } from '/@/api/demo/account';
 
   export default defineComponent({
     components: { BasicModal, BasicForm },
@@ -29,14 +28,7 @@
 
       const modelRef = ref({});
       const formTitle = ref('');
-      const [
-        registerForm,
-        {
-          // setFieldsValue,
-          // setProps,
-          validate,
-        },
-      ] = useForm({
+      const [registerForm, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
         layout: 'horizontal',
         schemas: formModalSchema,
@@ -46,25 +38,32 @@
       async function customSubmitFunc() {
         try {
           const values = await validate();
-          handleDelete(values);
+          handlePCSetting(values);
         } catch (error) {}
       }
 
-      function handleDelete(record: Recordable) {
+      function handlePCSetting(record: Recordable) {
         console.log(record);
         console.log(record.id);
         try {
-          let ret = accountInfoApi();
-          console.log(ret);
-          createMessage.success(`添加账户成功`);
+          //TODO 配置产码
+          // let ret = deleteCAccount(record.id);
+          // console.log(ret);
+          createMessage.success(`配置产码成功`);
         } catch (e) {
-          createMessage.error('添加账户失败');
+          createMessage.error('配置产码失败');
         } finally {
         }
       }
 
       const [register] = useModalInner((data) => {
         data && onDataReceive(data);
+        console.log(data.id);
+        console.log(data.acid);
+        setFieldsValue({
+          id: data.id,
+          acid: data.acid,
+        });
       });
 
       function onDataReceive(data) {

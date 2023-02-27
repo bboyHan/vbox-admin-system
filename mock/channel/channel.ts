@@ -1,12 +1,13 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { resultSuccess } from '../_util';
 
-const regionList = (() => {
+const gatewayList = (() => {
   const result: any[] = [];
   for (let index = 0; index < 6; index++) {
     result.push({
       id: `${index}`,
-      region: '@cname()',
+      gateway: '@cname()',
+      gateway_name: '@cname()',
       'status|1': ['normal', 'enable', 'disable'],
     });
   }
@@ -19,7 +20,7 @@ export default [
     timeout: 100,
     method: 'get',
     response: () => {
-      return resultSuccess(regionList);
+      return resultSuccess(gatewayList);
     },
   },
 ] as MockMethod[];

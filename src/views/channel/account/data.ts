@@ -2,7 +2,7 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
-import { setCodeSalesStatus } from '/@/api/channel/codesales';
+import { setCAccountStatus } from '/@/api/channel/channel';
 import { useMessage } from '/@/hooks/web/useMessage';
 
 const { createMessage } = useMessage();
@@ -32,47 +32,67 @@ export const columns: BasicColumn[] = [
   {
     title: 'ID',
     dataIndex: 'id',
-    width: 20,
+    width: 40,
+    fixed: 'left',
+    ifShow: false,
   },
   {
-    title: 'MID',
-    dataIndex: 'mid',
-    width: 20,
+    title: 'ACID',
+    dataIndex: 'acid',
+    width: 70,
+    ifShow: false,
   },
   {
     title: '帐号备注',
-    dataIndex: 'account',
-    width: 80,
+    dataIndex: 'ac_remark',
+    width: 70,
+    fixed: 'left',
+  },
+  {
+    title: '充值帐号',
+    dataIndex: 'ac_account',
+    width: 70,
+  },
+  {
+    title: '充值密码',
+    dataIndex: 'ac_pwd',
+    width: 70,
   },
   {
     title: '所属通道',
-    dataIndex: 'channel',
+    dataIndex: 'c_channel_name',
     width: 80,
   },
   {
-    title: '产码开关',
+    title: '所属区域',
+    dataIndex: 'c_gateway_name',
+    width: 120,
+  },
+  {
+    title: '账户开关',
     dataIndex: 'status',
-    width: 20,
+    width: 60,
     customRender: ({ record }) => {
       if (!Reflect.has(record, 'pendingStatus')) {
         record.pendingStatus = false;
       }
       // console.log(record);
       return h(Switch, {
-        checked: record.status === '1',
+        checked: record.status === 1,
         checkedChildren: '已启用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
           const newStatus = checked ? '1' : '0';
-          setCodeSalesStatus(record.id, newStatus)
+          setCAccountStatus(record.id, newStatus)
             .then(() => {
               record.status = newStatus;
-              createMessage.success(`已成功修改产码状态`);
+              createMessage.success(`已成功修改状态`);
+              location.reload();
             })
             .catch(() => {
-              createMessage.error('修改产码状态失败');
+              createMessage.error('修改状态失败');
             })
             .finally(() => {
               record.pendingStatus = false;
@@ -82,14 +102,42 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '产码个数',
-    dataIndex: 'prodCodeNum',
-    width: 30,
+    title: '异常开关',
+    dataIndex: 'sys_status',
+    width: 60,
+    customRender: ({ record }) => {
+      return h(Switch, {
+        checked: record.sys_status === 1,
+        checkedChildren: '正常',
+        unCheckedChildren: '异常',
+        disabled: true,
+      });
+    },
   },
   {
-    title: '产码任务',
-    dataIndex: 'prodCodeTask',
-    width: 30,
+    title: '今充值',
+    dataIndex: 'today_cost',
+    width: 60,
+  },
+  {
+    title: '日限额',
+    dataIndex: 'daily_limit',
+    width: 60,
+  },
+  {
+    title: '总充值',
+    dataIndex: 'total_cost',
+    width: 60,
+  },
+  {
+    title: '总限额',
+    dataIndex: 'total_limit',
+    width: 60,
+  },
+  {
+    title: '最新结果',
+    dataIndex: 'sys_log',
+    width: 180,
   },
 ];
 
@@ -105,10 +153,10 @@ export const formModalSchema: FormSchema[] = [
     span: 24,
   },
   {
-    field: 'mid',
-    label: 'MID',
+    field: 'acid',
+    label: 'ACID',
     dynamicDisabled: true,
-    component: 'InputNumber',
+    component: 'Input',
   },
   {
     field: 'period',
@@ -140,4 +188,87 @@ export const formModalSchema: FormSchema[] = [
     },
     defaultValue: '30',
   },
+];
+
+export const caUpdColumn: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'ID',
+    dynamicDisabled: true,
+    show: false,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'acid',
+    label: 'ACID',
+    dynamicDisabled: true,
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'ac_remark',
+    component: 'Input',
+    label: '账户备注',
+    helpMessage: ['账户备注, 便于商户自行区分账户'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入便于自行区别的账户备注名',
+    },
+  },
+  {
+    field: 'ac_account',
+    component: 'Input',
+    label: '充值账户',
+    helpMessage: ['充值账户, 用于账户充值的帐号确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实帐号，务必核对正确',
+    },
+    dynamicDisabled: true,
+    // required: true,
+  },
+  {
+    field: 'ac_pwd',
+    component: 'InputPassword',
+    label: '充值密码',
+    helpMessage: ['充值账户密码, 用于账户充值的密码确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实密码，务必核对正确',
+    },
+  },
+  {
+    field: 'daily_limit',
+    component: 'InputNumber',
+    label: '日限额',
+    colProps: {
+      span: 12,
+    },
+  },
+  {
+    field: 'total_limit',
+    component: 'InputNumber',
+    label: '总限额',
+    colProps: {
+      span: 12,
+    },
+  },
+  // {
+  //   field: 'ck',
+  //   component: 'InputTextArea',
+  //   label: 'CK',
+  //   helpMessage: ['请填写用户CK'],
+  //   colProps: { span: 24 },
+  //   componentProps: {
+  //     placeholder: '请输入用户CK',
+  //   },
+  //   required: true,
+  // },
 ];

@@ -18,6 +18,7 @@ enum Api {
   IsAccountExist = '/system/accountExist',
   OperateAccount = '/system/user',
   DeptList = '/system/getDeptList',
+  DeptListMock = '/system/getDeptList/Mock',
   OperateDept = '/system/dept',
   setRoleStatus = '/system/setRoleStatus',
   MenuList = '/system/getMenuList',

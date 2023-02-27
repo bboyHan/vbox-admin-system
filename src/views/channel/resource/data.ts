@@ -1,9 +1,9 @@
 import { FormSchema } from '/@/components/Table';
-import { getRegionList } from '/@/api/channel/channel';
+import { getGatewayList } from '/@/api/channel/channel';
 // import { Alert } from 'ant-design-vue';
 // import { h } from 'vue';
 import JX3 from '/@/assets/images/jx3.jpg';
-import QQ from '/@/assets/images/qq.jpg';
+// import QQ from '/@/assets/images/qq.jpg';
 
 interface ChannelItem {
   title: string;
@@ -11,8 +11,8 @@ interface ChannelItem {
   color: string;
   desc: string;
   date: string;
-  group: string;
   link: string;
+  channel_id: string;
 }
 
 export const channelItems: ChannelItem[] = [
@@ -21,24 +21,24 @@ export const channelItems: ChannelItem[] = [
     icon: JX3,
     color: '',
     desc: 'Build software better, together.',
-    group: '开源社区',
+    channel_id: 'jx3_weixin',
     date: '2022-12-21',
     link: 'https://github.com/bboyHan/',
   },
-  {
-    title: '腾讯系',
-    icon: QQ,
-    color: '#3fb27f',
-    desc: '渐进式 JavaScript 框架',
-    group: 'Vue.js',
-    date: '2022-12-21',
-    link: 'https://cn.vuejs.org/',
-  },
+  // {
+  //   title: '腾讯系',
+  //   icon: QQ,
+  //   color: '#3fb27f',
+  //   desc: '渐进式 JavaScript 框架',
+  //   channel_id: 'qq_wallet',
+  //   date: '2022-12-21',
+  //   link: 'https://cn.vuejs.org/',
+  // },
 ];
 
 export const columns: FormSchema[] = [
   {
-    field: 'userRemark',
+    field: 'ac_remark',
     component: 'Input',
     label: '账户备注',
     helpMessage: ['账户备注, 便于商户自行区分账户'],
@@ -46,11 +46,38 @@ export const columns: FormSchema[] = [
       span: 24,
     },
     componentProps: {
-      placeholder: '请输入便于自行区别的账户备注名',
+      placeholder: '请输入便于自行区别的账户备注名，且不能重复',
     },
+    required: true,
   },
   {
-    field: 'limitDaily',
+    field: 'ac_account',
+    component: 'Input',
+    label: '充值账户',
+    helpMessage: ['充值账户, 用于账户充值的帐号确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实帐号，务必核对正确',
+    },
+    required: true,
+  },
+  {
+    field: 'ac_pwd',
+    component: 'InputPassword',
+    label: '充值密码',
+    helpMessage: ['充值密码, 用于账户充值的密码确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实密码，务必核对正确',
+    },
+    required: true,
+  },
+  {
+    field: 'daily_limit',
     component: 'InputNumber',
     label: '日限额',
     helpMessage: ['默认为0, 0则为不限制'],
@@ -58,16 +85,18 @@ export const columns: FormSchema[] = [
       span: 12,
     },
     defaultValue: '0',
+    required: true,
   },
   {
-    field: 'limitTotal',
+    field: 'total_limit',
     component: 'InputNumber',
     label: '总限额',
-    helpMessage: ['默认为0, 0则为不限制'],
+    helpMessage: ['默认为10000'],
     colProps: {
       span: 12,
     },
-    defaultValue: '0',
+    defaultValue: '10000',
+    required: true,
   },
   {
     field: 'min',
@@ -77,6 +106,7 @@ export const columns: FormSchema[] = [
       span: 12,
     },
     defaultValue: '0',
+    required: true,
   },
   {
     field: 'max',
@@ -85,29 +115,34 @@ export const columns: FormSchema[] = [
     colProps: {
       span: 12,
     },
-    defaultValue: '999999',
+    defaultValue: '99999',
+    required: true,
   },
-  {
-    field: 'ck',
-    component: 'InputTextArea',
-    label: 'CK',
-    helpMessage: ['请填写（WeGame）CK'],
-    colProps: { span: 24 },
-    componentProps: {
-      placeholder: '请输入（WeGame）CK',
-    },
-  },
+  // {
+  //   field: 'ck',
+  //   component: 'InputTextArea',
+  //   label: 'CK',
+  //   helpMessage: ['请填写用户CK'],
+  //   colProps: { span: 24 },
+  //   componentProps: {
+  //     placeholder: '请输入用户CK',
+  //   },
+  //   required: true,
+  // },
   {
     label: '选择大区',
-    field: 'region',
+    field: 'c_gateway',
     component: 'ApiSelect',
     componentProps: {
-      api: getRegionList,
-      labelField: 'region',
-      valueField: 'id',
+      api: getGatewayList,
+      labelField: 'c_gateway_name',
+      valueField: 'c_gateway',
     },
     required: true,
-    defaultValue: '0',
+    colProps: {
+      span: 12,
+    },
+    rules: [{ required: true, trigger: 'blur' }],
   },
   {
     field: 'payType',
@@ -115,21 +150,18 @@ export const columns: FormSchema[] = [
     label: '支付方式',
     helpMessage: ['选择支付方式（支付宝或微信）'],
     colProps: {
-      span: 8,
+      span: 10,
     },
     componentProps: {
       options: [
         {
           label: '微信',
-          value: 'wechat',
+          value: '1',
           key: '1',
         },
-        // {
-        //   label: '支付宝',
-        //   value: 'ali',
-        //   key: '2',
-        // },
       ],
     },
+    required: true,
+    defaultValue: '1',
   },
 ];

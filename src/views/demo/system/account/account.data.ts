@@ -1,4 +1,5 @@
-import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
+// import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
+import { getAllRoleList } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { DescItem } from '/@/components/Description';
@@ -15,24 +16,14 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '性别',
-    dataIndex: 'gender',
-    width: 80,
-  },
-  {
-    title: '头像',
-    dataIndex: 'avatar',
+    title: '角色',
+    dataIndex: 'roles',
     width: 120,
   },
   {
     title: '创建时间',
     dataIndex: 'createTime',
     width: 180,
-  },
-  {
-    title: '角色',
-    dataIndex: 'roles',
-    // width: 120,
   },
   {
     title: '备注',
@@ -62,45 +53,77 @@ export const accountFormSchema: FormSchema[] = [
     field: 'account',
     label: '用户名',
     component: 'Input',
-    helpMessage: ['本字段演示异步验证', '不能输入带有admin的用户名'],
     rules: [
       {
         required: true,
-        message: '请输入用户名',
+        message: '输入用户名，系统存在则报错',
       },
-      {
-        validator(_, value) {
-          return new Promise((resolve, reject) => {
-            isAccountExist(value)
-              .then(() => resolve())
-              .catch((err) => {
-                reject(err.message || '验证失败');
-              });
-          });
-        },
-      },
+      // {
+      //   validator(_, value) {
+      //     return new Promise((resolve, reject) => {
+      //       isAccountExist(value)
+      //         .then(() => resolve())
+      //         .catch((err) => {
+      //           reject(err.message || '验证失败');
+      //         });
+      //     });
+      //   },
+      // },
     ],
     show: ({ values }) => !isUpd(values.id),
   },
   {
-    field: 'avatar',
-    label: '头像',
-    component: 'Upload',
-    required: true,
+    label: '密码',
+    field: 'pass',
+    component: 'Input',
+    helpMessage: ['不设置则初始默认密码123456'],
+    rules: [
+      {
+        required: false,
+        message: '可不填',
+      },
+    ],
+  },
+  {
+    field: 'gender',
+    component: 'RadioButtonGroup',
+    label: '性别',
+    componentProps: {
+      options: [
+        {
+          label: '男',
+          value: '0',
+        },
+        {
+          label: '女',
+          value: '1',
+        },
+        {
+          label: '不设置',
+          value: '-1',
+        },
+      ],
+    },
+    defaultValue: '-1',
+    rules: [
+      {
+        required: false,
+        message: '可不填',
+      },
+    ],
   },
   {
     label: '角色',
-    field: 'roles',
+    field: 'roleId',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
       labelField: 'roleName',
       valueField: 'id',
     },
-    required: true,
   },
   {
-    field: 'dept',
+    field: 'deptId',
     label: '所属部门',
     component: 'TreeSelect',
     componentProps: {
@@ -111,25 +134,17 @@ export const accountFormSchema: FormSchema[] = [
       },
       getPopupContainer: () => document.body,
     },
-    required: true,
   },
-  {
-    field: 'nickname',
-    label: '昵称',
-    component: 'Input',
-    required: true,
-  },
-  {
-    label: '性别',
-    field: 'gender',
-    component: 'Input',
-    required: true,
-  },
-
   {
     label: '备注',
     field: 'remark',
     component: 'InputTextArea',
+    rules: [
+      {
+        required: false,
+        message: '可不填',
+      },
+    ],
   },
 ];
 
