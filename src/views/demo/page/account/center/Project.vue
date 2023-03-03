@@ -5,7 +5,7 @@
         <a-col :span="6">
           <ListItem>
             <Card :hoverable="true" :class="`${prefixCls}__card`">
-<!--              <img :src="demoImg" />-->
+              <!--              <img :src="demoImg" />-->
               <div :class="`${prefixCls}__card-title`">
                 {{ item.title }}
               </div>

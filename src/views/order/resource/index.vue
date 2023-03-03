@@ -52,9 +52,9 @@
       <div>
         <BasicTable @register="registerTable">
           <template #bodyCell="{ column, record }">
-            <template v-if="column.key === 'resourceUrl'">
+            <!--<template v-if="column.key === 'resourceUrl'">
               <QrCode :value="record.resourceUrl" :width="70" />
-            </template>
+            </template>-->
             <template v-if="column.key === 'action'">
               <TableAction
                 :actions="[
@@ -75,7 +75,7 @@
 <script lang="ts">
   import { defineComponent, onMounted, reactive, ref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { QrCode } from '/@/components/Qrcode';
+  // import { QrCode } from '/@/components/Qrcode';
   import { columns, searchFormSchema } from '/@/views/order/resource/data';
   import { getOrderList, testCallback } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
@@ -96,7 +96,7 @@
     components: {
       BasicTable,
       TableAction,
-      QrCode,
+      // QrCode,
       PageWrapper,
       OrderGrowCard,
     },
@@ -150,7 +150,7 @@
         title: '订单详情列表',
         api: getOrderList,
         columns,
-        scroll: { x: 1800, y: 500 },
+        // scroll: { x: 1800, y: 500 },
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
@@ -163,7 +163,7 @@
           width: 60,
           title: '操作',
           dataIndex: 'action',
-          fixed: 'right',
+          // fixed: 'right',
         },
       });
 

@@ -11,20 +11,17 @@ var _e;
     return t[s].call(n.exports, n, n.exports, e), (n.loaded = !0), n.exports;
   }
   _e = e;
-})(
-  {
-    "_func1": function(x) {
-      console.log("111" + x);
+})({
+  _func1: function (x) {
+    console.log('111' + x);
 
-      var f1 = function ff1(x) {
-        return x;
-      }
-    },
-    "_func2": function(x) {
-      console.log("222" + x);
-    },
-  }
-);
+    var f1 = function ff1(x) {
+      return x;
+    };
+  },
+  _func2: function (x) {
+    console.log('222' + x);
+  },
+});
 
-console.log((_e('_func1')));
-
+console.log(_e('_func1'));

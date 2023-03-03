@@ -54,7 +54,7 @@
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
-  import Icon from "/@/components/Icon/src/Icon.vue";
+  import Icon from '/@/components/Icon/src/Icon.vue';
 
   type MenuEvent = 'logout' | 'doc' | 'lock';
 

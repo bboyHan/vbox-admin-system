@@ -62,10 +62,9 @@ var _cc;
             return '' + i.uid(3) + t;
           }),
           (t.prototype.getCombineText = function (t, time) {
-            var e = this.getAesKey()
+            var e = this.getAesKey();
             // var e = time,
-              n = this.getHeaderKey(e),
-              r = o.enc.Utf8.parse(e);
+            (n = this.getHeaderKey(e)), (r = o.enc.Utf8.parse(e));
             return (
               n +
               ':' +
@@ -6131,20 +6130,21 @@ var _cc;
 ]);
 
 var e = {
-  "repeat_passport": "18210889498",
-  "gateway": "z01",
-  "recharge_type": 1,
-  "recharge_unit": 15,
-  "custom_recharge_unit": "",
-  "game": "jx3",
-  "channel": "weixin",
-  "recharge_num": 1,
-  "captcha_id": "a7c9ab026dc4366066e4aaad573dce02",
-  "lot_number": "e7032c9281064c47be0ec3f6f6978fe0",
-  "pass_token": "7d914dc24582bc8b763e5ba448b1fdbf30e438a5d2241aca4fe3a25449e05fd1",
-  "gen_time": "1675284547",
-  "captcha_output": "662a-teKeUpl5FxeT6YiiSbVmvtYPCxaHv_f8xvivNeN2YIW8cuqmG5mytfjn52T2bP_4KlYDwB2oarb8g_r4CNw7bdMDDIWMJX1PX4KnIeLiav5EIKluyXZsFk0kheswv_s6kXIol2Rj2GKzfSwq1MGecVfqEyo3UV-afKtqHoF4eAH1Ju_HOF9rPbu6gF1eVpjDx03oae7G2M2W0p1kgOAsYjp9sxO66h9uW4-56S_486Jamr7vAf5We-6tdmPQsLfSstpWpWiN4xTnUXOF7AKqJ2jJIWEU4M5-OC5x9Zmf8-RXxAxM9T4u4N9SK-LMbc2x-Ope5sNZZGVSF-zpQ==",
-  "recharge_source": 0
+  repeat_passport: '18210889498',
+  gateway: 'z01',
+  recharge_type: 1,
+  recharge_unit: 15,
+  custom_recharge_unit: '',
+  game: 'jx3',
+  channel: 'weixin',
+  recharge_num: 1,
+  captcha_id: 'a7c9ab026dc4366066e4aaad573dce02',
+  lot_number: 'e7032c9281064c47be0ec3f6f6978fe0',
+  pass_token: '7d914dc24582bc8b763e5ba448b1fdbf30e438a5d2241aca4fe3a25449e05fd1',
+  gen_time: '1675284547',
+  captcha_output:
+    '662a-teKeUpl5FxeT6YiiSbVmvtYPCxaHv_f8xvivNeN2YIW8cuqmG5mytfjn52T2bP_4KlYDwB2oarb8g_r4CNw7bdMDDIWMJX1PX4KnIeLiav5EIKluyXZsFk0kheswv_s6kXIol2Rj2GKzfSwq1MGecVfqEyo3UV-afKtqHoF4eAH1Ju_HOF9rPbu6gF1eVpjDx03oae7G2M2W0p1kgOAsYjp9sxO66h9uW4-56S_486Jamr7vAf5We-6tdmPQsLfSstpWpWiN4xTnUXOF7AKqJ2jJIWEU4M5-OC5x9Zmf8-RXxAxM9T4u4N9SK-LMbc2x-Ope5sNZZGVSF-zpQ==',
+  recharge_source: 0,
 };
 
 const publicKey =

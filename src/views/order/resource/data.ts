@@ -29,13 +29,13 @@ export const columns: BasicColumn[] = [
     title: '帐号备注',
     dataIndex: 'acRemark',
     width: 80,
-    fixed: 'left',
+    // fixed: 'left',
   },
   {
     title: '充值帐号',
     dataIndex: 'acAccount',
     width: 80,
-    fixed: 'left',
+    // fixed: 'left',
   },
   {
     title: '订单ID（付方）',
@@ -57,7 +57,7 @@ export const columns: BasicColumn[] = [
     title: '订单金额',
     dataIndex: 'cost',
     width: 80,
-    fixed: 'right',
+    // fixed: 'right',
   },
   {
     title: '所属通道',
@@ -65,7 +65,7 @@ export const columns: BasicColumn[] = [
     width: 120,
     customRender: ({ record }) => {
       const text = record.channel;
-      const color = '#20A130FF';
+      const color = '#9da120';
       return h(Tag, { color: color }, () => text);
     },
   },
@@ -73,7 +73,7 @@ export const columns: BasicColumn[] = [
     title: '支付码',
     dataIndex: 'resourceUrl',
     width: 80,
-    fixed: 'right',
+    // fixed: 'right',
   },
   {
     title: '订单状态',

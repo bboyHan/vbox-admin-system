@@ -3,6 +3,7 @@
     <template #headerContent> <WorkbenchHeader /> </template>
     <div class="lg:flex">
       <div class="lg:w-7/10 w-full !mr-4 enter-y">
+        <VboxOperation :loading="loading" class="enter-y" />
         <ProjectCard :loading="loading" class="enter-y" />
         <DynamicInfo :loading="loading" class="!my-4 enter-y" />
       </div>
@@ -27,6 +28,7 @@
   import QuickNav from './components/QuickNav.vue';
   import DynamicInfo from './components/DynamicInfo.vue';
   import SaleRadar from './components/SaleRadar.vue';
+  import VboxOperation from './components/VboxOperation.vue';
 
   const loading = ref(true);
 

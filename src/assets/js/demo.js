@@ -1,8 +1,10 @@
 var _e;
-!(function (t = {
-  f1: _func1,
-  f2: _func2,
-}) {
+!(function (
+  t = {
+    f1: _func1,
+    f2: _func2,
+  },
+) {
   var i = {};
   function e(s) {
     if (i[s]) return i[s].exports;
@@ -15,15 +17,14 @@ var _e;
   }
   _e = e;
 })(
-  t = {
-    "_func1": function() {
-      console.log("111");
+  (t = {
+    _func1: function () {
+      console.log('111');
     },
-    "_func2": function() {
-      console.log("222");
+    _func2: function () {
+      console.log('222');
     },
-  }
+  }),
 );
 
 console.log(_e('_func1'));
-

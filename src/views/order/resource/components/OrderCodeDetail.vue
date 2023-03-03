@@ -1,33 +1,42 @@
 <template>
   <div>
     <div class="m-5 result-success">
-      <Result
-        status="success"
+      <!--      <Result
         :title="titlePay"
-        sub-title="该订单限时有效期为3分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
-      >
+        sub-title="该订单限时有效期为5分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
+      >-->
+      <Result>
+        <template #icon>
+          <Image :src="jdImg" style="margin: 20px 20px" />
+          <Card size="small" style="color: red">
+            {{ titlePay }}
+          </Card>
+          <Alert
+            type="info"
+            message="该订单限时有效期为5分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
+          />
+        </template>
         <template #extra>
-          <TypographyText> 支付链接: {{ payStr }} </TypographyText>
-          <Button type="primary" @click="copy(payStr)" style="margin: 20px 20px">
-            一键复制前往微信粘贴付款
+          <Button type="primary" @click="jumpTo(payUrl)" style="margin: 20px 20px">
+            一键复制并跳转支付
           </Button>
-          <!--<Alert type="info" :message="payStr" show-icon />
-          <Button @click="wechat"> ddd </Button>
-          <Button @click="test(payStr)"> ddd </Button>
-          <Button @click="testApp(payStr)"> ddd </Button>
-          <Button type="default"> 请先认真阅读以下支付流程 </Button>-->
+          <!-- <Button @click="wechat"> ddd </Button>
+           <Button @click="test(payStr)"> ddd </Button>
+           <Button @click="testApp(payStr)"> ddd </Button>-->
+          <Button type="default"> 请先认真阅读以下支付流程 </Button>
           <Card hoverable style="width: 240px">
             <template #cover>
               <img :src="PayGif" alt="" />
             </template>
             <CardMeta title="请认真阅读视频支付流程" style="color: red">
               <template #description>
-                <div>1.复制链接并唤醒微信</div>
-                <div>2.将链接发送至任意聊天窗口</div>
-                <div>3.点击复制链接，并成功支付</div>
+                <div>1.复制链接并跳转京东支付</div>
+                <div>2.[订单信息]{{ titlePay }}</div>
+                <div>3.西山居[剑网3]游戏充值</div>
               </template>
             </CardMeta>
           </Card>
+          <TypographyText> 支付链接: {{ payUrl }} </TypographyText>
         </template>
       </Result>
       <!--<QrCode :value="payStr" />-->
@@ -38,39 +47,40 @@
 <script lang="ts">
   import { defineComponent, ref, unref } from 'vue';
   import { useRoute } from 'vue-router';
-  import { Result, Button, TypographyText, Card, CardMeta } from 'ant-design-vue';
-  import { decodeByBase64 } from '/@/utils/cipher';
+  import { Result, Button, TypographyText, Card, CardMeta, Image, Alert } from 'ant-design-vue';
+  // import { decodeByBase64 } from '/@/utils/cipher';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { wechat } from '/@/assets/js/wx2.js';
   import CallApp from 'callapp-lib';
   import { getOrderCode } from '/@/api/channel/pay';
   import PayGif from '/@/assets/images/pay.gif';
+  import jdImg from '/@/assets/images/jdpay-logo.png';
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Result, Button, TypographyText, Card, CardMeta },
+    components: { Result, Button, TypographyText, Card, CardMeta, Image, Alert },
     setup() {
       const route = useRoute();
       const { clipboardRef, copiedRef } = useCopyToClipboard();
       const { createMessage } = useMessage();
       // 此处可以得到用户ID
       console.log(route.query);
-      const payUrl = ref(route.query?.payUrl);
-      let payStr = payUrl.value == null ? '' : payUrl.value.toString();
+      const orderId = ref(route.query?.orderId);
+      let oid = orderId.value == null ? '' : orderId.value.toString();
       let cost = ref(0);
       let titlePay = ref('');
-      getOrderCode(payStr).then((res) => {
+      let payUrl = ref('');
+      getOrderCode(oid).then((res) => {
         // copy(res.payUrl);
         cost.value = res.cost;
-        titlePay.value = '微信支付：' + cost.value + '元';
+        titlePay.value = '金额：' + cost.value + '元';
+        payUrl.value = res.payUrl;
       });
-      console.log(payStr);
-      payStr = decodeByBase64(payStr);
       let width = ref(300);
       console.log(payUrl);
-      if (payStr == '') {
-        width.value = 0;
-      }
+      // if (payStr == '') {
+      //   width.value = 0;
+      // }
 
       function getPayCode(payUrl) {
         getOrderCode(payUrl).then((res) => {
@@ -145,7 +155,28 @@
         }, t);
       }
 
-      return { payStr, width, copy, wechat, test, testApp, cost, getPayCode, titlePay, payUrl, PayGif };
+      function jumpTo(url) {
+        clipboardRef.value = url;
+        if (unref(copiedRef)) {
+          createMessage.warning('复制成功: ' + url);
+        }
+        window.open(url, '_blank');
+      }
+
+      return {
+        width,
+        copy,
+        wechat,
+        test,
+        testApp,
+        cost,
+        getPayCode,
+        titlePay,
+        payUrl,
+        PayGif,
+        jumpTo,
+        jdImg,
+      };
     },
   });
 </script>

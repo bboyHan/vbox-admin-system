@@ -3,8 +3,8 @@ var window = {
     appName: 'Netscape',
   },
   document: {
-    querySelector: function(val) {
-      console.log(val)
+    querySelector: function (val) {
+      console.log(val);
     },
   },
   location: {
@@ -25,26 +25,26 @@ const location = window.location;
   var n = {};
 
   (t.m = e),
-  (t.c = n),
-  (t.d = function (e, n, r) {
-    t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
-  }),
-  (t.n = function (e) {
-    var n =
-      e && e.__esModule
-        ? function () {
-            return e.default;
-          }
-        : function () {
-            return e;
-          };
-    return t.d(n, 'a', n), n;
-  }),
-  (t.o = function (e, t) {
-    return Object.prototype.hasOwnProperty.call(e, t);
-  }),
-  (t.p = ''),
-  t((t.s = 0));
+    (t.c = n),
+    (t.d = function (e, n, r) {
+      t.o(e, n) || Object.defineProperty(e, n, { configurable: !1, enumerable: !0, get: r });
+    }),
+    (t.n = function (e) {
+      var n =
+        e && e.__esModule
+          ? function () {
+              return e.default;
+            }
+          : function () {
+              return e;
+            };
+      return t.d(n, 'a', n), n;
+    }),
+    (t.o = function (e, t) {
+      return Object.prototype.hasOwnProperty.call(e, t);
+    }),
+    (t.p = ''),
+    t((t.s = 0));
   _cc = n;
 })([
   function (e, t, n) {
@@ -1370,15 +1370,15 @@ var shareData = {
   link: 'www.你的连接地址',
   icon: '图片地址',
   // 不要过于依赖以下两个回调，很多浏览器是不支持的
-  success: function() {
-    alert('success')
+  success: function () {
+    alert('success');
   },
-  fail: function() {
-    alert('fail')
-  }
-}
+  fail: function () {
+    alert('fail');
+  },
+};
 
 // console.log(new _cc["0"].exports.Share(shareData));
-let s = new _cc["0"].exports.default(shareData)
+let s = new _cc['0'].exports.default(shareData);
 console.log(s.call('wechatfriend'));
 // console.log(_cc["0"]);
