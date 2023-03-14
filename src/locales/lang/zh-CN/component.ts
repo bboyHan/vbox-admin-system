@@ -7,6 +7,7 @@ export default {
   countdown: {
     normalText: '获取验证码',
     sendText: '{0}秒后重新获取',
+    timeText: '{0}秒',
   },
   cropper: {
     selectImage: '选择图片',

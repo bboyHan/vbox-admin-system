@@ -1,68 +1,166 @@
 <template>
   <div>
-    <div class="m-5 result-success">
-      <!--      <Result
-        :title="titlePay"
-        sub-title="该订单限时有效期为5分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
-      >-->
-      <Result>
-        <template #icon>
-          <Image :src="jdImg" style="margin: 20px 20px" />
-          <Card size="small" style="color: red">
-            {{ titlePay }}
-          </Card>
-          <Alert
-            type="info"
-            message="该订单限时有效期为5分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
-          />
-        </template>
-        <template #extra>
-          <Button type="primary" @click="jumpTo(payUrl)" style="margin: 20px 20px">
-            一键复制并跳转支付
-          </Button>
-          <!-- <Button @click="wechat"> ddd </Button>
-           <Button @click="test(payStr)"> ddd </Button>
-           <Button @click="testApp(payStr)"> ddd </Button>-->
-          <Button type="default"> 请先认真阅读以下支付流程 </Button>
-          <Card hoverable style="width: 240px">
-            <template #cover>
-              <img :src="PayGif" alt="" />
-            </template>
-            <CardMeta title="请认真阅读视频支付流程" style="color: red">
-              <template #description>
-                <div>1.复制链接并跳转京东支付</div>
-                <div>2.[订单信息]{{ titlePay }}</div>
-                <div>3.西山居[剑网3]游戏充值</div>
-              </template>
-            </CardMeta>
-          </Card>
-          <TypographyText> 支付链接: {{ payUrl }} </TypographyText>
-        </template>
-      </Result>
-      <!--<QrCode :value="payStr" />-->
+    <div v-show="isError">
+      <div class="m-5 result-success">
+        <Result>
+          <template #icon>
+            <Empty description="" />
+            <Card size="small" style="color: red"> 订单异常或不存在，请联系客服... </Card>
+          </template>
+          <template #extra>
+            <hr class="my-4" />
+            <Card hoverable style="width: 240px">
+              <CardMeta title="请认真阅读支付流程" style="color: red">
+                <template #description>
+                  <div>1.长时等待仍未出订单</div>
+                  <div>2.请联系客服重新下单</div>
+                  <div>3.西山居[剑网3]游戏充值</div>
+                </template>
+              </CardMeta>
+            </Card>
+            <hr class="my-4" />
+          </template>
+        </Result>
+        <!--<QrCode :value="payStr" />-->
+      </div>
+    </div>
+    <div v-show="isPending">
+      <div class="m-5 result-success">
+        <Result>
+          <template #icon>
+            <Button
+              id="ppid"
+              size="large"
+              shape="circle"
+              v-bind="$attrs"
+              @click="handleStart"
+              :disabled="isStart"
+              :loading="loading"
+              style="
+                background-color: blue;
+                height: 100px;
+                width: 100px;
+                font-size: 30px;
+                color: white;
+              "
+              block
+            >
+              {{ getButtonText }}
+            </Button>
+            <hr class="my-4" />
+            <Card size="small" style="color: red">
+              订单创建中，请耐心等待...
+            </Card>
+          </template>
+          <template #extra>
+            <hr class="my-4" />
+            <Card hoverable style="width: 240px">
+              <CardMeta title="请认真阅读支付流程" style="color: red">
+                <template #description>
+                  <div>1.长时间等待仍未出现订单</div>
+                  <div>2.请联系客服重新下单</div>
+                  <div>3.西山居[剑网3]游戏充值</div>
+                </template>
+              </CardMeta>
+            </Card>
+            <hr class="my-4" />
+          </template>
+        </Result>
+        <!--<QrCode :value="payStr" />-->
+      </div>
+    </div>
+    <div v-show="isPaying">
+      <div class="m-5 result-success">
+        <Result>
+          <template #icon>
+            <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
+            <Card size="small" style="color: red">
+              {{ titlePay }}
+            </Card>
+            <Alert
+              type="info"
+              message="该订单限时有效期为3分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
+            />
+          </template>
+          <template #extra>
+            <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
+              点此跳转支付
+            </Button>
+            <!-- <Button @click="wechat"> ddd </Button>
+             <Button @click="test(payStr)"> ddd </Button>
+             <Button @click="testApp(payStr)"> ddd </Button>
+            <Button type="default"> 请先认真阅读以下流程 </Button>-->
+            <hr class="my-4" />
+            <Card hoverable style="width: 240px">
+              <CardMeta title="请认真阅读支付流程" style="color: red">
+                <template #description>
+                  <div>1.点击跳转支付</div>
+                  <div>2.[订单信息]{{ titlePay }}</div>
+                  <div>3.西山居[剑网3]游戏充值</div>
+                </template>
+              </CardMeta>
+            </Card>
+            <!--<TypographyText> 支付链接: {{ payUrl }} </TypographyText>-->
+            <hr class="my-4" />
+            <!--<img :src="PayGif" alt="" />-->
+          </template>
+        </Result>
+        <!--<QrCode :value="payStr" />-->
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, unref } from 'vue';
+  import { computed, defineComponent, ref, unref, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
-  import { Result, Button, TypographyText, Card, CardMeta, Image, Alert } from 'ant-design-vue';
+  import {
+    Empty,
+    Result,
+    Button,
+    TypographyText,
+    Card,
+    CardMeta,
+    Image,
+    Alert,
+  } from 'ant-design-vue';
   // import { decodeByBase64 } from '/@/utils/cipher';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { wechat } from '/@/assets/js/wx2.js';
   import CallApp from 'callapp-lib';
   import { getOrderCode } from '/@/api/channel/pay';
-  import PayGif from '/@/assets/images/pay.gif';
+  import jdGif from '/@/assets/images/jd_pay.gif';
   import jdImg from '/@/assets/images/jdpay-logo.png';
+  import wxImg from '/@/assets/images/wxpay-logo.png';
+  import aliImg from '/@/assets/images/alipay-logo.png';
+  import { useGo } from '/@/hooks/web/usePage';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { isFunction } from '/@/utils/is';
+  import { tryOnUnmounted } from '@vueuse/core';
+  const props = {
+    value: { type: [Object, Number, String, Array] },
+    count: { type: Number, default: 60 },
+    beforeStartFunc: {
+      type: Function as PropType<() => Promise<boolean>>,
+      default: null,
+    },
+  };
+
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Result, Button, TypographyText, Card, CardMeta, Image, Alert },
-    setup() {
+    components: { Empty, Result, Button, TypographyText, Card, CardMeta, Image, Alert },
+    props,
+    setup(props) {
+      const { t } = useI18n();
+      const loading = ref(false);
+      const getButtonText = computed(() => {
+        return t('component.countdown.timeText', [unref(currentCount)]);
+      });
       const route = useRoute();
       const { clipboardRef, copiedRef } = useCopyToClipboard();
       const { createMessage } = useMessage();
+      const go = useGo();
       // 此处可以得到用户ID
       console.log(route.query);
       const orderId = ref(route.query?.orderId);
@@ -70,17 +168,61 @@
       let cost = ref(0);
       let titlePay = ref('');
       let payUrl = ref('');
-      getOrderCode(oid).then((res) => {
-        // copy(res.payUrl);
-        cost.value = res.cost;
-        titlePay.value = '金额：' + cost.value + '元';
-        payUrl.value = res.payUrl;
-      });
+      let Img = ref();
+      let PayGif = ref();
+      let payStatus = ref(0);
+      let cid = ref('');
+      let isPending = ref(true);
+      let isPaying = ref(false);
+      let isError = ref(false);
+      function getOrder() {
+        getOrderCode(oid)
+          .then((res) => {
+            // copy(res.payUrl);
+            cost.value = res.cost;
+            titlePay.value = '金额：' + cost.value + '元';
+            payUrl.value = res.payUrl;
+            payStatus.value = res.status;
+            if (payStatus.value == 4) {
+              isPending.value = true;
+              isPaying.value = false;
+            } else {
+              isPending.value = false;
+              isPaying.value = true;
+            }
+            cid.value = res.channelId;
+            if (cid.value == 'jx3_weixin') {
+              Img.value = wxImg;
+            }
+            if (cid.value == 'jx3_jd') {
+              Img.value = jdImg;
+              PayGif.value = jdGif;
+            }
+            if (cid.value == 'jx3_alipay') {
+              Img.value = aliImg;
+            }
+          })
+          .catch(() => {
+            isError.value = true;
+            isPending.value = false;
+          });
+      }
+
       let width = ref(300);
       console.log(payUrl);
-      // if (payStr == '') {
-      //   width.value = 0;
-      // }
+      //模拟点击事件
+      setTimeout(function () {
+        // IE
+        if (document.all) {
+          document.getElementById('ppid').click();
+        }
+        // 其它浏览器
+        else {
+          var e = document.createEvent('MouseEvents');
+          e.initEvent('click', true, true);
+          document.getElementById('ppid').dispatchEvent(e);
+        }
+      }, 1000);
 
       function getPayCode(payUrl) {
         getOrderCode(payUrl).then((res) => {
@@ -155,13 +297,85 @@
         }, t);
       }
 
-      function jumpTo(url) {
-        clipboardRef.value = url;
-        if (unref(copiedRef)) {
-          createMessage.warning('复制成功: ' + url);
+      function jumpTo(url, cid, oid) {
+        // clipboardRef.value = url;
+        // if (unref(copiedRef)) {
+        //   createMessage.warning('复制成功: ' + url);
+        // }
+        if (cid == 'jx3_weixin') {
+          go('/code/pay/detail?orderId=' + oid);
+          return;
         }
         window.open(url, '_blank');
       }
+
+      watchEffect(() => {
+        // props.value === undefined && reset();
+      });
+
+      async function handleStart() {
+        const { beforeStartFunc } = props;
+        if (beforeStartFunc && isFunction(beforeStartFunc)) {
+          loading.value = true;
+          try {
+            const canStart = await beforeStartFunc();
+            canStart && start();
+          } finally {
+            loading.value = false;
+          }
+        } else {
+          start();
+        }
+      }
+
+      const currentCount = ref(props.count);
+
+      const isStart = ref(false);
+
+      let timerId: ReturnType<typeof setInterval> | null;
+
+      function clear() {
+        timerId && window.clearInterval(timerId);
+      }
+
+      function stop() {
+        isStart.value = false;
+        clear();
+        timerId = null;
+      }
+
+      function start() {
+        if (unref(isStart) || !!timerId) {
+          return;
+        }
+        isStart.value = true;
+        timerId = setInterval(() => {
+          if (unref(currentCount) === 1) {
+            stop();
+            currentCount.value = props.count;
+          } else {
+            getOrder();
+            if (isPending.value == false) {
+              stop();
+            }
+            currentCount.value -= 1;
+          }
+        }, 1000);
+      }
+
+      function reset() {
+        currentCount.value = props.count;
+        stop();
+      }
+
+      // function restart() {
+      //   reset();
+      //   start();
+      // }
+
+      tryOnUnmounted(() => {
+        reset();
+      });
 
       return {
         width,
@@ -175,7 +389,17 @@
         payUrl,
         PayGif,
         jumpTo,
-        jdImg,
+        Img,
+        cid,
+        oid,
+        handleStart,
+        currentCount,
+        loading,
+        getButtonText,
+        isStart,
+        isPending,
+        isPaying,
+        isError,
       };
     },
   });

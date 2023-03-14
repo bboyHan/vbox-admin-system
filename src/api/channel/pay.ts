@@ -10,6 +10,7 @@ enum Api {
   OperationPAccount = '/channel/pac',
   SetPAccountStatus = '/channel/pac/enable',
   OperationOrder = '/channel/order',
+  TestOrderPay = '/code/test',
   SysOrder = '/sys/order',
   TestCallback = '/channel/order/callback/test/',
   TestCreateOrder = '/channel/order/create/test/',
@@ -37,7 +38,46 @@ export const getOrderList = () => defHttp.get<OrderListGetResultModel>({ url: Ap
 
 export const testCallback = (id: string) => defHttp.get({ url: Api.TestCallback + id });
 
-export const testCreateOrder = (num: string) => defHttp.get({ url: Api.TestCreateOrder + num });
+export const testCreateOrder = (num: number, channel: string, acid?: string) =>
+  defHttp.get({
+    url: Api.TestCreateOrder + num,
+    params: {
+      channel: channel,
+      acid: acid,
+    },
+  });
 
 export const getOrderCode = (orderId: string) =>
-  defHttp.get({ url: Api.OperationOrder + '/code/' + orderId });
+  defHttp.get(
+    { url: Api.OperationOrder + '/code/' + orderId, timeout: 10000 },
+    { errorMessageMode: 'none' },
+  );
+
+export const testOrderPay = (orderId: string) =>
+  defHttp.get({
+    url: Api.TestOrderPay,
+    params: {
+      orderId: orderId,
+    },
+  });
+
+export const getOrderProdForWX = (url: string, params?: any) =>
+  defHttp.post({
+    headers: {
+      'Origin': 'https://m.xoyo.com',
+      'Referer': 'https://m.xoyo.com',
+      'Accept':
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Requested-With': 'com.seasun.gamemgr',
+    },
+    url: url,
+    // params: params,
+    // transformRequest: [params => {
+    //   let formData = new FormData()
+    //   for(let key in params){
+    //     formData.append(key, params[key])
+    //   }
+    //   return formData
+    // }]
+  });

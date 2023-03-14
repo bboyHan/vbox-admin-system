@@ -23,6 +23,24 @@ const order: AppRouteModule = {
       },
       component: () => import('/@/views/order/resource/index.vue'),
     },
+    {
+      path: 'overview',
+      name: 'OrderOverview',
+      meta: {
+        title: t('routes.channel.order_overview'),
+        ignoreKeepAlive: false,
+      },
+      component: () => import('/@/views/order/overview/index.vue'),
+    },
+    {
+      path: 'prod',
+      name: 'OrderProd',
+      meta: {
+        title: t('routes.channel.order_prod'),
+        ignoreKeepAlive: false,
+      },
+      component: () => import('/@/views/order/prod/index.vue'),
+    },
   ],
 };
 

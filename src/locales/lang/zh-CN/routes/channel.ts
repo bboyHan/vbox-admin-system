@@ -13,4 +13,6 @@ export default {
 
   order_management: '订单管理',
   order_list: '订单列表',
+  order_overview: '订单看板',
+  order_prod: '订单测试',
 };
