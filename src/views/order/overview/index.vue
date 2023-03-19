@@ -18,36 +18,6 @@
         class="md:w-1/1 !md:mx-8 !md:my-0 !my-8 w-full"
       />
     </div>
-    <!--<div class="md:flex enter-y">
-      <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
-        <FormItem name="inputNum" class="enter-x">
-          <Input
-            size="large"
-            v-model:value="formData.inputNum"
-            placeholder="金额"
-            class="fix-auto-fill"
-          />
-        </FormItem>
-        <FormItem name="sms" class="enter-x">
-          <CountdownInput
-            size="large"
-            class="fix-auto-fill"
-            v-model:value="inputNum"
-            placeholder="金额"
-          />
-        </FormItem>
-        <Button
-          type="primary"
-          class="enter-x"
-          size="default"
-          block
-          @click="handleRegister"
-          :loading="loadingNum"
-        >
-          提交
-        </Button>
-      </Form>
-    </div>-->
     <PageWrapper contentFullHeight contentBackground>
       <div>
         <BasicTable @register="registerTable">
@@ -59,9 +29,22 @@
               <TableAction
                 :actions="[
                   {
-                    label: '回调测试',
-                    icon: 'clarity:note-edit-line',
+                    icon: 'ant-design:copy-outlined',
                     onClick: handleDetail.bind(null, record),
+                  },
+                  {
+                    icon: 'ant-design:thunderbolt-outlined',
+                    popConfirm: {
+                      title: '模拟回调',
+                      confirm: handleDetail.bind(null, record),
+                    },
+                  },
+                  {
+                    icon: 'ant-design:sound-outlined',
+                    popConfirm: {
+                      title: '手动回调',
+                      confirm: handleDetail.bind(null, record),
+                    },
                   },
                 ]"
               />

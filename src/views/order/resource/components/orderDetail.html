@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <title>weixin</title>
+</head>
+<style>
+  h1,
+  .h1 {
+    font-size: 22px;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #000000;
+    text-align: center;
+    margin-top: 16%;
+  }
+
+  h2,
+  .h2 {
+    font-size: 17px;
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    text-align: center;
+    margin-top: 1em;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  #captcha-view {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #weixin_logo {
+    margin-left: auto;
+    margin-right: auto;
+    width: 99px;
+    height: 20px;
+    background-image: url('https://gtimg.wechatpay.cn/resource/xres/img/202209/d7848659d4f4bdd60411c1ade223c4f7_297x60.png');
+    background-size: cover;
+    position: absolute;
+    top: 92%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
+<body>
+<h1>请进行微信支付安全验证</h1>
+<h2>向西山居付款<nobr>￥10.00</nobr></h2>
+<div id="captcha-view"></div>
+<div id="weixin_logo"></div>
+<script src="https://t.captcha.qq.com/TCaptcha.js"></script>
+<script type="text/javascript">
+  function callback(res) {
+    if (res.ret !== 0) {
+      alert("系统繁忙，请稍后重试");
+      window.history.back();
+      return;
+    }
+
+    if (res.ticket) {
+      var xhr = new XMLHttpRequest();
+      var params = "ticket=" + res.ticket + "&randstr=" + res.randstr + "&prepayid=" + "wx1918133591065574ac73d270a0cfde0000" + "&package=" + "3482884740";
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          var resp = JSON.parse(xhr.response);
+          if (resp.retcode === 1) {
+            top.location.href = resp.deeplink;
+            var redirect_url = "https://m.xoyo.com/#/order-status?vouch_code=90016792208157218664&way=weixin_mobile&order_id=ee83a92ef96c8869aa0296c80af090c4&item=jx3";
+            if (redirect_url) {
+              setTimeout(
+                function () {
+                  top.location.href = redirect_url;
+                },
+                5000
+              );
+            } else {
+              setTimeout(
+                function () {
+                  window.history.back();
+                },
+                5000);
+            }
+          } else {
+            alert("系统繁忙，请稍后重试");
+            window.history.back();
+          }
+        }
+      }
+      xhr.open("GET", "/cgi-bin/mmpayweb-bin/checkcaptcha?" + params, true);
+      xhr.send();
+    } else {
+      alert("系统繁忙，请稍后重试");
+      window.history.back();
+    }
+  }
+
+  // 验证码js加载错误处理
+  function loadErrorCallback() {
+    alert("验证码加载失败，请稍后重试");
+    window.history.back();
+  }
+
+  try {
+    // 生成一个验证码对象
+    var captcha = new TencentCaptcha(document.getElementById('captcha-view'),
+      '2093769752',
+      callback,
+      {
+        ready: function () { },
+        needFeedBack: false,
+        type: "embed",
+        enableDarkMode: "force"
+      }
+    );
+    // 显示验证码
+    captcha.show();
+  } catch (error) {
+    loadErrorCallback();
+  }
+</script>
+</body>
+
+</html>

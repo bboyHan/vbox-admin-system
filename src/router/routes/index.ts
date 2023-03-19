@@ -41,7 +41,7 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const CodeRoute: AppRouteModule = {
   path: '/code/pay',
   name: 'OrderCodeDetail',
-  component: () => import('/@/views/order/resource/components/OrderCodeDetail.vue'),
+  component: () => import('/@/views/order/resource/components/OrderCodeDetailT.vue'),
   meta: {
     title: 'Code',
   },
@@ -50,7 +50,7 @@ export const CodeRoute: AppRouteModule = {
 export const CodePayRoute: AppRouteModule = {
   path: '/code/pay/detail',
   name: 'OrderCodePayDetail',
-  component: () => import('/@/views/order/resource/components/OrderCodePayDetail.vue'),
+  component: () => import('/@/views/order/resource/components/OrderCodePayDetailT.vue'),
   meta: {
     title: 'Code',
   },

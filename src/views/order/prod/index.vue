@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe :srcdoc="htmlStr"></iframe>
+    <!--<iframe :srcdoc="htmlStr"></iframe>
     <div class="md:flex enter-y">
       <Form class="p-4 enter-x" :model="formData2" :rules="getFormRules2" ref="formRef2">
         <FormItem name="orderId" class="enter-x">
@@ -15,7 +15,7 @@
           <Button type="primary" class="enter-x" block @click="handleSuccess"> 提交 </Button>
         </FormItem>
       </Form>
-    </div>
+    </div>-->
     <div class="md:flex enter-y">
       <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
         <FormItem name="inputNum" class="enter-x">
@@ -38,6 +38,7 @@
           <Button type="primary" class="enter-x" block @click="handleRegister"> 提交 </Button>
         </FormItem>
       </Form>
+      <Button type="primary" class="enter-x" block @click="open(htmlStr)"> {{ htmlStr }} </Button>
     </div>
   </div>
 </template>
@@ -162,8 +163,12 @@
         console.log(data);
         testCreateOrder(data.inputNum, data.channel).then((res) => {
           console.log(res);
-          htmlStr = res;
+          htmlStr = res.payUrl;
         });
+      }
+
+      function open(url) {
+        window.open(url, '_blank');
       }
 
       return {
@@ -179,6 +184,7 @@
         formData,
         formData2,
         htmlStr,
+        open,
       };
     },
   });

@@ -18,36 +18,6 @@
         class="md:w-1/1 !md:mx-8 !md:my-0 !my-8 w-full"
       />
     </div>
-    <!--<div class="md:flex enter-y">
-      <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
-        <FormItem name="inputNum" class="enter-x">
-          <Input
-            size="large"
-            v-model:value="formData.inputNum"
-            placeholder="金额"
-            class="fix-auto-fill"
-          />
-        </FormItem>
-        <FormItem name="sms" class="enter-x">
-          <CountdownInput
-            size="large"
-            class="fix-auto-fill"
-            v-model:value="inputNum"
-            placeholder="金额"
-          />
-        </FormItem>
-        <Button
-          type="primary"
-          class="enter-x"
-          size="default"
-          block
-          @click="handleRegister"
-          :loading="loadingNum"
-        >
-          提交
-        </Button>
-      </Form>
-    </div>-->
     <PageWrapper contentFullHeight contentBackground>
       <div>
         <BasicTable @register="registerTable">
@@ -59,9 +29,22 @@
               <TableAction
                 :actions="[
                   {
-                    label: '回调测试',
-                    icon: 'clarity:note-edit-line',
-                    onClick: handleDetail.bind(null, record),
+                    icon: 'ant-design:copy-outlined',
+                    onClick: copyLink.bind(null, record),
+                  },
+                  {
+                    icon: 'ant-design:thunderbolt-outlined',
+                    popConfirm: {
+                      title: '模拟回调',
+                      confirm: mockCallback.bind(null, record),
+                    },
+                  },
+                  {
+                    icon: 'ant-design:sound-outlined',
+                    popConfirm: {
+                      title: '手动回调',
+                      confirm: copyLink.bind(null, record),
+                    },
                   },
                 ]"
               />
@@ -73,7 +56,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, onMounted, reactive, ref } from 'vue';
+  import { defineComponent, onMounted, reactive, ref, unref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   // import { QrCode } from '/@/components/Qrcode';
   import { columns, searchFormSchema } from '/@/views/order/resource/data';
@@ -83,7 +66,9 @@
   import OrderGrowCard from './components/OrderGrowCard.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useFormRules, useFormValid } from '/@/views/sys/login/useLogin';
+  import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   const { createMessage } = useMessage();
+  const { clipboardRef, copiedRef } = useCopyToClipboard();
 
   const formData = reactive({
     inputNum: '',
@@ -160,27 +145,32 @@
         bordered: true,
         showIndexColumn: true,
         actionColumn: {
-          width: 60,
+          width: 120,
           title: '操作',
           dataIndex: 'action',
           // fixed: 'right',
         },
       });
 
-      function handleDetail(record: Recordable) {
+      function mockCallback(record: Recordable) {
         testCallback(record.orderId)
           .then(() => {
-            createMessage.info('回调测试成功，谨慎操作');
+            createMessage.info('模拟回调成功，谨慎操作');
           })
           .catch(() => {
-            createMessage.error('回调失败');
+            createMessage.error('模拟回调失败');
           });
       }
-
+      function copyLink(record) {
+        let orderId = record.orderId;
+        clipboardRef.value = 'http://mng.vboxjjjxxx.info/#/code/pay?orderId=' + orderId;
+        if (unref(copiedRef)) {
+          createMessage.warning('复制成功: ' + clipboardRef.value);
+        }
+      }
       function handleSuccess() {
         reload();
       }
-
       async function handleRegister() {
         const data = await validForm();
         if (!data) return;
@@ -189,7 +179,8 @@
 
       return {
         registerTable,
-        handleDetail,
+        copyLink,
+        mockCallback,
         handleSuccess,
         loading,
         account,

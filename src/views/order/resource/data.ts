@@ -69,12 +69,12 @@ export const columns: BasicColumn[] = [
       return h(Tag, { color: color }, () => text);
     },
   },
-  {
-    title: '支付码',
-    dataIndex: 'resourceUrl',
-    width: 80,
-    // fixed: 'right',
-  },
+  // {
+  //   title: '支付码',
+  //   dataIndex: 'resourceUrl',
+  //   width: 80,
+  //   // fixed: 'right',
+  // },
   {
     title: '订单状态',
     dataIndex: 'orderStatus',
@@ -148,7 +148,7 @@ export const columns: BasicColumn[] = [
       }
       if (status == 4) {
         color = '#ff0000';
-        text = '平台查询未支付';
+        text = '查单未支付';
       }
       return h(Tag, { color: color }, () => text);
     },

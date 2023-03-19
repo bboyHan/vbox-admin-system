@@ -1,75 +1,6 @@
 <template>
   <div>
-    <div v-if="isError">
-      <div class="m-5 result-success">
-        <Result>
-          <template #icon>
-            <Empty description="" />
-            <Card size="small" style="color: red"> 订单异常或不存在，请联系客服... </Card>
-          </template>
-          <template #extra>
-            <hr class="my-4" />
-            <Card hoverable style="width: 240px">
-              <CardMeta title="请认真阅读支付流程" style="color: red">
-                <template #description>
-                  <div>1.长时等待仍未出订单</div>
-                  <div>2.请联系客服重新下单</div>
-                  <div>3.西山居[剑网3]游戏充值</div>
-                </template>
-              </CardMeta>
-            </Card>
-            <hr class="my-4" />
-          </template>
-        </Result>
-        <!--<QrCode :value="payStr" />-->
-      </div>
-    </div>
-    <div v-if="isPending">
-      <div class="m-5 result-success">
-        <Result>
-          <template #icon>
-            <Button
-              id="ppid"
-              size="large"
-              shape="circle"
-              v-bind="$attrs"
-              @click="handleStart"
-              :disabled="isStart"
-              :loading="loading"
-              style="
-                background-color: blue;
-                height: 100px;
-                width: 100px;
-                font-size: 30px;
-                color: white;
-              "
-              block
-            >
-              {{ getButtonText }}
-            </Button>
-            <hr class="my-4" />
-            <Card size="small" style="color: red">
-              订单创建中，请耐心等待...
-            </Card>
-          </template>
-          <template #extra>
-            <hr class="my-4" />
-            <Card hoverable style="width: 240px">
-              <CardMeta title="请认真阅读支付流程" style="color: red">
-                <template #description>
-                  <div>1.长时间等待仍未出现订单</div>
-                  <div>2.请联系客服重新下单</div>
-                  <div>3.西山居[剑网3]游戏充值</div>
-                </template>
-              </CardMeta>
-            </Card>
-            <hr class="my-4" />
-          </template>
-        </Result>
-        <!--<QrCode :value="payStr" />-->
-      </div>
-    </div>
-    <div v-if="isPaying">
+    <div>
       <div class="m-5 result-success">
         <Result>
           <template #icon>
@@ -91,7 +22,7 @@
              <Button @click="testApp(payStr)"> ddd </Button>
             <Button type="default"> 请先认真阅读以下流程 </Button>-->
             <hr class="my-4" />
-            <Card hoverable style="width: 240px">
+            <Card hoverable style="width: 100%">
               <CardMeta title="请认真阅读支付流程" style="color: red">
                 <template #description>
                   <div>1.点击跳转支付</div>
@@ -114,16 +45,7 @@
 <script lang="ts">
   import { computed, defineComponent, ref, unref, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
-  import {
-    Empty,
-    Result,
-    Button,
-    TypographyText,
-    Card,
-    CardMeta,
-    Image,
-    Alert,
-  } from 'ant-design-vue';
+  import { Result, Button, Card, CardMeta, Image, Alert } from 'ant-design-vue';
   // import { decodeByBase64 } from '/@/utils/cipher';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -149,7 +71,7 @@
 
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Empty, Result, Button, TypographyText, Card, CardMeta, Image, Alert },
+    components: { Result, Button, Card, CardMeta, Image, Alert },
     props,
     setup(props) {
       const { t } = useI18n();
@@ -175,54 +97,39 @@
       let isPending = ref(true);
       let isPaying = ref(false);
       let isError = ref(false);
-      function getOrder() {
-        getOrderCode(oid)
-          .then((res) => {
-            // copy(res.payUrl);
-            cost.value = res.cost;
-            titlePay.value = '金额：' + cost.value + '元';
-            payUrl.value = res.payUrl;
-            payStatus.value = res.status;
-            if (payStatus.value == 4) {
-              isPending.value = true;
-              isPaying.value = false;
-            } else {
-              isPending.value = false;
-              isPaying.value = true;
-            }
-            cid.value = res.channelId;
-            if (cid.value == 'jx3_weixin') {
-              Img.value = wxImg;
-            }
-            if (cid.value == 'jx3_jd') {
-              Img.value = jdImg;
-              PayGif.value = jdGif;
-            }
-            if (cid.value == 'jx3_alipay') {
-              Img.value = aliImg;
-            }
-          })
-          .catch(() => {
-            isError.value = true;
+      getOrderCode(oid)
+        .then((res) => {
+          // copy(res.payUrl);
+          cost.value = res.cost;
+          titlePay.value = '金额：' + cost.value + '元';
+          payUrl.value = res.payUrl;
+          payStatus.value = res.status;
+          if (payStatus.value == 4) {
+            isPending.value = true;
+            isPaying.value = false;
+          } else {
             isPending.value = false;
-          });
-      }
+            isPaying.value = true;
+          }
+          cid.value = res.channelId;
+          if (cid.value == 'jx3_weixin') {
+            Img.value = wxImg;
+          }
+          if (cid.value == 'jx3_jd') {
+            Img.value = jdImg;
+            PayGif.value = jdGif;
+          }
+          if (cid.value == 'jx3_alipay') {
+            Img.value = aliImg;
+          }
+        })
+        .catch(() => {
+          isError.value = true;
+          isPending.value = false;
+        });
 
       let width = ref(300);
       console.log(payUrl);
-      //模拟点击事件
-      setTimeout(function () {
-        // IE
-        if (document.all) {
-          document.getElementById('ppid').click();
-        }
-        // 其它浏览器
-        else {
-          var e = document.createEvent('MouseEvents');
-          e.initEvent('click', true, true);
-          document.getElementById('ppid').dispatchEvent(e);
-        }
-      }, 1000);
 
       function getPayCode(payUrl) {
         getOrderCode(payUrl).then((res) => {
