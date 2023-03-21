@@ -3,6 +3,7 @@ export enum PageEnum {
   BASE_LOGIN = '/login',
   CODE_PAY = '/code/pay',
   CODE_PAY_DETAIL = '/code/pay/detail',
+  CODE_DOC = '/code/doc',
   // basic home path
   BASE_HOME = '/dashboard',
   // error page path

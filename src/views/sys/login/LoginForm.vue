@@ -10,7 +10,7 @@
   >
     <FormItem name="account" class="enter-x">
       <Input
-        size="middle"
+        size="large"
         v-model:value="formData.account"
         :placeholder="t('sys.login.userName')"
         class="fix-auto-fill"

@@ -190,6 +190,111 @@ export const formModalSchema: FormSchema[] = [
   },
 ];
 
+export const mockOrderColumn: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'ID',
+    dynamicDisabled: true,
+    show: false,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'acid',
+    label: '账户id',
+    dynamicDisabled: true,
+    show: false,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'c_channel_id',
+    label: '通道id',
+    dynamicDisabled: true,
+    show: true,
+    component: 'Input',
+    span: 24,
+    colProps: {
+      span: 18,
+    },
+  },
+  {
+    field: 'money',
+    label: '金额',
+    component: 'Slider',
+    span: 24,
+    componentProps: {
+      min: 10,
+      max: 300,
+      step: 10,
+      marks: {
+        10: '￥10',
+        100: '￥100',
+      },
+    },
+    colProps: {
+      span: 18,
+    },
+    defaultValue: 10,
+  },
+  {
+    field: 'payIp',
+    label: '付款IP',
+    component: 'Input',
+    span: 24,
+    colProps: {
+      span: 18,
+    },
+  },
+  {
+    field: 'area',
+    label: '地区编码',
+    component: 'Input',
+    span: 24,
+    colProps: {
+      span: 18,
+    },
+  },
+  {
+    field: 'pr',
+    label: '代理',
+    component: 'Select',
+    colProps: {
+      span: 18,
+    },
+    span: 24,
+    componentProps: {
+      options: [
+        {
+          label: '神龙',
+          value: 'shenlong',
+          key: '1',
+        },
+        {
+          label: '花生',
+          value: 'huasheng',
+          key: '2',
+        },
+        {
+          label: '芝麻',
+          value: 'zhima',
+          key: '3',
+        },
+        {
+          label: '蜗牛',
+          value: 'woniu',
+          key: '4',
+        },
+        {
+          label: '豌豆',
+          value: 'wandou',
+          key: '5',
+        },
+      ],
+    },
+  },
+];
+
 export const caUpdColumn: FormSchema[] = [
   {
     field: 'id',
@@ -260,15 +365,15 @@ export const caUpdColumn: FormSchema[] = [
       span: 12,
     },
   },
-  // {
-  //   field: 'ck',
-  //   component: 'InputTextArea',
-  //   label: 'CK',
-  //   helpMessage: ['请填写用户CK'],
-  //   colProps: { span: 24 },
-  //   componentProps: {
-  //     placeholder: '请输入用户CK',
-  //   },
-  //   required: true,
-  // },
+  {
+    field: 'ck',
+    component: 'InputTextArea',
+    label: 'CK',
+    helpMessage: ['填写用户CK'],
+    colProps: { span: 24 },
+    componentProps: {
+      placeholder: '输入用户CK（选填）',
+    },
+    required: false,
+  },
 ];

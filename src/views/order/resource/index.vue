@@ -43,7 +43,7 @@
                     icon: 'ant-design:sound-outlined',
                     popConfirm: {
                       title: '手动回调',
-                      confirm: copyLink.bind(null, record),
+                      confirm: checkAndCallback.bind(null, record),
                     },
                   },
                 ]"
@@ -58,9 +58,8 @@
 <script lang="ts">
   import { defineComponent, onMounted, reactive, ref, unref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  // import { QrCode } from '/@/components/Qrcode';
   import { columns, searchFormSchema } from '/@/views/order/resource/data';
-  import { getOrderList, testCallback } from '/@/api/channel/pay';
+  import { getOrderList, testCallback, queryAndCallback } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
   import { getVboxUserInfo } from '/@/api/channel/user';
   import OrderGrowCard from './components/OrderGrowCard.vue';
@@ -152,6 +151,9 @@
         },
       });
 
+      /**
+       * 模拟回调
+       */
       function mockCallback(record: Recordable) {
         testCallback(record.orderId)
           .then(() => {
@@ -168,6 +170,19 @@
           createMessage.warning('复制成功: ' + clipboardRef.value);
         }
       }
+
+      /**
+       * 查单回调
+       */
+      function checkAndCallback(record) {
+        queryAndCallback(record.orderId)
+          .then(() => {
+            createMessage.info('手动回调成功，谨慎操作');
+          })
+          .catch(() => {
+            createMessage.error('手动回调失败');
+          });
+      }
       function handleSuccess() {
         reload();
       }
@@ -181,6 +196,7 @@
         registerTable,
         copyLink,
         mockCallback,
+        checkAndCallback,
         handleSuccess,
         loading,
         account,

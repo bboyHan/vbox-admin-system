@@ -5,7 +5,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { basicRoutes } from './routes';
 
 // 白名单应该包含基本静态路由
-const WHITE_NAME_LIST: string[] = ['/code/pay', '/code/pay/detail'];
+const WHITE_NAME_LIST: string[] = ['/code/pay', '/code/pay/detail', '/code/doc'];
 const getRouteNames = (array: any[]) =>
   array.forEach((item) => {
     WHITE_NAME_LIST.push(item.name);

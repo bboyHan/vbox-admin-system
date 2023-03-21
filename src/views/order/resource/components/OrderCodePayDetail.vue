@@ -7,7 +7,6 @@
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
-  import { Result, Button, TypographyText, Card, CardMeta, Image, Alert } from 'ant-design-vue';
   // import { decodeByBase64 } from '/@/utils/cipher';
   import { wechat } from '/@/assets/js/wx2.js';
   import { testOrderPay } from '/@/api/channel/pay';
@@ -15,7 +14,7 @@
   import jdImg from '/@/assets/images/jdpay-logo.png';
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Result, Button, TypographyText, Card, CardMeta, Image, Alert },
+    components: {},
     setup() {
       const route = useRoute();
       // 此处可以得到用户ID

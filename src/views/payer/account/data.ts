@@ -35,13 +35,18 @@ export const columns: BasicColumn[] = [
     width: 20,
   },
   {
+    title: '付方备注',
+    dataIndex: 'p_remark',
+    width: 70,
+  },
+  {
     title: '付方ID',
     dataIndex: 'p_account',
     width: 70,
   },
   {
-    title: '付方备注',
-    dataIndex: 'p_remark',
+    title: '付方Key',
+    dataIndex: 'p_key',
     width: 70,
   },
   {
@@ -51,12 +56,12 @@ export const columns: BasicColumn[] = [
     ellipsis: true,
     // slots: { customRender: 'txt' },
   },
-  {
-    title: '私钥',
-    dataIndex: 'secret',
-    width: 60,
-    ellipsis: true,
-  },
+  // {
+  //   title: '私钥',
+  //   dataIndex: 'secret',
+  //   width: 60,
+  //   ellipsis: true,
+  // },
   {
     title: '开关',
     dataIndex: 'status',

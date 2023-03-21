@@ -56,12 +56,22 @@ export const CodePayRoute: AppRouteModule = {
   },
 };
 
+export const PayDocRoute: AppRouteModule = {
+  path: '/code/doc',
+  name: 'CodeDocument',
+  component: () => import('/@/views/payer/doc/index.vue'),
+  meta: {
+    title: 'Code',
+  },
+};
+
 // Basic routing without permission
 // 未经许可的基本路由
 export const basicRoutes = [
   LoginRoute,
   CodeRoute,
   CodePayRoute,
+  PayDocRoute,
   RootRoute,
   ...mainOutRoutes,
   REDIRECT_ROUTE,

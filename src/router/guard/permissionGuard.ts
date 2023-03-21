@@ -14,10 +14,11 @@ const LOGIN_PATH = PageEnum.BASE_LOGIN;
 // 白名单
 const CODE_PAY = PageEnum.CODE_PAY;
 const CODE_PAY_DETAIL = PageEnum.CODE_PAY_DETAIL;
+const CODE_DOC = PageEnum.CODE_DOC;
 
 const ROOT_PATH = RootRoute.path;
 
-const whitePathList: PageEnum[] = [LOGIN_PATH, CODE_PAY, CODE_PAY_DETAIL];
+const whitePathList: PageEnum[] = [LOGIN_PATH, CODE_PAY, CODE_PAY_DETAIL, CODE_DOC];
 
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStoreWithOut();

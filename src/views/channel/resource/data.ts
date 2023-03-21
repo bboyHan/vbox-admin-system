@@ -162,6 +162,6 @@ export const columns: FormSchema[] = [
       ],
     },
     required: true,
-    defaultValue: '1',
+    // defaultValue: '1',
   },
 ];

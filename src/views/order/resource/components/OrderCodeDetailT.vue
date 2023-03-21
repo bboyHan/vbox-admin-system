@@ -5,34 +5,33 @@
         <Result>
           <template #icon>
             <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
-            <Card size="small" style="color: red">
+            <Alert type="info" message="无法充值或者提示错误，请联系客服!" />
+            <hr class="my-4" />
+            <div style="color: black; font-size: 25px; margin: 10px">
               {{ titlePay }}
-            </Card>
-            <Alert
-              type="info"
-              message="该订单限时有效期为3分钟，为避免付款码失效，请收到后及时付款。无法充值或者提示错误，请联系客服!"
-            />
+            </div>
+            <hr class="my-4" />
           </template>
           <template #extra>
             <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
-              点此跳转支付
+              立即付款
             </Button>
             <!-- <Button @click="wechat"> ddd </Button>
              <Button @click="test(payStr)"> ddd </Button>
              <Button @click="testApp(payStr)"> ddd </Button>
-            <Button type="default"> 请先认真阅读以下流程 </Button>-->
-            <hr class="my-4" />
-            <Card hoverable style="width: 100%">
-              <CardMeta title="请认真阅读支付流程" style="color: red">
+            <Button type="default"> 请先认真阅读以下流程 </Button>
+            <hr class="my-4" />-->
+            <!--<Card hoverable style="width: 100%">
+              <CardMeta title="请在规定时间内付款，超时后请勿支付" style="color: red">
                 <template #description>
                   <div>1.点击跳转支付</div>
                   <div>2.[订单信息]{{ titlePay }}</div>
                   <div>3.西山居[剑网3]游戏充值</div>
                 </template>
               </CardMeta>
-            </Card>
-            <!--<TypographyText> 支付链接: {{ payUrl }} </TypographyText>-->
-            <hr class="my-4" />
+            </Card>-->
+            <!--<TypographyText> 支付链接: {{ payUrl }} </TypographyText>
+            <hr class="my-4" />-->
             <!--<img :src="PayGif" alt="" />-->
           </template>
         </Result>
@@ -45,8 +44,7 @@
 <script lang="ts">
   import { computed, defineComponent, ref, unref, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
-  import { Result, Button, Card, CardMeta, Image, Alert } from 'ant-design-vue';
-  // import { decodeByBase64 } from '/@/utils/cipher';
+  import { Result, Button, Image, Alert } from 'ant-design-vue';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { wechat } from '/@/assets/js/wx2.js';
@@ -71,7 +69,7 @@
 
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Result, Button, Card, CardMeta, Image, Alert },
+    components: { Result, Button, Image, Alert },
     props,
     setup(props) {
       const { t } = useI18n();
@@ -261,7 +259,6 @@
             stop();
             currentCount.value = props.count;
           } else {
-            getOrder();
             if (isPending.value == false) {
               stop();
             }

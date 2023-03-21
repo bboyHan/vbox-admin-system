@@ -8,13 +8,82 @@ export const searchFormSchema: FormSchema[] = [
     field: 'orderId',
     label: '订单ID（付方）',
     component: 'Input',
-    colProps: { span: 8 },
+    colProps: { span: 6 },
   },
   {
-    field: 'platformOid',
-    label: '订单ID（平台）',
-    component: 'Input',
-    colProps: { span: 8 },
+    field: 'callbackStatus',
+    label: '回调状态',
+    component: 'Select',
+    colProps: { span: 4 },
+    componentProps: {
+      options: [
+        {
+          label: '已回调',
+          value: '1',
+          key: '1',
+        },
+        {
+          label: '未回调',
+          value: '2',
+          key: '2',
+        },
+      ],
+    },
+  },
+  {
+    field: 'orderStatus',
+    label: '支付状态',
+    component: 'Select',
+    colProps: { span: 4 },
+    componentProps: {
+      options: [
+        {
+          label: '已支付',
+          value: '1',
+          key: '1',
+        },
+        {
+          label: '未支付',
+          value: '2',
+          key: '2',
+        },
+        {
+          label: '支付超时',
+          value: '3',
+          key: '3',
+        },
+        {
+          label: '支付失败',
+          value: '0',
+          key: '0',
+        },
+      ],
+    },
+  },
+  {
+    field: 'cChannelId',
+    label: '所属通道',
+    component: 'Select',
+    colProps: { span: 4 },
+    componentProps: {
+      options: [
+        {
+          label: '微信',
+          value: 'jx3_weixin',
+          key: '3',
+        },
+        {
+          label: '支付宝',
+          value: 'jx3_alipay',
+          key: '2',
+        },
+        {
+          label: '京东',
+          value: 'jx3_jd',
+          key: '1',
+        },
+      ],
+    },
   },
 ];
 

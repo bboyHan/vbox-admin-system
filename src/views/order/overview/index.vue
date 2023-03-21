@@ -18,49 +18,11 @@
         class="md:w-1/1 !md:mx-8 !md:my-0 !my-8 w-full"
       />
     </div>
-    <PageWrapper contentFullHeight contentBackground>
-      <div>
-        <BasicTable @register="registerTable">
-          <template #bodyCell="{ column, record }">
-            <!--<template v-if="column.key === 'resourceUrl'">
-              <QrCode :value="record.resourceUrl" :width="70" />
-            </template>-->
-            <template v-if="column.key === 'action'">
-              <TableAction
-                :actions="[
-                  {
-                    icon: 'ant-design:copy-outlined',
-                    onClick: handleDetail.bind(null, record),
-                  },
-                  {
-                    icon: 'ant-design:thunderbolt-outlined',
-                    popConfirm: {
-                      title: '模拟回调',
-                      confirm: handleDetail.bind(null, record),
-                    },
-                  },
-                  {
-                    icon: 'ant-design:sound-outlined',
-                    popConfirm: {
-                      title: '手动回调',
-                      confirm: handleDetail.bind(null, record),
-                    },
-                  },
-                ]"
-              />
-            </template>
-          </template>
-        </BasicTable>
-      </div>
-    </PageWrapper>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, onMounted, reactive, ref } from 'vue';
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { columns, searchFormSchema } from '/@/views/order/overview/data';
-  import { getOrderList, testCallback } from '/@/api/channel/pay';
-  import { PageWrapper } from '/@/components/Page';
+  import { testCallback } from '/@/api/channel/pay';
   import { getVboxUserInfo } from '/@/api/channel/user';
   import OrderOverviewCard from './components/OrderOverviewCard.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -76,10 +38,6 @@
   const { validForm } = useFormValid(formRef);
   export default defineComponent({
     components: {
-      BasicTable,
-      TableAction,
-      // QrCode,
-      PageWrapper,
       OrderOverviewCard,
     },
     setup() {
@@ -128,27 +86,6 @@
           totalProdNum.value = res.totalProdNum;
         });
       }
-      const [registerTable, { reload }] = useTable({
-        title: '订单详情列表',
-        api: getOrderList,
-        columns,
-        // scroll: { x: 1800, y: 500 },
-        formConfig: {
-          labelWidth: 120,
-          schemas: searchFormSchema,
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        showIndexColumn: true,
-        actionColumn: {
-          width: 60,
-          title: '操作',
-          dataIndex: 'action',
-          // fixed: 'right',
-        },
-      });
-
       function handleDetail(record: Recordable) {
         testCallback(record.orderId)
           .then(() => {
@@ -159,9 +96,7 @@
           });
       }
 
-      function handleSuccess() {
-        reload();
-      }
+      function handleSuccess() {}
 
       async function handleRegister() {
         const data = await validForm();
@@ -170,7 +105,6 @@
       }
 
       return {
-        registerTable,
         handleDetail,
         handleSuccess,
         loading,

@@ -1,13 +1,13 @@
 <template>
   <div>
     <!--<iframe :srcdoc="htmlStr" border="0" width="100%" height="600px"></iframe>-->
-<!--    <iframe id="code" ref="iframe" width="100%" height="100%"> </iframe>-->
+    <!--<iframe id="code" ref="iframe" width="100%" height="100%"> </iframe>-->
     <div id="pid"></div>
   </div>
 </template>
 
 <script lang="ts">
-  import { nextTick, defineComponent, ref } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import { wechat } from '/@/assets/js/wx2.js';
   import { testOrderPay } from '/@/api/channel/pay';
@@ -50,7 +50,7 @@
 
           // script 加载完成和错误处理
           newScript.onload = () => reslove();
-          newScript.onerror = (err) => rejected();
+          newScript.onerror = () => rejected();
           document.head.appendChild(newScript);
           document.head.removeChild(newScript);
           if (!src) {

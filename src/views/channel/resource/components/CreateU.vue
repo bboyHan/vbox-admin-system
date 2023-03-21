@@ -38,6 +38,7 @@
           // setProps,
           validate,
           updateSchema,
+          resetFields,
         },
       ] = useForm({
         labelWidth: 100,
@@ -57,6 +58,51 @@
             },
           },
         });
+        if (channelId.value == 'jx3_alipay') {
+          updateSchema({
+            field: 'payType',
+            componentProps: {
+              options: [
+                {
+                  label: '支付宝',
+                  value: '2',
+                  key: '2',
+                },
+              ],
+            },
+            defaultValue: '2',
+          });
+        }
+        if (channelId.value == 'jx3_weixin') {
+          updateSchema({
+            field: 'payType',
+            componentProps: {
+              options: [
+                {
+                  label: '微信',
+                  value: '3',
+                  key: '3',
+                },
+              ],
+            },
+            defaultValue: '3',
+          });
+        }
+        if (channelId.value == 'jx3_jd') {
+          updateSchema({
+            field: 'payType',
+            componentProps: {
+              options: [
+                {
+                  label: '京东',
+                  value: '1',
+                  key: '1',
+                },
+              ],
+            },
+            defaultValue: '1',
+          });
+        }
       });
       async function customSubmitFunc() {
         try {
@@ -92,6 +138,7 @@
         console.log('Data Received', data);
         formTitle.value = data.title;
         channelId.value = data.channel_id;
+        resetFields();
       }
 
       function handleVisibleChange(v) {

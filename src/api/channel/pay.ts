@@ -1,6 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import {
   OrderListGetResultModel,
+  OrderPageParams,
   OrderParam,
   PAccountListGetResultModel,
   PAccountParam,
@@ -13,6 +14,8 @@ enum Api {
   TestOrderPay = '/code/test',
   SysOrder = '/sys/order',
   TestCallback = '/channel/order/callback/test/',
+
+  QueryAndCallback = '/channel/order/queryAndCallback/',
   TestCreateOrder = '/channel/order/create/test/',
 }
 
@@ -34,16 +37,28 @@ export const setPAccountStatus = (id: number, status: string) =>
 export const createOrder = (params: OrderParam) =>
   defHttp.post({ url: Api.OperationOrder, params });
 
-export const getOrderList = () => defHttp.get<OrderListGetResultModel>({ url: Api.SysOrder });
+export const getOrderList = (params: OrderPageParams) =>
+  defHttp.get<OrderListGetResultModel>({ url: Api.SysOrder, params });
 
 export const testCallback = (id: string) => defHttp.get({ url: Api.TestCallback + id });
 
-export const testCreateOrder = (num: number, channel: string, acid?: string) =>
+export const queryAndCallback = (id: string) => defHttp.get({ url: Api.QueryAndCallback + id });
+export const testCreateOrder = (
+  num: number,
+  channel: string,
+  acid?: string,
+  pr?: string,
+  payIp?: string,
+  area?: string,
+) =>
   defHttp.get({
     url: Api.TestCreateOrder + num,
     params: {
       channel: channel,
       acid: acid,
+      pr: pr,
+      payIp: payIp,
+      area: area,
     },
   });
 
@@ -64,15 +79,15 @@ export const testOrderPay = (orderId: string) =>
 export const getOrderProdForWX = (url: string, params?: any) =>
   defHttp.post({
     headers: {
-      'Origin': 'https://m.xoyo.com',
-      'Referer': 'https://m.xoyo.com',
-      'Accept':
+      Origin: 'https://m.xoyo.com',
+      Referer: 'https://m.xoyo.com',
+      Accept:
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
       'Content-Type': 'application/x-www-form-urlencoded',
       'X-Requested-With': 'com.seasun.gamemgr',
     },
     url: url,
-    // params: params,
+    params: params,
     // transformRequest: [params => {
     //   let formData = new FormData()
     //   for(let key in params){

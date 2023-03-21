@@ -2,6 +2,8 @@ import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 
 export type PAccountPageParams = BasicPageParams & PAccountParams;
 
+export type OrderPageParams = BasicPageParams & OrderParam;
+
 export type OrderParam = {
   p_account?: string;
   p_order_id?: string;
