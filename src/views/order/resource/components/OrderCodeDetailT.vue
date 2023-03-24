@@ -68,7 +68,7 @@
   };
 
   export default defineComponent({
-    name: 'OrderCodeDetail',
+    name: 'OrderCodeDetailT',
     components: { Result, Button, Image, Alert },
     props,
     setup(props) {

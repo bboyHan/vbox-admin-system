@@ -14,6 +14,7 @@ enum Api {
   TestOrderPay = '/code/test',
   SysOrder = '/sys/order',
   TestCallback = '/channel/order/callback/test/',
+  HandleOrder = '/channel/order/handle/',
 
   QueryAndCallback = '/channel/order/queryAndCallback/',
   TestCreateOrder = '/channel/order/create/test/',
@@ -41,6 +42,8 @@ export const getOrderList = (params: OrderPageParams) =>
   defHttp.get<OrderListGetResultModel>({ url: Api.SysOrder, params });
 
 export const testCallback = (id: string) => defHttp.get({ url: Api.TestCallback + id });
+
+export const handleOrder = (id: string) => defHttp.get({ url: Api.HandleOrder + id });
 
 export const queryAndCallback = (id: string) => defHttp.get({ url: Api.QueryAndCallback + id });
 export const testCreateOrder = (

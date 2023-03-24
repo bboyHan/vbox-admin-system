@@ -41,7 +41,7 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const CodeRoute: AppRouteModule = {
   path: '/code/pay',
   name: 'OrderCodeDetail',
-  component: () => import('/@/views/order/resource/components/OrderCodeDetailT.vue'),
+  component: () => import('/@/views/order/resource/components/OrderCodeDetail.vue'),
   meta: {
     title: 'Code',
   },

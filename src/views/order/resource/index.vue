@@ -165,7 +165,7 @@
       }
       function copyLink(record) {
         let orderId = record.orderId;
-        clipboardRef.value = 'http://mng.vboxjjjxxx.info/#/code/pay?orderId=' + orderId;
+        clipboardRef.value = 'http://47.97.200.110/#/code/pay?orderId=' + orderId;
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + clipboardRef.value);
         }

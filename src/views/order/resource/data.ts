@@ -163,6 +163,10 @@ export const columns: BasicColumn[] = [
         color = '#108ee9';
         text = '支付超时';
       }
+      if (status == 4) {
+        color = '#10e9e2';
+        text = '待进单';
+      }
       if (status == 0) {
         color = '#ff0000';
         text = '支付失败';
@@ -209,7 +213,7 @@ export const columns: BasicColumn[] = [
       }
       if (status == 2) {
         color = '#E99D10FF';
-        text = '未取码';
+        text = '待取码';
       }
       if (status == 3) {
         color = '#108ee9';
