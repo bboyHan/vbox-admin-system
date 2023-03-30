@@ -142,10 +142,11 @@
 <script lang="ts">
   import { CountTo } from '/@/components/CountTo';
   import { Tag, Card } from 'ant-design-vue';
-  import { defineComponent } from 'vue';
+  import { defineComponent, h, ref } from 'vue';
   import Img from '/@/assets/images/jx3.jpg';
+  import { Description, DescItem, useDescription } from '/@/components/Description';
   export default defineComponent({
-    components: { CountTo, Tag, Card },
+    components: { CountTo, Tag, Card, Description },
     props: {
       account: String,
       yesterdayNum: Number,
@@ -162,6 +163,7 @@
       loading: Boolean,
     },
     setup(props) {
+      const userData = ref({});
       function getPercent(num, total) {
         num = parseFloat(num);
         total = parseFloat(total);
@@ -173,10 +175,51 @@
         return rs;
       }
 
+      const commonLinkRender = (text: string) => (href) => h('a', { href, target: '_blank' }, text);
+      const commonCountRender = (prefix: string, color: string, endVal: number) => (culVal) =>
+        h(CountTo, { prefix, color, endVal: culVal }, () => {
+          endVal;
+        });
+
+      const infoSchema: DescItem[] = [
+        {
+          label: '登录商户',
+          field: 'account',
+          // render: commonTagRender('blue'),
+        },
+        {
+          label: '商户余额',
+          field: 'balance',
+          render: commonCountRender('￥', 'blue', 0),
+          // render: (curVal, data) => {
+          //   return `${data.balance}`;
+          // },
+        },
+        {
+          label: '商户费率',
+          field: 'tariff',
+          render: commonLinkRender('请联系运营确认'),
+          span: 2,
+        },
+        {
+          label: '商户类型',
+          field: 'userLevel',
+          render: commonLinkRender('主号模式'),
+        },
+      ];
+
+      const [register] = useDescription({
+        title: '账户信息',
+        data: userData,
+        schema: infoSchema,
+        column: 2,
+      });
+
       return {
         props,
         Img,
         getPercent,
+        register,
       };
     },
   });

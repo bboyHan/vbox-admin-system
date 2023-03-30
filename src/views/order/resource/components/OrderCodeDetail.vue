@@ -5,7 +5,10 @@
         <Result>
           <template #icon>
             <Empty description="" />
-            <Card size="small" style="color: red"> 订单异常或不存在，请联系客服重新下单... </Card>
+            <Card size="small" style="color: red; font-size: 25px">
+              订单异常或不存在，请5秒后尝试重新刷新页面获取，如仍旧异常，请联系客服重新下单...
+            </Card>
+            <Button size="large" type="primary" @click="renew()" block> 点此尝试刷新 </Button>
           </template>
           <template #extra>
             <!--<hr class="my-4" />
@@ -40,15 +43,25 @@
                 background-color: blue;
                 height: 100px;
                 width: 100px;
-                font-size: 30px;
+                font-size: 35px;
                 color: white;
               "
               block
             >
-              {{ getButtonText }}
+              <div style="font-size: 25px">{{ getButtonText }}</div>
             </Button>
+            <!--<Card size="small" style="color: red; font-size: 35px">
+              订单生成中
+            </Card>-->
             <hr class="my-4" />
-            <Card size="small" style="color: red"> 订单查询中，请喝口茶耐心等待... </Card>
+            <div style="color: black; font-size: 25px; margin: 10px">
+              订单生成中
+            </div>
+            <hr class="my-4" />
+            <div style="color: black; font-size: 25px; margin: 10px">
+              大约需等待5-20秒，请客官喝口茶耐心等待...
+            </div>
+            <hr class="my-4" />
           </template>
           <template #extra>
             <!--<hr class="my-4" />
@@ -72,7 +85,7 @@
         <Result>
           <template #icon>
             <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
-            <Alert type="info" message="无法充值或者提示错误，请联系客服!" />
+            <!--<Alert type="info" message="无法充值或者提示错误，请联系客服!" />-->
             <hr class="my-4" />
             <div style="color: black; font-size: 25px; margin: 10px">
               {{ titlePay }}
@@ -81,7 +94,9 @@
           </template>
           <template #extra>
             <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
-              立即付款
+              <div style="font-size: 20px">
+                点此立即付款
+              </div>
             </Button>
           </template>
         </Result>
@@ -343,10 +358,11 @@
         }
         isStart.value = true;
         timerId = setInterval(() => {
-          if (unref(currentCount) < 30) {
-            stop();
-            isPending.value = false;
-            isError.value = true;
+          if (unref(currentCount) < 40) {
+            // stop();
+            location.reload();
+            // isPending.value = false;
+            // isError.value = true;
             // currentCount.value = props.count;
           } else {
             getOrder();
@@ -361,6 +377,9 @@
       function reset() {
         currentCount.value = props.count;
         stop();
+      }
+      function renew() {
+        location.reload();
       }
 
       // function restart() {
@@ -380,6 +399,7 @@
       return {
         width,
         copy,
+        renew,
         wechat,
         test,
         testApp,

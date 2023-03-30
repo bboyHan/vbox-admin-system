@@ -1,24 +1,24 @@
 <template>
   <div>
-    <div class="md:flex enter-y">
-      <OrderGrowCard
-        :loading="loading"
-        :account="account"
-        :yesterdayNum="yesterdayNum"
-        :todayNum="todayNum"
-        :yesterdaySum="yesterdaySum"
-        :todaySum="todaySum"
-        :todayProdNum="todayProdNum"
-        :hourProdNum="hourProdNum"
-        :hourSum="hourSum"
-        :hourNum="hourNum"
-        :totalNum="totalNum"
-        :totalSum="totalSum"
-        :totalProdNum="totalProdNum"
-        class="md:w-1/1 !md:mx-8 !md:my-0 !my-8 w-full"
-      />
-    </div>
     <PageWrapper contentFullHeight contentBackground>
+      <!-- <div class="md:flex enter-y">
+         <OrderGrowCard
+           :loading="loading"
+           :account="account"
+           :yesterdayNum="yesterdayNum"
+           :todayNum="todayNum"
+           :yesterdaySum="yesterdaySum"
+           :todaySum="todaySum"
+           :todayProdNum="todayProdNum"
+           :hourProdNum="hourProdNum"
+           :hourSum="hourSum"
+           :hourNum="hourNum"
+           :totalNum="totalNum"
+           :totalSum="totalSum"
+           :totalProdNum="totalProdNum"
+           class="md:w-1/1 !md:mx-8 !md:my-0 !my-8 w-full"
+         />
+       </div>-->
       <div>
         <BasicTable @register="registerTable">
           <template #bodyCell="{ column, record }">
@@ -52,6 +52,7 @@
           </template>
         </BasicTable>
       </div>
+      <SelfIndex />
     </PageWrapper>
   </div>
 </template>
@@ -68,6 +69,7 @@
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   const { createMessage } = useMessage();
   const { clipboardRef, copiedRef } = useCopyToClipboard();
+  import SelfIndex from '/@/views/codesale/self/index.vue';
 
   const formData = reactive({
     inputNum: '',
@@ -83,6 +85,7 @@
       // QrCode,
       PageWrapper,
       OrderGrowCard,
+      SelfIndex,
     },
     setup() {
       const loading = ref(true);
@@ -156,8 +159,8 @@
        */
       function mockCallback(record: Recordable) {
         testCallback(record.orderId)
-          .then(() => {
-            createMessage.info('模拟回调成功，谨慎操作');
+          .then((res) => {
+            createMessage.info('模拟回调成功，谨慎操作' + res.toString());
           })
           .catch(() => {
             createMessage.error('模拟回调失败');

@@ -16,6 +16,7 @@ enum Api {
   QueryOrder = '/code/order/query',
   CreateCodeSaleSub = '/sale/createSub',
   GetCodeSaleListByPage = '/sale/info',
+  GetCodeSaleOverview = '/sale/overview',
   GetSaleCAccountListByPage = '/sale/cAccount',
 }
 
@@ -34,6 +35,10 @@ export const queryOrder = (params?: QueryOrderParams) =>
 // 我的码商
 export const getSaleListByPage = (params?: QuerySaleParams) =>
   defHttp.get({ url: Api.GetCodeSaleListByPage, params });
+
+// 码商看板
+export const getCodeSaleOverview = (params?: QuerySaleParams) =>
+  defHttp.get({ url: Api.GetCodeSaleOverview, params });
 
 // 码商所有帐号
 export const getSaleCAccountListByPage = (params?: QuerySaleParams) =>

@@ -1,91 +1,182 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'clarity:note-edit-line',
-                onClick: handleEdit.bind(null, record),
-              },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                popConfirm: {
-                  title: '是否测试产码',
-                  placement: 'left',
-                  confirm: handleTestProdCode.bind(null, record),
-                },
-              },
-              {
-                label: '查询订单',
-                icon: 'clarity:note-edit-line',
-                onClick: handleCheck.bind(null, record),
-              },
-            ]"
-          />
-        </template>
+    <div class="mt-2">
+      <template v-for="item in saleList" :key="item.id">
+        <Description
+          :data="item"
+          title="核销信息"
+          :column="4"
+          :schema="infoSchema"
+          class="md:w-1/1 w-full"
+        />
       </template>
-    </BasicTable>
+      <!--<BasicTable @register="registerTable">
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'action'">
+              <TableAction
+                :actions="[
+                  {
+                    icon: 'clarity:note-edit-line',
+                    onClick: handleEdit.bind(null, record),
+                  },
+                  /*{
+                    icon: 'ant-design:delete-outlined',
+                    color: 'error',
+                    popConfirm: {
+                      title: '是否测试产码',
+                      placement: 'left',
+                      confirm: handleTestProdCode.bind(null, record),
+                    },
+                  },*/
+                  {
+                    label: '查询订单',
+                    icon: 'clarity:note-edit-line',
+                    onClick: handleCheck.bind(null, record),
+                  },
+                ]"
+              />
+            </template>
+          </template>
+        </BasicTable>-->
+    </div>
   </div>
 </template>
-<script lang="js">
-  import { defineComponent } from "vue";
-
-  import { BasicTable, useTable, TableAction } from "/@/components/Table";
-  import { analysis, getCap, verifyCaptcha, prodCode, queryOrder } from "/@/api/channel/codesales";
-
-  import { useDrawer } from "/@/components/Drawer";
-
-  import { columns, searchFormSchema } from "./data";
-  import { useMessage } from "/@/hooks/web/useMessage";
-  import { getSaleListByPage } from "/@/api/channel/codesales";
-  import { get_w } from "/@/assets/js/d2_168.js";
-  import { get_payload } from "/@/assets/js/d3.js";
+<script lang="ts">
+  import { defineComponent, h, onMounted, ref } from 'vue';
+  import { Description, DescItem } from '/@/components/Description';
+  import { PageWrapper } from '/@/components/Page';
+  import { getSaleListByPage } from '/@/api/channel/codesales';
+  // import { useMessage } from '/@/hooks/web/useMessage';
+  // import { analysis, getCap, verifyCaptcha, prodCode, queryOrder } from '/@/api/channel/codesales';
+  // import { get_w } from '/@/assets/js/d2_168.js';
+  // import { get_payload } from '/@/assets/js/d3.js';
+  import { Tag } from 'ant-design-vue';
+  import { CountTo } from '/@/components/CountTo';
 
   export default defineComponent({
-    components: { BasicTable, TableAction },
+    components: { PageWrapper, Description },
     setup() {
-      const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload }] = useTable({
-        title: "我的码商",
-        api: getSaleListByPage,
-        columns,
-        formConfig: {
-          labelWidth: 120,
-          schemas: searchFormSchema
-        },
-        useSearchForm: true,
-        showTableSetting: true,
-        bordered: true,
-        showIndexColumn: false,
-        actionColumn: {
-          width: 80,
-          title: "操作",
-          dataIndex: "action",
-          fixed: undefined
-        }
+      onMounted(() => {
+        getSaleInfoList();
       });
+      let saleList = ref([{} as any]);
+      function getSaleInfoList() {
+        getSaleListByPage().then((res) => {
+          saleList.value = res;
+          saleList.value.forEach((num, index, a) => {
+            // 三个参数分别为：子元素，索引，原数组
+            console.log(num);
+            console.log(index);
+            console.log(a);
+            num['yesterdayPercent'] = getPercent(num.yesterdayOrderNum, num.yesterdayProdOrderNum);
+            num['todayPercent'] = getPercent(num.todayOrderNum, num.todayProdOrderNum);
+            // num['hourPercent'] = getPercent(num.hourOrderNum, num.hourProdOrderNum);
 
-      function handleCreate() {
-        openDrawer(true, {
-          isUpdate: false
+          });
         });
       }
-
-      function handleEdit(record) {
-        openDrawer(true, {
-          record,
-          isUpdate: true
+      const commonTagRender = (color: string, unit?: string) => (curVal) =>
+        h(Tag, { color }, () => {
+          if (!unit) unit = '';
+          return curVal + ' ' + unit;
         });
+      // const commonLinkRender = (text: string) => (href) => h('a', { href, target: '_blank' }, text);
+      const commonCountRender = (suffix: string, color: string, endVal: number) => (culVal) =>
+        h(CountTo, { suffix: suffix, color, endVal: culVal }, () => {
+          endVal;
+        });
+      function getPercent(num, total) {
+        num = parseFloat(num);
+        total = parseFloat(total);
+        if (isNaN(num) || isNaN(total)) {
+          return 0;
+        }
+        let rs = total <= 0 ? 0 : Math.round((num / total) * 10000) / 100.0;
+        console.log(num, total, rs);
+        return rs;
       }
+      const infoSchema: DescItem[] = [
+        {
+          label: '账户名',
+          field: 'account',
+          render: commonTagRender('blue'),
+          span: 2,
+        },
+        {
+          label: '余额',
+          field: 'balance',
+          render: commonTagRender('blue', '元'),
+          span: 2,
+        },
+        {
+          label: '通道账号',
+          field: 'countCA',
+          render: commonTagRender('blue'),
+          span: 2,
+        },
+        {
+          label: '开启账号',
+          field: 'countEnableCA',
+          render: commonTagRender('blue'),
+          span: 2,
+        },
+        {
+          label: '昨日订单量',
+          field: 'yesterdayProdOrderNum',
+          render: commonTagRender('blue', '个'),
+        },
+        {
+          label: '昨日成单量',
+          field: 'yesterdayOrderNum',
+          render: commonTagRender('blue', '个'),
+        },
+        {
+          label: '昨日成功率',
+          field: 'yesterdayPercent',
+          render: commonCountRender('%', 'red', 0),
+        },
+        {
+          label: '昨日收入',
+          field: 'yesterdayOrderSum',
+          render: commonTagRender('red', '元'),
+        },
+        {
+          label: '今日订单量',
+          field: 'todayProdOrderNum',
+          render: commonTagRender('blue', '个'),
+        },
+        {
+          label: '今日成单量',
+          field: 'todayOrderNum',
+          render: commonTagRender('blue', '个'),
+        },
+        {
+          label: '今日成功率',
+          field: 'todayPercent',
+          render: commonCountRender('%', 'red', 0),
+          // render: (curVal, data) => {
+          //   return `${data.balance}`;
+          // },
+        },
+        {
+          label: '今日收入',
+          field: 'todayOrderSum',
+          render: commonTagRender('red', '元'),
+        },
+        // {
+        //   label: '1小时成功率',
+        //   field: 'hourPercent',
+        //   render: commonCountRender('%', 'red', 0),
+        // },
+        // {
+        //   label: '1小时收入',
+        //   field: 'hourOrderSum',
+        //   render: commonTagRender('red'),
+        // },
+      ];
 
-      function handleSuccess() {
-        reload();
-      }
 
-      function handleTestProdCode() {
+      /*function handleTestProdCode() {
         const { createMessage } = useMessage();
         try {
           getCap().then((ret) => {
@@ -153,9 +244,9 @@
         } finally {
           reload();
         }
-      }
+      }*/
 
-      function handleCheck() {
+      /*function handleCheck() {
         const { createMessage } = useMessage();
         try {
           getCap().then((ret) => {
@@ -222,16 +313,11 @@
         } finally {
           reload();
         }
-      }
+      }*/
       return {
-        registerTable,
-        registerDrawer,
-        handleCreate,
-        handleEdit,
-        handleTestProdCode,
-        handleCheck,
-        handleSuccess,
+        infoSchema,
+        saleList,
       };
-    }
+    },
   });
 </script>

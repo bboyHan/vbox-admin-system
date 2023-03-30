@@ -18,9 +18,9 @@ export default {
       totalField: 'total',
     },
     // Number of pages that can be selected
-    pageSizeOptions: ['20', '50', '80', '100'],
+    pageSizeOptions: ['10', '20', '50', '100'],
     // Default display quantity on one page
-    defaultPageSize: 20,
+    defaultPageSize: 10,
     // Default Size
     defaultSize: 'middle',
     // Custom general sort function

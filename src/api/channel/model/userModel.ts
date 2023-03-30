@@ -7,6 +7,7 @@ export interface GetVboxUserInfoModel {
   balance: number;
   todayOrderNum: number;
   yesterdayOrderNum: number;
+  yesterdayProdOrderNum: number;
   yesterdayOrderSum: number;
   todayOrderSum: number;
   todayProdOrderNum: number;

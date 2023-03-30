@@ -10,6 +10,7 @@ export default {
 
   payer_management: '付方管理',
   payer_list: '付方列表',
+  payer_overview: '付方看板',
 
   order_management: '订单管理',
   order_list: '订单列表',
