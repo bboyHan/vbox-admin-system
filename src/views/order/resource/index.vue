@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageWrapper contentFullHeight contentBackground>
+    <PageWrapper contentBackground>
       <!-- <div class="md:flex enter-y">
          <OrderGrowCard
            :loading="loading"
@@ -52,6 +52,36 @@
           </template>
         </BasicTable>
       </div>
+      <div>
+        <BasicTable @register="registerTableWait">
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'action'">
+              <TableAction
+                :actions="[
+                  {
+                    icon: 'ant-design:copy-outlined',
+                    onClick: copyLink.bind(null, record),
+                  },
+                  {
+                    icon: 'ant-design:thunderbolt-outlined',
+                    popConfirm: {
+                      title: '模拟回调',
+                      confirm: mockCallback.bind(null, record),
+                    },
+                  },
+                  {
+                    icon: 'ant-design:sound-outlined',
+                    popConfirm: {
+                      title: '手动回调',
+                      confirm: checkAndCallback.bind(null, record),
+                    },
+                  },
+                ]"
+              />
+            </template>
+          </template>
+        </BasicTable>
+      </div>
       <SelfIndex />
     </PageWrapper>
   </div>
@@ -59,8 +89,13 @@
 <script lang="ts">
   import { defineComponent, onMounted, reactive, ref, unref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { columns, searchFormSchema } from '/@/views/order/resource/data';
-  import { getOrderList, testCallback, queryAndCallback } from '/@/api/channel/pay';
+  import { columnsWait, columns, searchFormSchema } from '/@/views/order/resource/data';
+  import {
+    getOrderList,
+    testCallback,
+    queryAndCallback,
+    getOrderListWait,
+  } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
   import { getVboxUserInfo } from '/@/api/channel/user';
   import OrderGrowCard from './components/OrderGrowCard.vue';
@@ -70,6 +105,7 @@
   const { createMessage } = useMessage();
   const { clipboardRef, copiedRef } = useCopyToClipboard();
   import SelfIndex from '/@/views/codesale/self/index.vue';
+  import dayjs from 'dayjs';
 
   const formData = reactive({
     inputNum: '',
@@ -133,6 +169,27 @@
           totalProdNum.value = res.totalProdNum;
         });
       }
+      const [registerTableWait] = useTable({
+        title: '订单列表（待取码）',
+        api: getOrderListWait,
+        columns: columnsWait,
+        // scroll: { x: 1800, y: 500 },
+        formConfig: {
+          labelWidth: 120,
+          schemas: searchFormSchema,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: true,
+        actionColumn: {
+          width: 120,
+          title: '操作',
+          dataIndex: 'action',
+          // fixed: 'right',
+        },
+      });
+
       const [registerTable, { reload }] = useTable({
         title: '订单详情列表',
         api: getOrderList,
@@ -168,7 +225,7 @@
       }
       function copyLink(record) {
         let orderId = record.orderId;
-        clipboardRef.value = 'http://47.97.200.110/#/code/pay?orderId=' + orderId;
+        clipboardRef.value = 'http://59.110.141.171/#/code/pay?orderId=' + orderId;
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + clipboardRef.value);
         }
@@ -195,8 +252,18 @@
         console.log(data);
       }
 
+      let ct;
+      function dateFormat(val) {
+        val = dayjs(val).format('MM-DD HH:mm:ss');
+        console.log(val);
+        return val;
+      }
+
       return {
+        registerTableWait,
         registerTable,
+        ct,
+        dateFormat,
         copyLink,
         mockCallback,
         checkAndCallback,

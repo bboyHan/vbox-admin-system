@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isError">
+    <!--<div v-if="isError">
       <div class="m-5 result-success">
         <Result>
           <template #icon>
@@ -11,7 +11,7 @@
             <Button size="large" type="primary" @click="renew()" block> 点此尝试刷新 </Button>
           </template>
           <template #extra>
-            <!--<hr class="my-4" />
+            &lt;!&ndash;<hr class="my-4" />
             <Card hoverable style="width: 240px">
               <CardMeta title="请认真阅读支付流程" style="color: red">
                 <template #description>
@@ -21,12 +21,12 @@
                 </template>
               </CardMeta>
             </Card>
-            <hr class="my-4" />-->
+            <hr class="my-4" />&ndash;&gt;
           </template>
         </Result>
-        <!--<QrCode :value="payStr" />-->
+        &lt;!&ndash;<QrCode :value="payStr" />&ndash;&gt;
       </div>
-    </div>
+    </div>-->
     <div v-if="isPending">
       <div class="m-5 result-success">
         <Result>
@@ -62,6 +62,9 @@
               大约需等待5-20秒，请客官喝口茶耐心等待...
             </div>
             <hr class="my-4" />
+            <div style="color: red; font-size: 15px; margin: 10px">
+              禁止使用任何外网、翻墙工具，请注意！
+            </div>
           </template>
           <template #extra>
             <!--<hr class="my-4" />
@@ -207,7 +210,7 @@
             }
           })
           .catch(() => {
-            isError.value = true;
+            // isError.value = true;
             isPending.value = false;
             console.log(isPending.value);
           });

@@ -1,7 +1,7 @@
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
-import { h } from 'vue';
-import { Tag } from 'ant-design-vue';
+import {BasicColumn, FormSchema} from '/@/components/Table';
+import {h} from 'vue';
+import {Tag} from 'ant-design-vue';
+import dayjs from 'dayjs';
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -87,6 +87,97 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
+export const columnsWait: BasicColumn[] = [
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    width: 40,
+    ifShow: false,
+  },
+  {
+    title: '订单ID（付方）',
+    dataIndex: 'orderId',
+    width: 220,
+  },
+  {
+    title: '付方ID',
+    dataIndex: 'pa',
+    width: 70,
+    ifShow: false,
+  },
+  {
+    title: '订单金额',
+    dataIndex: 'cost',
+    width: 80,
+    // fixed: 'right',
+  },
+  {
+    title: '所属通道',
+    dataIndex: 'channel',
+    width: 120,
+    customRender: ({ record }) => {
+      const text = record.channel;
+      const color = '#9da120';
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  // {
+  //   title: '支付码',
+  //   dataIndex: 'resourceUrl',
+  //   width: 80,
+  //   // fixed: 'right',
+  // },
+  {
+    title: '订单状态',
+    dataIndex: 'orderStatus',
+    width: 80,
+    customRender: ({ record }) => {
+      const status = record.orderStatus;
+      let color, text;
+      if (status == 1) {
+        color = '#20A130FF';
+        text = '已支付';
+      }
+      if (status == 2) {
+        color = '#E99D10FF';
+        text = '未支付';
+      }
+      if (status == 3) {
+        color = '#108ee9';
+        text = '支付超时';
+      }
+      if (status == 4) {
+        color = '#10e9e2';
+        text = '待进单';
+      }
+      if (status == 0) {
+        color = '#ff0000';
+        text = '支付失败';
+      }
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: 120,
+    customRender: ({ record }) => {
+      let ct = ' - ';
+      ct = dayjs(record.createTime).format('MM-DD HH:mm:ss');
+      if (ct == 'Invalid Date') return ' - ';
+      return ct;
+    },
+  },
+  {
+    title: '地区',
+    dataIndex: 'payRegion',
+    width: 120,
+    // customRender: ({ record }) => {
+    //   let region = record.payRegion;
+    // },
+  },
+];
+
 export const columns: BasicColumn[] = [
   {
     title: 'ID',
@@ -107,13 +198,13 @@ export const columns: BasicColumn[] = [
     // fixed: 'left',
   },
   {
-    title: '订单ID（付方）',
-    dataIndex: 'orderId',
+    title: '平台订单ID',
+    dataIndex: 'platformOid',
     width: 220,
   },
   {
-    title: '平台订单ID',
-    dataIndex: 'platformOid',
+    title: '订单ID（付方）',
+    dataIndex: 'orderId',
     width: 220,
   },
   {
@@ -230,6 +321,42 @@ export const columns: BasicColumn[] = [
     title: '创建时间',
     dataIndex: 'createTime',
     width: 120,
+    customRender: ({ record }) => {
+      let ct = ' - ';
+      ct = dayjs(record.createTime).format('MM-DD HH:mm:ss');
+      if (ct == 'Invalid Date') return ' - ';
+      return ct;
+    },
+  },
+  {
+    title: '取码时间',
+    dataIndex: 'asyncTime',
+    width: 120,
+    customRender: ({ record }) => {
+      let ct = ' - ';
+      ct = dayjs(record.asyncTime).format('MM-DD HH:mm:ss');
+      if (ct == 'Invalid Date') return ' - ';
+      return ct;
+    },
+  },
+  {
+    title: '回调时间',
+    dataIndex: 'callTime',
+    width: 120,
+    customRender: ({ record }) => {
+      let ct = ' - ';
+      ct = dayjs(record.callTime).format('MM-DD HH:mm:ss');
+      if (ct == 'Invalid Date') return ' - ';
+      return ct;
+    },
+  },
+  {
+    title: '地区',
+    dataIndex: 'payRegion',
+    width: 120,
+    // customRender: ({ record }) => {
+    //   let region = record.payRegion;
+    // },
   },
 ];
 
