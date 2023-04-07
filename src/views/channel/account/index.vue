@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageWrapper title="通道管理" contentFullHeight contentBackground>
+    <PageWrapper title="通道账号" contentFullHeight contentBackground>
       <BasicTable @register="registerTable">
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">

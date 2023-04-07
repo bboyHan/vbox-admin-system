@@ -82,7 +82,7 @@
           </template>
         </BasicTable>
       </div>
-      <SelfIndex />
+<!--      <SelfIndex />-->
     </PageWrapper>
   </div>
 </template>
@@ -98,13 +98,13 @@
   } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
   import { getVboxUserInfo } from '/@/api/channel/user';
-  import OrderGrowCard from './components/OrderGrowCard.vue';
+  // import OrderGrowCard from './components/OrderGrowCard.vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useFormRules, useFormValid } from '/@/views/sys/login/useLogin';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   const { createMessage } = useMessage();
   const { clipboardRef, copiedRef } = useCopyToClipboard();
-  import SelfIndex from '/@/views/codesale/self/index.vue';
+  // import SelfIndex from '/@/views/codesale/self/index.vue';
   import dayjs from 'dayjs';
 
   const formData = reactive({
@@ -120,8 +120,8 @@
       TableAction,
       // QrCode,
       PageWrapper,
-      OrderGrowCard,
-      SelfIndex,
+      // OrderGrowCard,
+      // SelfIndex,
     },
     setup() {
       const loading = ref(true);
@@ -225,7 +225,7 @@
       }
       function copyLink(record) {
         let orderId = record.orderId;
-        clipboardRef.value = 'http://59.110.141.171/#/code/pay?orderId=' + orderId;
+        clipboardRef.value = 'http://116.62.24.139:10717/#/code/pay?orderId=' + orderId;
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + clipboardRef.value);
         }
@@ -236,8 +236,8 @@
        */
       function checkAndCallback(record) {
         queryAndCallback(record.orderId)
-          .then(() => {
-            createMessage.info('手动回调成功，谨慎操作');
+          .then((res) => {
+            createMessage.info('手动回调成功,响应数据：' + res + '，谨慎操作');
           })
           .catch(() => {
             createMessage.error('手动回调失败');

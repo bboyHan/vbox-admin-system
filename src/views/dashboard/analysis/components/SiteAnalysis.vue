@@ -9,10 +9,10 @@
       <VisitAnalysis />
     </p>-->
     <p v-if="activeKey === 'tab1'">
-      <AnalysisOrderNum />
+      <AnalysisOrderSum />
     </p>
     <p v-if="activeKey === 'tab2'">
-      <AnalysisOrderSum />
+      <AnalysisOrderNum />
     </p>
   </Card>
 </template>
@@ -28,11 +28,11 @@
   const tabListTitle = [
     {
       key: 'tab1',
-      tab: '订单数量',
+      tab: '成交金额',
     },
     {
       key: 'tab2',
-      tab: '成交金额',
+      tab: '订单数量',
     },
     // {
     //   key: 'tab3',

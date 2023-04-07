@@ -42,7 +42,7 @@
           </template>
           <CardMeta title="剑网3（微信端）" description="This is the description">
             <template #avatar>
-              <img :src="WeChat" style="width: 30px; height: 30px"  alt=""/>
+              <img :src="WeChat" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>
@@ -62,7 +62,7 @@
           </template>
           <CardMeta title="剑网3（支付宝端）" description="This is the description">
             <template #avatar>
-              <img :src="AliPay" style="width: 30px; height: 30px"  alt=""/>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>
@@ -80,7 +80,7 @@
           </template>
           <CardMeta title="剑网3（京东端）" description="This is the description">
             <template #avatar>
-              <img :src="JD" style="width: 30px; height: 30px"  alt=""/>
+              <img :src="JD" style="width: 30px; height: 30px" alt=""/>
             </template>
           </CardMeta>
         </Card>

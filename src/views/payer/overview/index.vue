@@ -80,7 +80,7 @@
   </PageWrapper>
 </template>
 <script lang="ts">
- import { defineComponent, onMounted, reactive, ref } from 'vue';
+  import { defineComponent, onMounted, reactive, ref } from 'vue';
   import { PageWrapper } from '/@/components/Page';
   import { Card, Row, Col, Statistic } from 'ant-design-vue';
   import { listPAccountOverview } from '/@/api/channel/payer';
