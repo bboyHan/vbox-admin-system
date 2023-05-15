@@ -54,12 +54,10 @@
               订单生成中
             </Card>-->
             <hr class="my-4" />
-            <div style="color: black; font-size: 25px; margin: 10px">
-              订单生成中
-            </div>
+            <div style="color: black; font-size: 25px; margin: 10px"> 订单生成中 </div>
             <hr class="my-4" />
             <div style="color: black; font-size: 25px; margin: 10px">
-              大约需等待5-20秒，请客官喝口茶耐心等待...
+              大约需等待15-30秒，请客官喝口茶耐心等待...
             </div>
             <hr class="my-4" />
             <div style="color: red; font-size: 15px; margin: 10px">
@@ -97,8 +95,13 @@
           </template>
           <template #extra>
             <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
-              <div style="font-size: 20px">
-                点此立即付款
+              <div style="font-size: 20px"> 点此立即付款 </div>
+              <div v-if="isJD">
+                <hr class="my-4" />
+                <div style="color: red; font-size: 15px; margin: 10px">
+                  温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
+                </div>
+                <hr class="my-4" />
               </div>
             </Button>
           </template>
@@ -140,7 +143,7 @@
   import { tryOnUnmounted } from '@vueuse/core';
   const props = {
     value: { type: [Object, Number, String, Array] },
-    count: { type: Number, default: 60 },
+    count: { type: Number, default: 90 },
     beforeStartFunc: {
       type: Function as PropType<() => Promise<boolean>>,
       default: null,
@@ -174,6 +177,7 @@
       let cid = ref('');
       let isPending = ref(true);
       let isPaying = ref(false);
+      let isJD = ref(false);
       let isError = ref(false);
       let isFinished = ref(false);
       function getOrder() {
@@ -198,14 +202,15 @@
               isPaying.value = true;
             }
             cid.value = res.channelId;
-            if (cid.value == 'jx3_weixin') {
+            if (cid.value == 'jx3_weixin' || cid.value == 'jx3_wx_gift') {
               Img.value = wxImg;
             }
             if (cid.value == 'jx3_jd') {
               Img.value = jdImg;
               PayGif.value = jdGif;
+              isJD.value = true;
             }
-            if (cid.value == 'jx3_alipay') {
+            if (cid.value == 'jx3_alipay' || cid.value == 'jx3_ali_gift') {
               Img.value = aliImg;
             }
           })
@@ -310,10 +315,10 @@
         // if (unref(copiedRef)) {
         //   createMessage.warning('复制成功: ' + url);
         // }
-        if (cid == 'jx3_weixin') {
-          go('/code/pay/detail?orderId=' + oid);
-          return;
-        }
+        // if (cid == 'jx3_weixin') {
+        //   go('/code/pay/detail?orderId=' + oid);
+        //   return;
+        // }
         window.open(url, '_blank');
       }
 
@@ -422,6 +427,7 @@
         isStart,
         isPending,
         isPaying,
+        isJD,
         isError,
         isFinished,
       };

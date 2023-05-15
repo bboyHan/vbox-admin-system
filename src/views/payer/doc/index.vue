@@ -19,9 +19,10 @@
       const valueRef = ref(`
 ### 0. 对接信息
 
-请求地址： http://47.97.200.110
+请求地址： 联系对接人获取
+回调IP白名单： 联系对接人获取
 
-通道channel_id:  \`jx3_alipay\`  -  支付宝、\`jx3_weixin\` - 微信、\` jx3_jd\` - 京东
+通道channel_id:  \`jx3_alipay\`  -  支付宝、\`jx3_weixin\` - 微信、\` jx3_jd\` - 京东  、\`jx3_ali_gift\`  -  支付宝(固额特惠)
 
 ### **1.1** **公共签名规则**
 
@@ -67,9 +68,9 @@ Normal - 一般情况的响应体如下：
 | ---------- | ------------ | ------------- | -------- | ------------------------------------------------------------ |
 | p_account  | 商户ID       | string        | 是       | 向运营或管理员申请获得                                       |
 | sign       | 签名         | string        | 是       | 参见1.1 公共签名规则                                         |
-| money      | 金额         | int           | 是       | 单位：元，必须为10的倍数，范围是10-30,000                    |
+| money      | 金额         | int           | 是       | 单位：元，必须为10的倍数，范围是10-30,000。其中：jx3_ali_gift特惠，只允许4种固额传参（分别为76，156，162，276）                    |
 | p_order_id | 订单ID       | string[16,32] | 是       | 商户自定义订单ID（支持16-32位不定长uuid）                    |
-| channel_id | 通道ID       | string        | 是       | 目前支持 jx3_weixin（微信）、jx3_alipay（支付宝）、jx3_jd（京东） |
+| channel_id | 通道ID       | string        | 是       | 目前支持 jx3_weixin（微信）、jx3_alipay（支付宝）、jx3_jd（京东）、jx3_ali_gift（支付宝-固额特惠） |
 | notify_url | 回调地址     | string        | 是       | 格式：URL。通知URL必须为直接可访问的URL，不允许携带查询串（用于通知商户成功支付的订单信息） |
 | pay_type   | 支付类型     | int           | 是       | 支付类型（1- 京东，2-微信，3-支付宝）                        |
 | pay_ip     | 下单IP       | string        | 是       | 客户端下单IP地址（IPv4）                                     |
@@ -104,7 +105,7 @@ POST /basic-api/channel/order/create
         "status": 2,
         "orderId": "na1bfa23a3ba44acaf5b119ddyyvm1",
         "cost": 10,
-        "payUrl": "http://mng.vboxjjjxxx.info/code/pay?orderId=xxx",
+        "payUrl": "http://{host}/code/pay?orderId=xxx",
         "attach": "..."
 \t},
     "message": "success",
@@ -168,7 +169,7 @@ POST /basic-api/channel/order/query
         "orderId": "na1bfa23a3ba44acaf5b119ddyyvm1",
         "status": 2,
         "cost": 10,
-        "payUrl": "http://mng.vboxjjjxxx.info/#/code/pay?orderId=xxx",
+        "payUrl": "http://{host}/#/code/pay?orderId=xxx",
         "notifyUrl": "http://127.0.0.1:8080/test/callback"
     },
     "message": "success",

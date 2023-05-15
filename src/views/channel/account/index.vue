@@ -6,18 +6,18 @@
           <template v-if="column.key === 'action'">
             <TableAction
               :actions="[
-                {
-                  label: '产码配置',
-                  icon: 'clarity:note-edit-line',
-                  color: 'success',
-                  onClick: prodCodeSetting.bind(null, record),
-                  ifShow: false,
-                },
-                {
-                  label: '模拟建单',
-                  icon: 'ant-design:send-outlined',
-                  onClick: mockCreateOrder.bind(null, record),
-                },
+                // {
+                //   label: '产码配置',
+                //   icon: 'clarity:note-edit-line',
+                //   color: 'success',
+                //   onClick: prodCodeSetting.bind(null, record),
+                //   ifShow: false,
+                // },
+                // {
+                //   label: '模拟建单',
+                //   icon: 'ant-design:send-outlined',
+                //   onClick: mockCreateOrder.bind(null, record),
+                // },
                 {
                   label: '修改',
                   icon: 'clarity:note-edit-line',

@@ -80,7 +80,27 @@
           </template>
           <CardMeta title="剑网3（京东端）" description="This is the description">
             <template #avatar>
-              <img :src="JD" style="width: 30px; height: 30px" alt=""/>
+              <img :src="JD" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="TH" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="send('剑网3（特惠礼盒）', 'jx3_ali_gift')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="剑网3（特惠礼盒-支付宝）" description="This is the description">
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>
@@ -102,6 +122,7 @@
   import WeChat from '/@/assets/images/wechat.jpg';
   import AliPay from '/@/assets/images/alipay.png';
   import JD from '/@/assets/images/jd.png';
+  import TH from '/@/assets/images/th.png';
 
   // const go = useGo();
   export default defineComponent({
@@ -124,7 +145,7 @@
         });
       }
 
-      return { items: channelItems, send, register, JX3, WeChat, AliPay, JD };
+      return { items: channelItems, send, register, JX3, WeChat, AliPay, JD, TH };
     },
   });
 </script>

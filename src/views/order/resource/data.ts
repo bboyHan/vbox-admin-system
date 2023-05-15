@@ -358,6 +358,14 @@ export const columns: BasicColumn[] = [
     //   let region = record.payRegion;
     // },
   },
+  {
+    title: 'IP',
+    dataIndex: 'payIp',
+    width: 120,
+    // customRender: ({ record }) => {
+    //   let region = record.payRegion;
+    // },
+  },
 ];
 
 export const formSchema: FormSchema[] = [

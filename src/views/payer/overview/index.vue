@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper title="付方看板">
+  <PageWrapper title="付方看板" contentBackground>
     <div class="mt-2">
       <Row :gutter="[24, 24]">
         <template v-for="item in itemList" :key="item">
@@ -76,19 +76,25 @@
           </Col>
         </template>
       </Row>
+      <Pagination
+        showLessItems
+        :current="currentPage"
+        :pageSize="pageSize"
+        :total="total"
+        @change="handlePageChange"
+      />
     </div>
   </PageWrapper>
 </template>
 <script lang="ts">
-  import { defineComponent, onMounted, reactive, ref } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { PageWrapper } from '/@/components/Page';
-  import { Card, Row, Col, Statistic } from 'ant-design-vue';
+  import { Pagination, Card, Row, Col, Statistic } from 'ant-design-vue';
   import { listPAccountOverview } from '/@/api/channel/payer';
-  import { PAOverviewItem } from '/@/api/channel/model/payerModel';
   export default defineComponent({
-    components: { PageWrapper, Card, Row, Col, Statistic },
+    components: { Pagination, PageWrapper, Card, Row, Col, Statistic },
     setup() {
-      let itemList: PAOverviewItem[] = reactive([]);
+      let itemList = ref([]);
       // function listPAOverview() {
       //   listPAccountOverview()
       //     .then((res) => {
@@ -98,61 +104,43 @@
       //       console.log(e);
       //     });
       // }
-
-      onMounted(async () => {
-        let res = await listPAccountOverview();
-        console.log(res);
-        itemList.push(...res.items);
+      const total = ref(0);
+      const pageSize = ref(10);
+      const currentPage = ref(1);
+      function handlePageChange(page: number) {
+        setCurrentPage(page);
+      }
+      function setCurrentPage(page: number) {
+        currentPage.value = page;
+        console.log(currentPage.value);
+        let param = {
+          page: currentPage.value,
+          pageSize: pageSize.value,
+        };
+        listPAccountOverview(param).then((res) => {
+          console.log(res);
+          total.value = res.total;
+          itemList.value = res.items;
+        });
+      }
+      onMounted(() => {
+        let param = {
+          page: currentPage.value,
+          pageSize: pageSize.value,
+        };
+        listPAccountOverview(param).then((res) => {
+          console.log(res);
+          total.value = res.total;
+          itemList.value = res.items;
+        });
       });
 
-      /*const itemList = ref([
-        {
-          pAccount: 'a',
-          pRemark: '备注1',
-          orderNum: 5,
-          orderProdNum: 10,
-          orderSum: 100,
-        },
-        {
-          pAccount: 'b',
-          pRemark: '备注2',
-          orderNum: 7,
-          orderProdNum: 14,
-          orderSum: 200,
-        },
-        {
-          pAccount: 'b',
-          pRemark: '备注2',
-          orderNum: 7,
-          orderProdNum: 14,
-          orderSum: 200,
-        },
-        {
-          pAccount: 'b',
-          pRemark: '备注2',
-          orderNum: 7,
-          orderProdNum: 14,
-          orderSum: 200,
-        },
-        {
-          pAccount: 'b',
-          pRemark: '备注2',
-          orderNum: 7,
-          orderProdNum: 14,
-          orderSum: 200,
-        },
-        {
-          pAccount: 'b',
-          pRemark: '备注2',
-          orderNum: 7,
-          orderProdNum: 14,
-          orderSum: 200,
-        },
-      ]);*/
-      // let itemList.value = ;
-      // console.log(itemList.value);
       return {
         itemList,
+        total,
+        currentPage,
+        pageSize,
+        handlePageChange,
       };
     },
   });

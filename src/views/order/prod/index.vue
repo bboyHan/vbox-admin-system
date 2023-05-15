@@ -109,6 +109,11 @@
           value: 'jx3_jd',
           key: '3',
         },
+        {
+          label: '支付宝(特惠活动)',
+          value: 'jx3_ali_gift',
+          key: '4',
+        },
       ];
       return {
         registerModal,

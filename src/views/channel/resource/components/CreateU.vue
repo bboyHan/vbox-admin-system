@@ -58,6 +58,21 @@
             },
           },
         });
+        if (channelId.value == 'jx3_ali_gift') {
+          updateSchema({
+            field: 'payType',
+            componentProps: {
+              options: [
+                {
+                  label: '支付宝',
+                  value: '3',
+                  key: '3',
+                },
+              ],
+            },
+            defaultValue: '3',
+          });
+        }
         if (channelId.value == 'jx3_alipay') {
           updateSchema({
             field: 'payType',
@@ -65,12 +80,12 @@
               options: [
                 {
                   label: '支付宝',
-                  value: '2',
-                  key: '2',
+                  value: '3',
+                  key: '3',
                 },
               ],
             },
-            defaultValue: '2',
+            defaultValue: '3',
           });
         }
         if (channelId.value == 'jx3_weixin') {
@@ -80,12 +95,12 @@
               options: [
                 {
                   label: '微信',
-                  value: '3',
-                  key: '3',
+                  value: '2',
+                  key: '2',
                 },
               ],
             },
-            defaultValue: '3',
+            defaultValue: '2',
           });
         }
         if (channelId.value == 'jx3_jd') {

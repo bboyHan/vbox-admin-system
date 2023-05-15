@@ -225,7 +225,8 @@
       }
       function copyLink(record) {
         let orderId = record.orderId;
-        clipboardRef.value = 'http://116.62.24.139:10717/#/code/pay?orderId=' + orderId;
+        clipboardRef.value = 'http://36.133.172.154:10717/#/code/pay?orderId=' + orderId;
+        // clipboardRef.value = 'http://127.0.0.1:3100/#/code/pay?orderId=' + orderId;
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + clipboardRef.value);
         }
