@@ -73,7 +73,7 @@
             defaultValue: '3',
           });
         }
-        if (channelId.value == 'jx3_alipay') {
+        if (channelId.value == 'jx3_alipay' || channelId.value == 'jx3_ali_gift') {
           updateSchema({
             field: 'payType',
             componentProps: {
@@ -88,7 +88,11 @@
             defaultValue: '3',
           });
         }
-        if (channelId.value == 'jx3_weixin') {
+        if (
+          channelId.value == 'jx3_weixin' ||
+          channelId.value == 'jx3_weixin_qr' ||
+          channelId.value == 'jx3_wx_gift'
+        ) {
           updateSchema({
             field: 'payType',
             componentProps: {

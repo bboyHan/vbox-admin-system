@@ -40,7 +40,7 @@
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="剑网3（微信端）" description="This is the description">
+          <CardMeta title="剑网3（微信端）" description="wechat pay">
             <template #avatar>
               <img :src="WeChat" style="width: 30px; height: 30px" alt="" />
             </template>
@@ -60,7 +60,7 @@
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="剑网3（支付宝端）" description="This is the description">
+          <CardMeta title="剑网3（支付宝端）" description="ali pay">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
@@ -78,7 +78,7 @@
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="剑网3（京东端）" description="This is the description">
+          <CardMeta title="剑网3（京东端）" description="JD pay">
             <template #avatar>
               <img :src="JD" style="width: 30px; height: 30px" alt="" />
             </template>
@@ -98,9 +98,49 @@
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="剑网3（特惠礼盒-支付宝）" description="This is the description">
+          <CardMeta title="剑网3（特惠礼盒-支付宝）" description="固额（76，156，162，276）">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="TH" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="send('剑网3（特惠礼盒）', 'jx3_wx_gift')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="剑网3（特惠礼盒-微信）" description="固额（76，156，162，276）">
+            <template #avatar>
+              <img :src="WeChat" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="JX3" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="send('剑网3（微信扫码端）', 'jx3_weixin_qr')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="剑网3（微信扫码端）" description="使用手机设备扫码电脑链接二维码">
+            <template #avatar>
+              <img :src="WeChat" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>

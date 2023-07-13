@@ -5,7 +5,7 @@ import {
   CodeProdParams,
   CodeVerifyParams,
   QueryOrderParams,
-  QuerySaleParams,
+  QuerySaleParams, SaleRechargeParams,
 } from '/@/api/channel/model/codeSalesModel';
 
 enum Api {
@@ -16,6 +16,9 @@ enum Api {
   QueryOrder = '/code/order/query',
   CreateCodeSaleSub = '/sale/createSub',
   GetCodeSaleListByPage = '/sale/info',
+  GetCodeSaleSimpleList = '/sale/simple/list',
+  GetCodeSaleRechargeListByPage = '/sale/recharge',
+  AddSaleRecharge = '/sale/recharge',
   GetCodeSaleOverview = '/sale/overview',
   GetSaleCAccountListByPage = '/sale/cAccount',
 }
@@ -35,6 +38,16 @@ export const queryOrder = (params?: QueryOrderParams) =>
 // 我的码商
 export const getSaleListByPage = (params?: QuerySaleParams) =>
   defHttp.get({ url: Api.GetCodeSaleListByPage, params });
+// 我的码商简单列表
+export const getSaleSimpleList = (params?: QuerySaleParams) =>
+  defHttp.get({ url: Api.GetCodeSaleSimpleList, params });
+// 充值积分
+export const addSaleRecharge = (params: SaleRechargeParams) =>
+  defHttp.post({ url: Api.AddSaleRecharge, params });
+
+// 我的码商积分
+export const getSaleRechargeListByPage = (params?: QuerySaleParams) =>
+  defHttp.get({ url: Api.GetCodeSaleRechargeListByPage, params });
 
 // 码商看板
 export const getCodeSaleOverview = (params?: QuerySaleParams) =>
@@ -46,4 +59,4 @@ export const getSaleCAccountListByPage = (params?: QuerySaleParams) =>
 
 // 添加码商
 export const createSaleSub = (params?: CodeCreateSubParams) =>
-  defHttp.post({ url: Api.CreateCodeSaleSub, params });
+  defHttp.post({ url: Api.CreateCodeSaleSub, params }, { errorMessageMode: 'message' });

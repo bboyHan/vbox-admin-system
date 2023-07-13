@@ -114,6 +114,16 @@
           value: 'jx3_ali_gift',
           key: '4',
         },
+        {
+          label: '微信(特惠活动)',
+          value: 'jx3_wx_gift',
+          key: '5',
+        },
+        {
+          label: '微信扫码',
+          value: 'jx3_weixin_qr',
+          key: '6',
+        },
       ];
       return {
         registerModal,

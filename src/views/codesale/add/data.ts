@@ -53,20 +53,20 @@ export const formSchema: FormSchema[] = [
       ];
     },
   },
-  {
-    field: 'charge',
-    label: '配置余额',
-    component: 'InputNumber',
-    componentProps: {
-      placeholder: '分配余额，不允许超过本账户所剩余额',
-    },
-    rules: [
-      {
-        required: true,
-        message: '请输入需要分配的码商余额',
-      },
-    ],
-  },
+  // {
+  //   field: 'charge',
+  //   label: '配置余额',
+  //   component: 'InputNumber',
+  //   componentProps: {
+  //     placeholder: '分配余额，不允许超过本账户所剩余额',
+  //   },
+  //   rules: [
+  //     {
+  //       required: true,
+  //       message: '请输入需要分配的码商余额',
+  //     },
+  //   ],
+  // },
   {
     field: 'min',
     label: '最小进单额',

@@ -47,8 +47,8 @@
             console.log(ret);
             createMessage.success('创建码商成功');
           })
-          .catch(() => {
-            createMessage.error('创建码商失败');
+          .catch((e) => {
+            createMessage.error(e.response.data.result);
           });
       }
 

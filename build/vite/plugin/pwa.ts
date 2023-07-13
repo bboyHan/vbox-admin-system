@@ -15,14 +15,16 @@ export function configPwaConfig(env: ViteEnv) {
         short_name: VITE_GLOB_APP_SHORT_NAME,
         icons: [
           {
-            src: './resource/img/pwa-190x237.png',
+            // src: './resource/img/pwa-190x237.png',
+            src: './resource/img/windsock.gif',
             sizes: '190x237',
-            type: 'image/png',
+            type: 'image/gif',
           },
           {
-            src: './resource/img/pwa-610x762.png',
+            // src: './resource/img/pwa-610x762.png',
+            src: './resource/img/windsock.gif',
             sizes: '610x762',
-            type: 'image/png',
+            type: 'image/gif',
           },
         ],
       },

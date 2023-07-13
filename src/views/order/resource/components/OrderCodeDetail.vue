@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<div v-if="isError">
+    <div v-if="isError">
       <div class="m-5 result-success">
         <Result>
           <template #icon>
@@ -11,7 +11,7 @@
             <Button size="large" type="primary" @click="renew()" block> 点此尝试刷新 </Button>
           </template>
           <template #extra>
-            &lt;!&ndash;<hr class="my-4" />
+            <!--<hr class="my-4" />
             <Card hoverable style="width: 240px">
               <CardMeta title="请认真阅读支付流程" style="color: red">
                 <template #description>
@@ -21,12 +21,12 @@
                 </template>
               </CardMeta>
             </Card>
-            <hr class="my-4" />&ndash;&gt;
+            <hr class="my-4" />-->
           </template>
         </Result>
-        &lt;!&ndash;<QrCode :value="payStr" />&ndash;&gt;
+        <!--<QrCode :value="payStr" />-->
       </div>
-    </div>-->
+    </div>
     <div v-if="isPending">
       <div class="m-5 result-success">
         <Result>
@@ -94,16 +94,26 @@
             <hr class="my-4" />
           </template>
           <template #extra>
-            <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
-              <div style="font-size: 20px"> 点此立即付款 </div>
-              <div v-if="isJD">
-                <hr class="my-4" />
-                <div style="color: red; font-size: 15px; margin: 10px">
-                  温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
-                </div>
-                <hr class="my-4" />
+            <div v-if="isQR">
+              <QrCode :value="payUrl" />
+              <hr class="my-4" />
+              <div style="color: red; font-size: 15px; margin: 10px">
+                温馨提示：1、在电脑端打此链接，使用手机设备识别二维码进行扫码支付；2、在手机端打开此链接，需使用另一台手机进行扫码支付；
               </div>
-            </Button>
+              <hr class="my-4" />
+            </div>
+            <div v-if="!isQR">
+              <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
+                <div style="font-size: 20px"> 点此立即付款 </div>
+                <div v-if="isJD">
+                  <hr class="my-4" />
+                  <div style="color: red; font-size: 15px; margin: 10px">
+                    温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
+                  </div>
+                  <hr class="my-4" />
+                </div>
+              </Button>
+            </div>
           </template>
         </Result>
       </div>
@@ -141,6 +151,7 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isFunction } from '/@/utils/is';
   import { tryOnUnmounted } from '@vueuse/core';
+  import { QrCode } from '/@/components/Qrcode';
   const props = {
     value: { type: [Object, Number, String, Array] },
     count: { type: Number, default: 90 },
@@ -152,7 +163,7 @@
 
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Empty, Result, Button, Card, Image, Alert },
+    components: { Empty, Result, Button, Card, Image, Alert, QrCode },
     props,
     setup(props) {
       const { t } = useI18n();
@@ -178,6 +189,7 @@
       let isPending = ref(true);
       let isPaying = ref(false);
       let isJD = ref(false);
+      let isQR = ref(false);
       let isError = ref(false);
       let isFinished = ref(false);
       function getOrder() {
@@ -202,16 +214,28 @@
               isPaying.value = true;
             }
             cid.value = res.channelId;
-            if (cid.value == 'jx3_weixin' || cid.value == 'jx3_wx_gift') {
+            if (cid.value == 'jx3_weixin') {
               Img.value = wxImg;
+            }
+            if (cid.value == 'jx3_wx_gift') {
+              Img.value = wxImg;
+              isQR.value = true;
             }
             if (cid.value == 'jx3_jd') {
               Img.value = jdImg;
               PayGif.value = jdGif;
               isJD.value = true;
             }
-            if (cid.value == 'jx3_alipay' || cid.value == 'jx3_ali_gift') {
+            if (cid.value == 'jx3_weixin_qr') {
+              Img.value = wxImg;
+              isQR.value = true;
+            }
+            if (cid.value == 'jx3_alipay') {
               Img.value = aliImg;
+            }
+            if (cid.value == 'jx3_ali_gift') {
+              Img.value = aliImg;
+              isQR.value = true;
             }
           })
           .catch(() => {
@@ -427,6 +451,7 @@
         isStart,
         isPending,
         isPaying,
+        isQR,
         isJD,
         isError,
         isFinished,

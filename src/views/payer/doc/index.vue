@@ -22,7 +22,7 @@
 请求地址： 联系对接人获取
 回调IP白名单： 联系对接人获取
 
-通道channel_id:  \`jx3_alipay\`  -  支付宝、\`jx3_weixin\` - 微信、\` jx3_jd\` - 京东  、\`jx3_ali_gift\`  -  支付宝(固额特惠)
+通道channel_id:  \`jx3_alipay\`  -  支付宝、\`jx3_weixin\` - 微信、\` jx3_jd\` - 京东  、\`jx3_ali_gift\`  -  支付宝(固额特惠) 、\`jx3_wx_gift\`  -  微信(固额特惠)
 
 ### **1.1** **公共签名规则**
 

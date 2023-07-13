@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
-    <img src="../../../assets/images/logo.png" />
+<!--    <img src="../../../assets/images/logo.png" />-->
     <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
       {{ title }}
     </div>
@@ -27,7 +27,7 @@
     /**
      * Whether to show title
      */
-    showTitle: { type: Boolean, default: true },
+    showTitle: { type: Boolean, default: false },
     /**
      * The title is also displayed when the menu is collapsed
      */

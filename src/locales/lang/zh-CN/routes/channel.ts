@@ -4,9 +4,10 @@ export default {
   channel_account: '通道帐号',
 
   code_sale_management: '码商管理',
-  code_sale_self: '我的码商',
+  code_sale_self: '码商看板',
   code_sale_list: '码商帐号',
   code_sale_add: '添加码商',
+  code_sale_recharge: '积分管理',
 
   payer_management: '付方管理',
   payer_list: '付方列表',

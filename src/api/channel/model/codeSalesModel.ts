@@ -35,6 +35,13 @@ export type CodeProdParams = {
   token?: string;
 };
 
+export type SaleRechargeParams = {
+  recharge?: number;
+  account?: string;
+  balance?: number;
+  uid?: string;
+};
+
 export type QueryOrderParams = {
   captcha_id?: string;
   captcha_output?: string;
