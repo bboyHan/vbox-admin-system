@@ -124,6 +124,26 @@
           value: 'jx3_weixin_qr',
           key: '6',
         },
+        {
+          label: '腾讯（支付宝-JYM)',
+          value: 'tx_jym',
+          key: '7',
+        },
+        {
+          label: '腾讯（淘宝)',
+          value: 'tx_tb',
+          key: '8',
+        },
+        {
+          label: '腾讯（抖音)',
+          value: 'tx_dy',
+          key: '9',
+        },
+        {
+          label: '腾讯（京东)',
+          value: 'tx_jd',
+          key: '10',
+        },
       ];
       return {
         registerModal,

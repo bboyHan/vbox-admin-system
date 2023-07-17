@@ -103,8 +103,22 @@
               <hr class="my-4" />
             </div>
             <div v-if="!isQR">
-              <Button size="large" type="primary" @click="jumpTo(payUrl, cid, oid)" block>
-                <div style="font-size: 20px"> 点此立即付款 </div>
+              <div v-if="isTX">
+                <hr class="my-4" />
+                <div style="color: red; font-size: 15px; margin: 10px">
+                  充值账号： {{ QQ }}
+                </div>
+                <Button size="large" type="primary" @click="copy(QQ)" block>
+                  <div style="font-size: 20px"> 点此复制 </div>
+                </Button>
+                <hr class="my-4" />
+                <div style="color: red; font-size: 15px; margin: 10px">
+                  重要提示：核对充值金额！点击复制并核对需要充值的QQ！充错金额或充错账号，不退不补！
+                </div>
+                <hr class="my-4" />
+              </div>
+              <Button size="large" type="primary" @click="jumpTo(payUrl, cid, QQ)" block>
+                <div style="font-size: 20px"> 点此跳转付款 </div>
                 <div v-if="isJD">
                   <hr class="my-4" />
                   <div style="color: red; font-size: 15px; margin: 10px">
@@ -145,6 +159,7 @@
   import { getOrderCode, handleOrder } from '/@/api/channel/pay';
   import jdGif from '/@/assets/images/jd_pay.gif';
   import jdImg from '/@/assets/images/jdpay-logo.png';
+  import qqImg from '/@/assets/images/qq.jpg';
   import wxImg from '/@/assets/images/wxpay-logo.png';
   import aliImg from '/@/assets/images/alipay-logo.png';
   import { useGo } from '/@/hooks/web/usePage';
@@ -182,6 +197,7 @@
       let cost = ref(0);
       let titlePay = ref('');
       let payUrl = ref('');
+      let QQ = ref('');
       let Img = ref();
       let PayGif = ref();
       let payStatus = ref(0);
@@ -189,6 +205,7 @@
       let isPending = ref(true);
       let isPaying = ref(false);
       let isJD = ref(false);
+      let isTX = ref(false);
       let isQR = ref(false);
       let isError = ref(false);
       let isFinished = ref(false);
@@ -214,6 +231,14 @@
               isPaying.value = true;
             }
             cid.value = res.channelId;
+            // var c = res.channelId;
+            console.log(res.platformOid);
+            // if (cid.value == 'tx_jym') {
+            if (cid.value.includes('tx')) {
+              Img.value = qqImg;
+              isTX.value = true;
+              QQ.value = res.platformOid;
+            }
             if (cid.value == 'jx3_weixin') {
               Img.value = wxImg;
             }
@@ -274,7 +299,7 @@
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + val);
         }
-        test(val);
+        // test(val);
       }
 
       function test(val) {
@@ -334,11 +359,13 @@
         }, t);
       }
 
-      function jumpTo(url, cid, oid) {
-        // clipboardRef.value = url;
-        // if (unref(copiedRef)) {
-        //   createMessage.warning('复制成功: ' + url);
-        // }
+      function jumpTo(url, cid, qq) {
+        if (cid.includes('tx')) {
+          clipboardRef.value = qq;
+          if (unref(copiedRef)) {
+            createMessage.warning('复制成功: ' + qq);
+          }
+        }
         // if (cid == 'jx3_weixin') {
         //   go('/code/pay/detail?orderId=' + oid);
         //   return;
@@ -452,6 +479,8 @@
         isPending,
         isPaying,
         isQR,
+        isTX,
+        QQ,
         isJD,
         isError,
         isFinished,

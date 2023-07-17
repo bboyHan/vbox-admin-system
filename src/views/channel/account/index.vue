@@ -42,6 +42,7 @@
     <ProdCodeSetting @register="registerPCModal" />
     <MockCreateOrder @register="registerMockModal" />
     <ChannelAccountUpd @register="registerUpdModal" />
+    <ChannelTxAccountUpd @register="registerUpdTxModal" />
   </div>
 </template>
 <script lang="ts">
@@ -54,6 +55,7 @@
   import { useModal } from '/@/components/Modal';
   import ProdCodeSetting from '/@/views/channel/account/components/ProdCodeSetting.vue';
   import ChannelAccountUpd from '/@/views/channel/account/components/ChannelAccountUpd.vue';
+  import ChannelTxAccountUpd from '/@/views/channel/account/components/ChannelTxAccountUpd.vue';
   import { deleteCAccount, getCAccountListByPage } from '/@/api/channel/channel';
   import MockCreateOrder from '/@/views/channel/account/components/MockCreateOrder.vue';
 
@@ -65,12 +67,14 @@
       TableAction,
       ProdCodeSetting,
       ChannelAccountUpd,
+      ChannelTxAccountUpd,
     },
     setup() {
       const { createMessage } = useMessage();
       const [registerPCModal, { openModal: openPCM }] = useModal();
       const [registerMockModal, { openModal: openMockM }] = useModal();
       const [registerUpdModal, { openModal: openUpdM }] = useModal();
+      const [registerUpdTxModal, { openModal: openUpdTxM }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '全部帐号',
         api: getCAccountListByPage,
@@ -120,15 +124,27 @@
 
       function handleEdit(record: Recordable) {
         const titleDesc = '通道帐号：' + record.ac_remark + '（当前帐号）';
-        openUpdM(true, {
-          title: titleDesc,
-          id: record.id,
-          acid: record.acid,
-          ac_remark: record.ac_remark,
-          ac_account: record.ac_account,
-          daily_limit: record.daily_limit,
-          total_limit: record.total_limit,
-        });
+        if (record.c_channel_id.includes('tx')) {
+          openUpdTxM(true, {
+            title: titleDesc,
+            id: record.id,
+            acid: record.acid,
+            ac_remark: record.ac_remark,
+            ac_account: record.ac_account,
+            daily_limit: record.daily_limit,
+            total_limit: record.total_limit,
+          });
+        } else {
+          openUpdM(true, {
+            title: titleDesc,
+            id: record.id,
+            acid: record.acid,
+            ac_remark: record.ac_remark,
+            ac_account: record.ac_account,
+            daily_limit: record.daily_limit,
+            total_limit: record.total_limit,
+          });
+        }
       }
 
       function handleSuccess() {
@@ -154,6 +170,7 @@
         registerPCModal,
         registerMockModal,
         registerUpdModal,
+        registerUpdTxModal,
         mockCreateOrder,
         handleEdit,
         handleDelete,

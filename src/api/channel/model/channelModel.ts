@@ -2,12 +2,33 @@ import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 /**
  * @description: Request list interface parameters
  */
+export type ChannelShopPageParams = BasicPageParams & ChannelShopParams;
+
+export type ChannelShopParams = {
+  id?: string;
+  channel?: string;
+  shopRemark?: string;
+  money?: number;
+  status?: number;
+};
+
 export type GatewayPageParams = BasicPageParams & GatewayParams;
 
 export type GatewayParams = {
   id?: string;
   c_channel_id?: string;
 };
+
+export interface ChannelShopListItem {
+  id: string;
+  uid: string;
+  channel: string;
+  address: string;
+  shopRemark: string;
+  money: number;
+  status: number;
+  createTime: string;
+}
 
 export interface GatewayListItem {
   id: string;
@@ -56,4 +77,5 @@ export type CAccountListGetResultModel = BasicFetchResult<CAccountItem>;
 /**
  * @description: Request list return value
  */
+export type ChannelShopListGetResultModel = ChannelShopListItem[];
 export type GatewayListGetResultModel = GatewayListItem[];

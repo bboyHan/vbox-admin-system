@@ -145,9 +145,84 @@
           </CardMeta>
         </Card>
       </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="QQ" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendTx('腾讯QB（交易猫）', 'tx_jym')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="腾讯（交易猫）" description="引导类支付">
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="QQ" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendTx('腾讯QB（淘宝）', 'tx_tb')"> 添加帐号 </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="腾讯QB（淘宝）" description="引导类支付，固额30，50，100，200，300">
+            <template #avatar>
+              <img :src="TaoBaoLogo" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="QQ" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendTx('腾讯QB（抖音）', 'tx_dy')"> 添加帐号 </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="腾讯QB（抖音）" description="引导类支付，固额50，100，200，300，500">
+            <template #avatar>
+              <img :src="DouYin" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="QQ" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendTx('腾讯QB（京东）', 'tx_jd')"> 添加帐号 </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="腾讯QB（京东）" description="引导类支付，固额50，100，200，300，500">
+            <template #avatar>
+              <img :src="JD" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
     </Row>
 
     <CreateU @register="register" />
+    <CreateTxU @register="registerTx" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -156,6 +231,7 @@
   import { channelItems } from './data';
   import { useModal } from '/@/components/Modal';
   import CreateU from '/@/views/channel/resource/components/CreateU.vue';
+  import CreateTxU from '/@/views/channel/resource/components/CreateTxU.vue';
   import { PageWrapper } from '/@/components/Page';
 
   import JX3 from '/@/assets/images/jx3.jpg';
@@ -163,6 +239,9 @@
   import AliPay from '/@/assets/images/alipay.png';
   import JD from '/@/assets/images/jd.png';
   import TH from '/@/assets/images/th.png';
+  import QQ from '/@/assets/images/QQ_C.jpg';
+  import TaoBaoLogo from '/@/assets/images/taobao.png';
+  import DouYin from '/@/assets/images/douyin.png';
 
   // const go = useGo();
   export default defineComponent({
@@ -171,12 +250,14 @@
       Col,
       Alert,
       CreateU,
+      CreateTxU,
       Card,
       CardMeta,
       PageWrapper,
     },
     setup() {
       const [register, { openModal: openM }] = useModal();
+      const [registerTx, { openModal: openTxM }] = useModal();
 
       function send(title, channel_id) {
         openM(true, {
@@ -184,8 +265,28 @@
           channel_id: channel_id,
         });
       }
+      function sendTx(title, channel_id) {
+        openTxM(true, {
+          title: title,
+          channel_id: channel_id,
+        });
+      }
 
-      return { items: channelItems, send, register, JX3, WeChat, AliPay, JD, TH };
+      return {
+        items: channelItems,
+        send,
+        sendTx,
+        register,
+        registerTx,
+        QQ,
+        JX3,
+        WeChat,
+        AliPay,
+        TaoBaoLogo,
+        DouYin,
+        JD,
+        TH,
+      };
     },
   });
 </script>

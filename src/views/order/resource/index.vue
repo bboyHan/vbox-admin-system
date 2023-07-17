@@ -28,24 +28,35 @@
             <template v-if="column.key === 'action'">
               <TableAction
                 :actions="[
-                  {
-                    icon: 'ant-design:copy-outlined',
-                    onClick: copyLink.bind(null, record),
-                  },
+                  // {
+                  //   icon: 'ant-design:copy-outlined',
+                  //   label: '链接复制',
+                  //   onClick: copyLink.bind(null, record),
+                  // },
                   {
                     icon: 'ant-design:thunderbolt-outlined',
+                    label: '回调',
                     popConfirm: {
-                      title: '模拟回调',
+                      title: '手动回调',
                       confirm: mockCallback.bind(null, record),
                     },
                   },
                   {
                     icon: 'ant-design:sound-outlined',
-                    popConfirm: {
-                      title: '手动回调',
-                      confirm: checkAndCallback.bind(null, record),
-                    },
+                    label: '记录',
+                    onClick: queryTX.bind(null, record),
+                    // popConfirm: {
+                    //   title: '交易记录',
+                    //   confirm: queryTX.bind(null, record),
+                    // },
                   },
+                  // {
+                  //   icon: 'ant-design:sound-outlined',
+                  //   popConfirm: {
+                  //     title: '手动回调',
+                  //     confirm: checkAndCallback.bind(null, record),
+                  //   },
+                  // },
                 ]"
               />
             </template>
@@ -69,20 +80,20 @@
                       confirm: mockCallback.bind(null, record),
                     },
                   },
-                  {
-                    icon: 'ant-design:sound-outlined',
-                    popConfirm: {
-                      title: '手动回调',
-                      confirm: checkAndCallback.bind(null, record),
-                    },
-                  },
+                  // {
+                  //   icon: 'ant-design:sound-outlined',
+                  //   popConfirm: {
+                  //     title: '手动回调',
+                  //     confirm: checkAndCallback.bind(null, record),
+                  //   },
+                  // },
                 ]"
               />
             </template>
           </template>
         </BasicTable>
       </div>
-<!--      <SelfIndex />-->
+      <TXQueryModal @register="registerModal" />
     </PageWrapper>
   </div>
 </template>
@@ -90,11 +101,13 @@
   import { defineComponent, onMounted, reactive, ref, unref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { columnsWait, columns, searchFormSchema } from '/@/views/order/resource/data';
+  import TXQueryModal from '/@/views/order/resource/components/TXQueryModal.vue';
   import {
     getOrderList,
     testCallback,
     queryAndCallback,
     getOrderListWait,
+    getTxQuery,
   } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
   import { getVboxUserInfo } from '/@/api/channel/user';
@@ -106,6 +119,7 @@
   const { clipboardRef, copiedRef } = useCopyToClipboard();
   // import SelfIndex from '/@/views/codesale/self/index.vue';
   import dayjs from 'dayjs';
+  import { useModal } from '/@/components/Modal';
 
   const formData = reactive({
     inputNum: '',
@@ -114,13 +128,14 @@
   const loadingNum = ref(false);
   const { getFormRules } = useFormRules(formData);
   const { validForm } = useFormValid(formRef);
+  const [registerModal, { openModal: openModal }] = useModal();
   export default defineComponent({
     components: {
       BasicTable,
       TableAction,
       // QrCode,
       PageWrapper,
-      // OrderGrowCard,
+      TXQueryModal,
       // SelfIndex,
     },
     setup() {
@@ -183,7 +198,7 @@
         bordered: true,
         showIndexColumn: true,
         actionColumn: {
-          width: 120,
+          width: 140,
           title: '操作',
           dataIndex: 'action',
           // fixed: 'right',
@@ -231,6 +246,15 @@
           createMessage.warning('复制成功: ' + clipboardRef.value);
         }
       }
+      function queryTX(record) {
+        let oid = record.orderId;
+        getTxQuery(oid).then((res) => {
+          console.log(res);
+          openModal(true, {
+            content: res,
+          });
+        });
+      }
 
       /**
        * 查单回调
@@ -263,10 +287,12 @@
       return {
         registerTableWait,
         registerTable,
+        registerModal,
         ct,
         dateFormat,
         copyLink,
         mockCallback,
+        queryTX,
         checkAndCallback,
         handleSuccess,
         loading,
