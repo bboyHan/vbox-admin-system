@@ -12,6 +12,18 @@ export type ChannelShopParams = {
   status?: number;
 };
 
+export type ChannelPrePageParams = BasicPageParams & ChannelPreParams;
+
+export type ChannelPreParams = {
+  id?: string;
+  channel?: string;
+  platOid?: string;
+  platParam?: string;
+  address?: string;
+  money?: number;
+  status?: number;
+};
+
 export type GatewayPageParams = BasicPageParams & GatewayParams;
 
 export type GatewayParams = {
@@ -25,6 +37,26 @@ export interface ChannelShopListItem {
   channel: string;
   address: string;
   shopRemark: string;
+  money: number;
+  status: number;
+  createTime: string;
+}
+
+export interface CountChannelPreListItem {
+  id: string;
+  status: string;
+  count: number;
+  acAccount: string;
+  acid: string;
+}
+
+export interface ChannelPreListItem {
+  id: string;
+  uid: string;
+  channel: string;
+  address: string;
+  platOid: string;
+  platParam: string;
   money: number;
   status: number;
   createTime: string;
@@ -48,7 +80,8 @@ export type CAccountPageParams = {
 
 export interface CAccountItem {
   id: string;
-  region: string;
+  acid: string;
+  acAccount: string;
   status: number;
   createTime: string;
 }
@@ -77,5 +110,8 @@ export type CAccountListGetResultModel = BasicFetchResult<CAccountItem>;
 /**
  * @description: Request list return value
  */
+export type ChannelAccountListGetResultModel = CAccountItem[];
 export type ChannelShopListGetResultModel = ChannelShopListItem[];
+export type ChannelPreListGetResultModel = ChannelPreListItem[];
+export type CountChannelPreListGetResultModel = CountChannelPreListItem[];
 export type GatewayListGetResultModel = GatewayListItem[];

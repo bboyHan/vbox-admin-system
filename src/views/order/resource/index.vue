@@ -35,15 +35,23 @@
                   // },
                   {
                     icon: 'ant-design:thunderbolt-outlined',
-                    label: '回调',
+                    label: '测试',
                     popConfirm: {
-                      title: '手动回调',
+                      title: '测试回调',
                       confirm: mockCallback.bind(null, record),
                     },
                   },
                   {
+                    icon: 'ant-design:thunderbolt-outlined',
+                    label: '强补',
+                    popConfirm: {
+                      title: '回调补单',
+                      confirm: confirmOrder.bind(null, record),
+                    },
+                  },
+                  {
                     icon: 'ant-design:sound-outlined',
-                    label: '记录',
+                    label: '查询',
                     onClick: queryTX.bind(null, record),
                     // popConfirm: {
                     //   title: '交易记录',
@@ -63,7 +71,7 @@
           </template>
         </BasicTable>
       </div>
-      <div>
+<!--      <div>
         <BasicTable @register="registerTableWait">
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">
@@ -76,7 +84,7 @@
                   {
                     icon: 'ant-design:thunderbolt-outlined',
                     popConfirm: {
-                      title: '模拟回调',
+                      title: '测试回调',
                       confirm: mockCallback.bind(null, record),
                     },
                   },
@@ -92,7 +100,7 @@
             </template>
           </template>
         </BasicTable>
-      </div>
+      </div>-->
       <TXQueryModal @register="registerModal" />
     </PageWrapper>
   </div>
@@ -108,6 +116,7 @@
     queryAndCallback,
     getOrderListWait,
     getTxQuery,
+    callbackOrder,
   } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
   import { getVboxUserInfo } from '/@/api/channel/user';
@@ -219,7 +228,7 @@
         bordered: true,
         showIndexColumn: true,
         actionColumn: {
-          width: 120,
+          width: 220,
           title: '操作',
           dataIndex: 'action',
           // fixed: 'right',
@@ -236,6 +245,18 @@
           })
           .catch(() => {
             createMessage.error('模拟回调失败');
+          });
+      }
+      /**
+       * 强补回调
+       */
+      function confirmOrder(record: Recordable) {
+        callbackOrder(record.orderId)
+          .then((res) => {
+            createMessage.info('补单回调成功，谨慎操作' + res.toString());
+          })
+          .catch(() => {
+            createMessage.error('补单回调失败');
           });
       }
       function copyLink(record) {
@@ -292,6 +313,7 @@
         dateFormat,
         copyLink,
         mockCallback,
+        confirmOrder,
         queryTX,
         checkAndCallback,
         handleSuccess,

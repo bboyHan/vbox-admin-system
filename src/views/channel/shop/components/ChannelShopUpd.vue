@@ -14,7 +14,7 @@
 <script lang="ts">
   import { defineComponent, ref, nextTick } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicForm, useForm } from '/@/components/Form';
   import { channelShopUpdColumn } from '/@/views/channel/shop/data';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { updateChannelShop } from '/@/api/channel/channel';

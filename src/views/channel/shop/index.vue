@@ -18,7 +18,7 @@
                   icon: 'ant-design:delete-outlined',
                   color: 'error',
                   label: '删除',
-                  tooltip: '删除此商铺资源',
+                  tooltip: '删除商铺',
                   popConfirm: {
                     title: '是否确认删除',
                     placement: 'left',

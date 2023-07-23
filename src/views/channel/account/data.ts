@@ -472,3 +472,99 @@ export const caUpdTxColumn: FormSchema[] = [
     },
   },
 ];
+
+export const caUpdSdoColumn: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'ID',
+    dynamicDisabled: true,
+    show: false,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'acid',
+    label: 'ACID',
+    dynamicDisabled: true,
+    component: 'Input',
+    show: false,
+  },
+  {
+    field: 'ac_remark',
+    component: 'Input',
+    label: '账户备注',
+    helpMessage: ['账户备注, 便于商户自行区分账户'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入便于自行区别的账户备注名',
+    },
+  },
+  {
+    field: 'ac_account',
+    component: 'Input',
+    label: '充值账户',
+    helpMessage: ['充值账户, 用于账户充值的帐号确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实帐号，务必核对正确',
+    },
+    dynamicDisabled: true,
+    // required: true,
+  },
+  // {
+  //   field: 'openId',
+  //   component: 'Input',
+  //   label: 'openId',
+  //   helpMessage: ['从ck工具中获取查看'],
+  //   colProps: {
+  //     span: 24,
+  //   },
+  //   componentProps: {
+  //     placeholder: '请输入ck工具中的openID，务必核对正确',
+  //   },
+  // },
+  // {
+  //   field: 'openKey',
+  //   component: 'Input',
+  //   label: 'openKey',
+  //   helpMessage: ['从ck工具中获取查看'],
+  //   colProps: {
+  //     span: 24,
+  //   },
+  //   componentProps: {
+  //     placeholder: '请输入ck工具中的openKey，务必核对正确',
+  //   },
+  // },
+  {
+    field: 'ck',
+    component: 'InputTextArea',
+    label: 'CK',
+    helpMessage: ['填写用户CK'],
+    colProps: { span: 24 },
+    componentProps: {
+      placeholder: '输入用户CK（选填）',
+    },
+    required: false,
+  },
+  {
+    field: 'daily_limit',
+    component: 'InputNumber',
+    label: '日限额',
+    colProps: {
+      span: 12,
+    },
+  },
+  {
+    field: 'total_limit',
+    component: 'InputNumber',
+    label: '总限额',
+    colProps: {
+      span: 12,
+    },
+  },
+];
+

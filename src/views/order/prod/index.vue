@@ -95,54 +95,64 @@
 
       const options = [
         {
-          label: '微信',
+          label: '1001-jx3微信',
           value: 'jx3_weixin',
           key: '1',
         },
         {
-          label: '支付宝',
+          label: '1002-jx3支付宝',
           value: 'jx3_alipay',
           key: '2',
         },
         {
-          label: '京东',
+          label: '1003-jx3京东',
           value: 'jx3_jd',
           key: '3',
         },
         {
-          label: '支付宝(特惠活动)',
+          label: '1004-jx3支付宝(特惠活动)',
           value: 'jx3_ali_gift',
           key: '4',
         },
         {
-          label: '微信(特惠活动)',
+          label: '1005-jx3微信(特惠活动)',
           value: 'jx3_wx_gift',
           key: '5',
         },
         {
-          label: '微信扫码',
+          label: '1006-jx3微信扫码',
           value: 'jx3_weixin_qr',
           key: '6',
         },
         {
-          label: '腾讯（支付宝-JYM)',
+          label: '2001-tx腾讯（支付宝-JYM)',
           value: 'tx_jym',
           key: '7',
         },
         {
-          label: '腾讯（淘宝)',
+          label: '2002-tx腾讯（淘宝)',
           value: 'tx_tb',
           key: '8',
         },
         {
-          label: '腾讯（抖音)',
+          label: '2003-tx腾讯（抖音)',
           value: 'tx_dy',
           key: '9',
         },
         {
-          label: '腾讯（京东)',
+          label: '2004-tx腾讯（京东)',
           value: 'tx_jd',
           key: '10',
+        },
+        {
+          label: '2005-tx腾讯（支付宝小程序)',
+          value: 'tx_zfb',
+          key: '11',
+        },
+        {
+          label: '2006-测试（支付宝)',
+          value: 'sdo_alipay',
+          key: '11',
         },
       ];
       return {

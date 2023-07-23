@@ -3,6 +3,7 @@ export default {
   channel_list: '通道列表',
   channel_account: '通道帐号',
   channel_shop: '引导商铺',
+  channel_pre: '预产管理',
 
   code_sale_management: '码商管理',
   code_sale_self: '码商看板',

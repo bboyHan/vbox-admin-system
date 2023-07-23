@@ -15,6 +15,7 @@ enum Api {
   SysOrder = '/sys/order',
   SysOrderWait = '/sys/order/wait',
   TestCallback = '/channel/order/callback/test/',
+  CallbackOrder = '/channel/order/callback/confirm/',
   HandleOrder = '/channel/order/handle/',
   GetTxQuery = '/channel/txQuery/',
 
@@ -23,35 +24,54 @@ enum Api {
 }
 
 export const getPAccountList = () =>
-  defHttp.get<PAccountListGetResultModel>({ url: Api.OperationPAccount });
+  defHttp.get<PAccountListGetResultModel>(
+    { url: Api.OperationPAccount },
+    { errorMessageMode: 'message' },
+  );
 
 export const createPAccount = (params: PAccountParam) =>
-  defHttp.post({ url: Api.OperationPAccount, params });
+  defHttp.post({ url: Api.OperationPAccount, params }, { errorMessageMode: 'message' });
 
 export const updatePAccount = (id: string, params: PAccountParam) =>
-  defHttp.put({ url: Api.OperationPAccount + '/' + id, params });
+  defHttp.put({ url: Api.OperationPAccount + '/' + id, params }, { errorMessageMode: 'message' });
 
 export const deletePAccount = (params: string) =>
-  defHttp.delete({ url: Api.OperationPAccount, params });
+  defHttp.delete({ url: Api.OperationPAccount, params }, { errorMessageMode: 'message' });
 
 export const setPAccountStatus = (id: number, status: string) =>
-  defHttp.put({ url: Api.SetPAccountStatus, params: { id, status } });
+  defHttp.put(
+    { url: Api.SetPAccountStatus, params: { id, status } },
+    { errorMessageMode: 'message' },
+  );
 
 export const createOrder = (params: OrderParam) =>
-  defHttp.post({ url: Api.OperationOrder, params });
+  defHttp.post({ url: Api.OperationOrder, params }, { errorMessageMode: 'message' });
 
 export const getOrderList = (params: OrderPageParams) =>
-  defHttp.get<OrderListGetResultModel>({ url: Api.SysOrder, params });
+  defHttp.get<OrderListGetResultModel>(
+    { url: Api.SysOrder, params },
+    { errorMessageMode: 'message' },
+  );
 export const getOrderListWait = (params: OrderPageParams) =>
-  defHttp.get<OrderListGetResultModel>({ url: Api.SysOrderWait, params });
+  defHttp.get<OrderListGetResultModel>(
+    { url: Api.SysOrderWait, params },
+    { errorMessageMode: 'message' },
+  );
 
-export const testCallback = (id: string) => defHttp.get({ url: Api.TestCallback + id });
+export const testCallback = (id: string) =>
+  defHttp.get({ url: Api.TestCallback + id }, { errorMessageMode: 'message' });
 
-export const handleOrder = (id: string) => defHttp.get({ url: Api.HandleOrder + id });
+export const callbackOrder = (id: string) =>
+  defHttp.get({ url: Api.CallbackOrder + id }, { errorMessageMode: 'message' });
 
-export const getTxQuery = (id: string) => defHttp.get({ url: Api.GetTxQuery + id });
+export const handleOrder = (id: string) =>
+  defHttp.get({ url: Api.HandleOrder + id }, { errorMessageMode: 'message' });
 
-export const queryAndCallback = (id: string) => defHttp.get({ url: Api.QueryAndCallback + id });
+export const getTxQuery = (id: string) =>
+  defHttp.get({ url: Api.GetTxQuery + id }, { errorMessageMode: 'message' });
+
+export const queryAndCallback = (id: string) =>
+  defHttp.get({ url: Api.QueryAndCallback + id }, { errorMessageMode: 'message' });
 export const testCreateOrder = (
   num: number,
   channel: string,
@@ -60,30 +80,36 @@ export const testCreateOrder = (
   payIp?: string,
   area?: string,
 ) =>
-  defHttp.get({
-    url: Api.TestCreateOrder + num,
-    params: {
-      channel: channel,
-      acid: acid,
-      pr: pr,
-      payIp: payIp,
-      area: area,
+  defHttp.get(
+    {
+      url: Api.TestCreateOrder + num,
+      params: {
+        channel: channel,
+        acid: acid,
+        pr: pr,
+        payIp: payIp,
+        area: area,
+      },
     },
-  });
+    { errorMessageMode: 'message' },
+  );
 
 export const getOrderCode = (orderId: string) =>
   defHttp.get(
     { url: Api.OperationOrder + '/code/' + orderId, timeout: 10000 },
-    { errorMessageMode: 'none' },
+    { errorMessageMode: 'message' },
   );
 
 export const testOrderPay = (orderId: string) =>
-  defHttp.get({
-    url: Api.TestOrderPay,
-    params: {
-      orderId: orderId,
+  defHttp.get(
+    {
+      url: Api.TestOrderPay,
+      params: {
+        orderId: orderId,
+      },
     },
-  });
+    { errorMessageMode: 'message' },
+  );
 
 export const getOrderProdForWX = (url: string, params?: any) =>
   defHttp.post({

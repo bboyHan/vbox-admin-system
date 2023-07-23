@@ -47,15 +47,15 @@ export const addSaleRecharge = (params: SaleRechargeParams) =>
 
 // 我的码商积分
 export const getSaleRechargeListByPage = (params?: QuerySaleParams) =>
-  defHttp.get({ url: Api.GetCodeSaleRechargeListByPage, params });
+  defHttp.get({ url: Api.GetCodeSaleRechargeListByPage, params }, { errorMessageMode: 'message' });
 
 // 码商看板
 export const getCodeSaleOverview = (params?: QuerySaleParams) =>
-  defHttp.get({ url: Api.GetCodeSaleOverview, params });
+  defHttp.get({ url: Api.GetCodeSaleOverview, params }, { errorMessageMode: 'message' });
 
 // 码商所有帐号
 export const getSaleCAccountListByPage = (params?: QuerySaleParams) =>
-  defHttp.get({ url: Api.GetSaleCAccountListByPage, params });
+  defHttp.get({ url: Api.GetSaleCAccountListByPage, params }, { errorMessageMode: 'message' });
 
 // 添加码商
 export const createSaleSub = (params?: CodeCreateSubParams) =>

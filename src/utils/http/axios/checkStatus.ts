@@ -37,11 +37,11 @@ export function checkStatus(
       }
       break;
     case 403:
-      errMessage = t('sys.api.errMsg403');
+      errMessage = msg || t('sys.api.errMsg403');
       break;
     // 404请求不存在
     case 404:
-      errMessage = t('sys.api.errMsg404');
+      errMessage = msg || t('sys.api.errMsg404');
       break;
     case 405:
       errMessage = t('sys.api.errMsg405');
@@ -50,7 +50,7 @@ export function checkStatus(
       errMessage = t('sys.api.errMsg408');
       break;
     case 500:
-      errMessage = t('sys.api.errMsg500');
+      errMessage = msg || t('sys.api.errMsg500');
       break;
     case 501:
       errMessage = t('sys.api.errMsg501');

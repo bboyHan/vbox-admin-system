@@ -43,6 +43,7 @@
     <MockCreateOrder @register="registerMockModal" />
     <ChannelAccountUpd @register="registerUpdModal" />
     <ChannelTxAccountUpd @register="registerUpdTxModal" />
+    <ChannelSdoAccountUpd @register="registerUpdSdoModal" />
   </div>
 </template>
 <script lang="ts">
@@ -56,6 +57,7 @@
   import ProdCodeSetting from '/@/views/channel/account/components/ProdCodeSetting.vue';
   import ChannelAccountUpd from '/@/views/channel/account/components/ChannelAccountUpd.vue';
   import ChannelTxAccountUpd from '/@/views/channel/account/components/ChannelTxAccountUpd.vue';
+  import ChannelSdoAccountUpd from '/@/views/channel/account/components/ChannelSdoAccountUpd.vue';
   import { deleteCAccount, getCAccountListByPage } from '/@/api/channel/channel';
   import MockCreateOrder from '/@/views/channel/account/components/MockCreateOrder.vue';
 
@@ -68,6 +70,7 @@
       ProdCodeSetting,
       ChannelAccountUpd,
       ChannelTxAccountUpd,
+      ChannelSdoAccountUpd,
     },
     setup() {
       const { createMessage } = useMessage();
@@ -75,8 +78,9 @@
       const [registerMockModal, { openModal: openMockM }] = useModal();
       const [registerUpdModal, { openModal: openUpdM }] = useModal();
       const [registerUpdTxModal, { openModal: openUpdTxM }] = useModal();
+      const [registerUpdSdoModal, { openModal: openUpdSdoM }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: '全部帐号',
+        title: '帐号列表',
         api: getCAccountListByPage,
         columns,
         scroll: { x: 1500, y: 500 },
@@ -134,8 +138,20 @@
             daily_limit: record.daily_limit,
             total_limit: record.total_limit,
           });
-        } else {
+        }
+        if (record.c_channel_id.includes('jx3')) {
           openUpdM(true, {
+            title: titleDesc,
+            id: record.id,
+            acid: record.acid,
+            ac_remark: record.ac_remark,
+            ac_account: record.ac_account,
+            daily_limit: record.daily_limit,
+            total_limit: record.total_limit,
+          });
+        }
+        if (record.c_channel_id.includes('sdo')) {
+          openUpdSdoM(true, {
             title: titleDesc,
             id: record.id,
             acid: record.acid,
@@ -171,6 +187,7 @@
         registerMockModal,
         registerUpdModal,
         registerUpdTxModal,
+        registerUpdSdoModal,
         mockCreateOrder,
         handleEdit,
         handleDelete,

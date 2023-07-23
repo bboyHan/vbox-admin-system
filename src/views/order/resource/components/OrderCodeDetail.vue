@@ -258,6 +258,9 @@
             if (cid.value == 'jx3_alipay') {
               Img.value = aliImg;
             }
+            if (cid.value.includes('sdo')) {
+              Img.value = aliImg;
+            }
             if (cid.value == 'jx3_ali_gift') {
               Img.value = aliImg;
               isQR.value = true;

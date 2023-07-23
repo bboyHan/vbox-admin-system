@@ -219,10 +219,54 @@
           </CardMeta>
         </Card>
       </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="QQ" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendTx('腾讯QB（支付宝小程序）', 'tx_zfb')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta
+            title="腾讯QB（支付宝小程序）"
+            description="引导类支付，固额50，100，200，300，500"
+          >
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="SDO" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendSdo('测试（支付宝）', 'sdo_alipay')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="测试（支付宝）" description="预产类支付，固额50，100，200，300，500">
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
     </Row>
 
     <CreateU @register="register" />
     <CreateTxU @register="registerTx" />
+    <CreateSdoU @register="registerSdo" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -232,6 +276,7 @@
   import { useModal } from '/@/components/Modal';
   import CreateU from '/@/views/channel/resource/components/CreateU.vue';
   import CreateTxU from '/@/views/channel/resource/components/CreateTxU.vue';
+  import CreateSdoU from '/@/views/channel/resource/components/CreateSdoU.vue';
   import { PageWrapper } from '/@/components/Page';
 
   import JX3 from '/@/assets/images/jx3.jpg';
@@ -240,6 +285,7 @@
   import JD from '/@/assets/images/jd.png';
   import TH from '/@/assets/images/th.png';
   import QQ from '/@/assets/images/QQ_C.jpg';
+  import SDO from '/@/assets/images/test.png';
   import TaoBaoLogo from '/@/assets/images/taobao.png';
   import DouYin from '/@/assets/images/douyin.png';
 
@@ -251,6 +297,7 @@
       Alert,
       CreateU,
       CreateTxU,
+      CreateSdoU,
       Card,
       CardMeta,
       PageWrapper,
@@ -258,6 +305,7 @@
     setup() {
       const [register, { openModal: openM }] = useModal();
       const [registerTx, { openModal: openTxM }] = useModal();
+      const [registerSdo, { openModal: openSdoM }] = useModal();
 
       function send(title, channel_id) {
         openM(true, {
@@ -271,14 +319,23 @@
           channel_id: channel_id,
         });
       }
+      function sendSdo(title, channel_id) {
+        openSdoM(true, {
+          title: title,
+          channel_id: channel_id,
+        });
+      }
 
       return {
         items: channelItems,
         send,
         sendTx,
+        sendSdo,
         register,
         registerTx,
+        registerSdo,
         QQ,
+        SDO,
         JX3,
         WeChat,
         AliPay,

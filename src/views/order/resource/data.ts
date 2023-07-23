@@ -1,9 +1,21 @@
-import {BasicColumn, FormSchema} from '/@/components/Table';
-import {h} from 'vue';
-import {Tag} from 'ant-design-vue';
+import { BasicColumn, FormSchema } from '/@/components/Table';
+import { h } from 'vue';
+import { Tag } from 'ant-design-vue';
 import dayjs from 'dayjs';
 
 export const searchFormSchema: FormSchema[] = [
+  {
+    field: 'acRemark',
+    label: '账号（备注）',
+    component: 'Input',
+    colProps: { span: 6 },
+  },
+  {
+    field: 'acAccount',
+    label: '账号（充值）',
+    component: 'Input',
+    colProps: { span: 6 },
+  },
   {
     field: 'orderId',
     label: '订单ID（付方）',
