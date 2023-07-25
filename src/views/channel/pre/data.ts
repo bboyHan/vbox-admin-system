@@ -1,8 +1,34 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { getChannelPreTypes, getChannelPreAccount } from '/@/api/channel/channel';
+import { getChannelPreTypes, getChannelPreAccount, uploadChannelPre } from '/@/api/channel/channel';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
+
+export const preBatchColumns: FormSchema[] = [
+  {
+    field: 'file1',
+    component: 'Upload',
+    label: '点它上传',
+    colProps: {
+      span: 24,
+    },
+    rules: [{ required: true, message: '请选择上传文件，仅支持excel格式' }],
+    componentProps: {
+      api: uploadChannelPre,
+    },
+  },
+  {
+    field: 'fac',
+    component: 'Input',
+    label: '格式说明',
+    required: true,
+    defaultValue: 'test@example.com',
+    colProps: {
+      span: 24,
+    },
+    dynamicDisabled: true,
+  },
+];
 
 export const preColumns: FormSchema[] = [
   {
@@ -22,22 +48,6 @@ export const preColumns: FormSchema[] = [
     },
     // rules: [{ required: true, trigger: 'blur' }],
   },
-  // {
-  //   label: '查单账户',
-  //   field: 'ckid',
-  //   component: 'ApiSelect',
-  //   componentProps: {
-  //     api: getChannelPreAccount,
-  //     labelField: 'acRemark',
-  //     valueField: 'acid',
-  //     immediate: false,
-  //   },
-  //   // required: true,
-  //   colProps: {
-  //     span: 24,
-  //   },
-  //   // rules: [{ required: true, trigger: 'blur' }],
-  // },
   {
     field: 'money',
     component: 'InputNumber',

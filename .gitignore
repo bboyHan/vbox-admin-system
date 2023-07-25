@@ -27,6 +27,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.zip
 
 package-lock.json
 pnpm-lock.yaml

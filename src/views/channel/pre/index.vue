@@ -4,6 +4,7 @@
       <div class="py-8 bg-white flex flex-col justify-center items-center">
         <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5">
           <template #toolbar>
+            <a-button type="primary" @click="batchCreate"> 批量导入 </a-button>
             <a-button type="primary" @click="handleCreate"> 预产添加 </a-button>
           </template>
           <template #bodyCell="{ column, record }">
@@ -33,6 +34,7 @@
         </BasicTable>
 
         <ChannelPre @register="registerModal" />
+        <ChannelPreBatch @register="registerBatchModal" />
         <ChannelPreUpd @register="registerUpdModal" />
       </div>
     </PageWrapper>
@@ -48,12 +50,21 @@
   import { deleteChannelPre, getChannelPreList, countChannelPreList } from '/@/api/channel/channel';
   import { columns, countPreColums } from '/@/views/channel/pre/data';
   import ChannelPre from '/@/views/channel/pre/components/ChannelPre.vue';
+  import ChannelPreBatch from '/@/views/channel/pre/components/ChannelPreBatch.vue';
   import ChannelPreUpd from '/@/views/channel/pre/components/ChannelPreUpd.vue';
   const { createMessage } = useMessage();
   export default defineComponent({
-    components: { ChannelPre, ChannelPreUpd, PageWrapper, BasicTable, TableAction },
+    components: {
+      ChannelPre,
+      ChannelPreBatch,
+      ChannelPreUpd,
+      PageWrapper,
+      BasicTable,
+      TableAction,
+    },
     setup() {
       const [registerModal, { openModal: openM }] = useModal();
+      const [registerBatchModal, { openModal: openBatchM }] = useModal();
       const [registerUpdModal, { openModal: openMUpd }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '预产列表',
@@ -109,6 +120,9 @@
       onMounted(() => {
         // getUser();
       });
+      function batchCreate() {
+        openBatchM(true, {});
+      }
       function handleCreate() {
         openM(true, {});
       }
@@ -131,12 +145,14 @@
         }
       }
       return {
+        batchCreate,
         handleCreate,
         handleDelete,
         handleEdit,
         registerTable,
         registerCountTable,
         registerModal,
+        registerBatchModal,
         registerUpdModal,
         handleSuccess,
       };

@@ -12,10 +12,13 @@ import {
   ChannelShopListGetResultModel,
   ChannelPreParams,
   ChannelShopParams,
-  ChannelAccountListGetResultModel, CountChannelPreListGetResultModel,
+  ChannelAccountListGetResultModel,
+  CountChannelPreListGetResultModel,
 } from '/@/api/channel/model/channelModel';
+import { UploadFileParams } from '/#/axios';
 
 enum Api {
+  UploadChannelPre = '/channel/pre/upload',
   OperationChannelShop = '/channel/shop',
   OperationChannelPre = '/channel/pre',
   CountChannelPreList = '/channel/pre/unUsedCount',
@@ -30,20 +33,48 @@ enum Api {
   SetCAccountStatus = '/channel/CAccount/enable',
 }
 
+export function uploadChannelPre(
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: ProgressEvent) => void,
+) {
+  return defHttp.uploadFile(
+    {
+      url: Api.UploadChannelPre,
+      onUploadProgress,
+    },
+    params,
+  );
+}
+
 export const getChannelPreAccount = (params?: ChannelShopPageParams) =>
-  defHttp.get<ChannelAccountListGetResultModel>({ url: Api.GetChannelPreAccount, params }, { errorMessageMode: 'message' });
+  defHttp.get<ChannelAccountListGetResultModel>(
+    { url: Api.GetChannelPreAccount, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const getChannelPreTypes = (params?: ChannelShopPageParams) =>
-  defHttp.get<ChannelPreListGetResultModel>({ url: Api.GetChannelPreTypes, params }, { errorMessageMode: 'message' });
+  defHttp.get<ChannelPreListGetResultModel>(
+    { url: Api.GetChannelPreTypes, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const getChannelShopTypes = (params?: ChannelShopPageParams) =>
-  defHttp.get<ChannelShopListGetResultModel>({ url: Api.GetChannelShopTypes, params }, { errorMessageMode: 'message' });
+  defHttp.get<ChannelShopListGetResultModel>(
+    { url: Api.GetChannelShopTypes, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const getChannelShopList = (params?: ChannelShopPageParams) =>
-  defHttp.get<ChannelShopListGetResultModel>({ url: Api.OperationChannelShop, params }, { errorMessageMode: 'message' });
+  defHttp.get<ChannelShopListGetResultModel>(
+    { url: Api.OperationChannelShop, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const getChannelPreList = (params?: ChannelPrePageParams) =>
-  defHttp.get<ChannelPreListGetResultModel>({ url: Api.OperationChannelPre, params }, { errorMessageMode: 'message' });
+  defHttp.get<ChannelPreListGetResultModel>(
+    { url: Api.OperationChannelPre, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const countChannelPreList = (params?: ChannelPrePageParams) =>
   defHttp.get<CountChannelPreListGetResultModel>(
@@ -64,7 +95,10 @@ export const updateChannelPre = (params: ChannelPreParams) =>
   defHttp.put({ url: Api.OperationChannelPre, params }, { errorMessageMode: 'message' });
 
 export const setChannelShopStatus = (id: number, status: number) =>
-  defHttp.put({ url: Api.SetChannelShopStatus, params: { id, status } }, { errorMessageMode: 'message' });
+  defHttp.put(
+    { url: Api.SetChannelShopStatus, params: { id, status } },
+    { errorMessageMode: 'message' },
+  );
 
 export const deleteChannelShop = (id: number) =>
   defHttp.delete({ url: Api.OperationChannelShop + '/' + id }, { errorMessageMode: 'message' });
@@ -73,10 +107,16 @@ export const deleteChannelPre = (id: number) =>
   defHttp.delete({ url: Api.OperationChannelPre + '/' + id }, { errorMessageMode: 'message' });
 
 export const getGatewayList = (params?: GatewayPageParams) =>
-  defHttp.get<GatewayListGetResultModel>({ url: Api.OperationGateway, params }, { errorMessageMode: 'message' });
+  defHttp.get<GatewayListGetResultModel>(
+    { url: Api.OperationGateway, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const getCAccountListByPage = (params?: CAccountPageParams) =>
-  defHttp.get<CAccountListGetResultModel>({ url: Api.OperateCAccount, params }, { errorMessageMode: 'message' });
+  defHttp.get<CAccountListGetResultModel>(
+    { url: Api.OperateCAccount, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const deleteCAccount = (id: number) =>
   defHttp.delete({ url: Api.OperateCAccount + '/' + id });
@@ -89,7 +129,10 @@ export const createSdoCAccount = (params?: CAccountParams) =>
   defHttp.post({ url: Api.OperateSdoCAccount, params }, { errorMessageMode: 'message' });
 
 export const setCAccountStatus = (id: number, status: string) =>
-  defHttp.put({ url: Api.SetCAccountStatus, params: { id, status } }, { errorMessageMode: 'message' });
+  defHttp.put(
+    { url: Api.SetCAccountStatus, params: { id, status } },
+    { errorMessageMode: 'message' },
+  );
 
 export const updateCAccount = (params: CAccountParam) =>
   defHttp.put({ url: Api.OperateCAccount, params }, { errorMessageMode: 'message' });
