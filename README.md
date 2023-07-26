@@ -65,7 +65,7 @@ Open the project in Gitpod (free online dev environment for GitHub) and start co
 git clone https://github.com/anncwb/vue-vben-admin.git
 ```
 
-- bao Installation dependencies
+-  Installation dependencies
 
 ```bash
 cd vue-vben-admin
