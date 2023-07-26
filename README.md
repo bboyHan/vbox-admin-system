@@ -65,13 +65,13 @@ Open the project in Gitpod (free online dev environment for GitHub) and start co
 git clone https://github.com/anncwb/vue-vben-admin.git
 ```
 
-- Installation dependencies
+- bao Installation dependencies
 
 ```bash
 cd vue-vben-admin
 
 pnpm install
-
+ 
 ```
 
 - run
