@@ -115,6 +115,11 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '预产剩余',
+    dataIndex: 'pre_count',
+    width: 60,
+  },
+  {
     title: '今充值',
     dataIndex: 'today_cost',
     width: 60,

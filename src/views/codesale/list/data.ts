@@ -49,6 +49,11 @@ export const columns: BasicColumn[] = [
   //   width: 80,
   // },
   {
+    title: '预产剩余',
+    dataIndex: 'pre_count',
+    width: 100,
+  },
+  {
     title: '前日充值',
     dataIndex: 'before_day_cost',
     width: 100,
