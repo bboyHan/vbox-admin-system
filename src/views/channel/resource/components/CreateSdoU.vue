@@ -73,6 +73,21 @@
             defaultValue: '3',
           });
         }
+        if (channelId.value.includes('cy')) {
+          updateSchema({
+            field: 'payType',
+            componentProps: {
+              options: [
+                {
+                  label: '支付宝',
+                  value: '3',
+                  key: '3',
+                },
+              ],
+            },
+            defaultValue: '3',
+          });
+        }
       });
       async function customSubmitFunc() {
         try {

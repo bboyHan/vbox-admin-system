@@ -258,7 +258,7 @@
             if (cid.value == 'jx3_alipay') {
               Img.value = aliImg;
             }
-            if (cid.value.includes('sdo')) {
+            if (cid.value.includes('sdo') || cid.value.includes('cy') || cid.value == 'jx3_alipay_pre') {
               Img.value = aliImg;
             }
             if (cid.value == 'jx3_ali_gift') {

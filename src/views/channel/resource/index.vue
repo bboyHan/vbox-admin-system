@@ -262,6 +262,46 @@
           </CardMeta>
         </Card>
       </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="SDO" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="sendSdo('测试2（支付宝）', 'cy_alipay')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="测试2（支付宝）" description="预产类支付，固额100-1000">
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <img :src="SDO" alt="" style="height: 150px" />
+          </template>
+          <template #actions>
+            <a-button type="text" @click="send('剑三预产（支付宝）', 'jx3_alipay_pre')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="剑三预产（支付宝）" description="预产类支付，固额100-1000">
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
     </Row>
 
     <CreateU @register="register" />

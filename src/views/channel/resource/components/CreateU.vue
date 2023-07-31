@@ -73,7 +73,7 @@
             defaultValue: '3',
           });
         }
-        if (channelId.value == 'jx3_alipay' || channelId.value == 'jx3_ali_gift') {
+        if (channelId.value == 'jx3_alipay' || channelId.value == 'jx3_ali_gift' || channelId.value == 'jx3_alipay_pre') {
           updateSchema({
             field: 'payType',
             componentProps: {

@@ -415,9 +415,9 @@ export const columnsSdo: FormSchema[] = [
     componentProps: {
       options: [
         {
-          label: '微信',
-          value: '1',
-          key: '1',
+          label: '支付宝',
+          value: '3',
+          key: '3',
         },
       ],
     },

@@ -150,9 +150,19 @@
           key: '11',
         },
         {
-          label: '2006-测试（支付宝)',
+          label: '3006-测试（支付宝)',
           value: 'sdo_alipay',
-          key: '11',
+          key: '12',
+        },
+        {
+          label: '3007-测试2（支付宝)',
+          value: 'cy_alipay',
+          key: '13',
+        },
+        {
+          label: '3008-剑三预产（支付宝)',
+          value: 'jx3_alipay_pre',
+          key: '14',
         },
       ];
       return {

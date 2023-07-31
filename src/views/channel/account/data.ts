@@ -195,6 +195,90 @@ export const formModalSchema: FormSchema[] = [
   },
 ];
 
+export const preOrderColumn: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'ID',
+    dynamicDisabled: true,
+    show: false,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'money',
+    label: '金额',
+    component: 'Slider',
+    span: 24,
+    componentProps: {
+      min: 10,
+      max: 2000,
+      step: 10,
+      marks: {
+        100: '￥100',
+        1000: '￥1000',
+      },
+    },
+    colProps: {
+      span: 18,
+    },
+    defaultValue: 100,
+  },
+  {
+    field: 'count',
+    label: '数量',
+    component: 'Slider',
+    span: 24,
+    componentProps: {
+      min: 1,
+      max: 20,
+      step: 1,
+      marks: {
+        3: '3个',
+        10: '10个',
+      },
+    },
+    colProps: {
+      span: 18,
+    },
+    defaultValue: 3,
+  },
+  {
+    field: 'acid',
+    label: '账户id',
+    dynamicDisabled: true,
+    show: true,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'acRemark',
+    label: '账户备注',
+    dynamicDisabled: true,
+    show: true,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'acAccount',
+    label: '充值账户',
+    dynamicDisabled: true,
+    show: true,
+    component: 'Input',
+    span: 24,
+  },
+  {
+    field: 'channel',
+    label: '通道id',
+    dynamicDisabled: true,
+    show: true,
+    component: 'Input',
+    span: 24,
+    colProps: {
+      span: 18,
+    },
+  },
+];
+
 export const mockOrderColumn: FormSchema[] = [
   {
     field: 'id',
