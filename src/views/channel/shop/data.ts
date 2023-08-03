@@ -63,57 +63,57 @@ export const columns: BasicColumn[] = [
   {
     title: '金额',
     dataIndex: 'money',
-    width: 40,
+    width: 80,
   },
-  {
-    title: '商铺地址',
-    dataIndex: 'address',
-    width: 120,
-  },
+  // {
+  //   title: '商铺地址',
+  //   dataIndex: 'address',
+  //   width: 120,
+  // },
   {
     title: '商铺备注',
     dataIndex: 'shopRemark',
-    width: 80,
+    width: 50,
   },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 80,
-  },
-  {
-    title: '开关',
-    dataIndex: 'status',
-    width: 120,
-    customRender: ({ record }) => {
-      if (!Reflect.has(record, 'pendingStatus')) {
-        record.pendingStatus = false;
-      }
-      // console.log(record);
-      return h(Switch, {
-        checked: record.status === 1,
-        checkedChildren: '已启用',
-        unCheckedChildren: '已禁用',
-        loading: record.pendingStatus,
-        onChange(checked: boolean) {
-          record.pendingStatus = true;
-          const newStatus = checked ? 1 : 0;
-          const { createMessage } = useMessage();
-          setChannelShopStatus(record.id, newStatus)
-            .then(() => {
-              record.status = newStatus;
-              createMessage.success(`已成功修改商铺状态`);
-              location.reload();
-            })
-            .catch(() => {
-              createMessage.error('修改商铺状态失败');
-            })
-            .finally(() => {
-              record.pendingStatus = false;
-            });
-        },
-      });
-    },
-  },
+  // {
+  //   title: '创建时间',
+  //   dataIndex: 'createTime',
+  //   width: 80,
+  // },
+  // {
+  //   title: '开关',
+  //   dataIndex: 'status',
+  //   width: 120,
+  //   customRender: ({ record }) => {
+  //     if (!Reflect.has(record, 'pendingStatus')) {
+  //       record.pendingStatus = false;
+  //     }
+  //     // console.log(record);
+  //     return h(Switch, {
+  //       checked: record.status === 1,
+  //       checkedChildren: '已启用',
+  //       unCheckedChildren: '已禁用',
+  //       loading: record.pendingStatus,
+  //       onChange(checked: boolean) {
+  //         record.pendingStatus = true;
+  //         const newStatus = checked ? 1 : 0;
+  //         const { createMessage } = useMessage();
+  //         setChannelShopStatus(record.id, newStatus)
+  //           .then(() => {
+  //             record.status = newStatus;
+  //             createMessage.success(`已成功修改商铺状态`);
+  //             location.reload();
+  //           })
+  //           .catch(() => {
+  //             createMessage.error('修改商铺状态失败');
+  //           })
+  //           .finally(() => {
+  //             record.pendingStatus = false;
+  //           });
+  //       },
+  //     });
+  //   },
+  // },
 ];
 
 export const channelShopUpdColumn: FormSchema[] = [
