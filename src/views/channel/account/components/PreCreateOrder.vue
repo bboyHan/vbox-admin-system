@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { preOrderColumn } from '/@/views/channel/account/data';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { createChannelPre } from '/@/api/channel/channel';
+  import { batchCreateChannelPre } from '/@/api/channel/channel';
 
   export default defineComponent({
     components: { BasicModal, BasicForm },
@@ -53,10 +53,7 @@
 
       async function handleChannelPre(record: Recordable) {
         console.log(record);
-        console.log(record.count);
-        var count = record.count;
-        for (let i = 0; i < count; i++) {
-          createChannelPre(record)
+        batchCreateChannelPre(record)
           .then((res) => {
             console.log(res);
             createMessage.success(`预产建单成功`);
@@ -66,7 +63,20 @@
             createMessage.error('预产建单失败');
             emit('register');
           });
-        }
+        // console.log(record.count);
+        // var count = record.count;
+        // for (let i = 0; i < count; i++) {
+        //   createChannelPre(record)
+        //   .then((res) => {
+        //     console.log(res);
+        //     createMessage.success(`预产建单成功`);
+
+        //   })
+        //   .catch(() => {
+        //     createMessage.error('预产建单失败');
+        //     emit('register');
+        //   });
+        // }
         
       }
 

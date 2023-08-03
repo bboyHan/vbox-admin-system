@@ -285,7 +285,7 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="SDO" alt="" style="height: 150px" />
+            <img :src="JX3" alt="" style="height: 150px" />
           </template>
           <template #actions>
             <a-button type="text" @click="send('剑三预产（支付宝）', 'jx3_alipay_pre')">

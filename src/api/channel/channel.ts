@@ -21,6 +21,7 @@ enum Api {
   UploadChannelPre = '/channel/pre/upload',
   OperationChannelShop = '/channel/shop',
   OperationChannelPre = '/channel/pre',
+  BatchCreateChannelPre = '/channel/pre/batch',
   CountChannelPreList = '/channel/pre/unUsedCount',
   GetChannelPreAccount = '/channel/pre/account',
   GetChannelPreTypes = '/channel/pre/types',
@@ -87,6 +88,9 @@ export const createChannelShop = (params?: ChannelShopParams) =>
 
 export const createChannelPre = (params?: ChannelPreParams) =>
   defHttp.post({ url: Api.OperationChannelPre, params }, { errorMessageMode: 'message' });
+
+export const batchCreateChannelPre = (params?: ChannelPreParams) =>
+defHttp.post({ url: Api.BatchCreateChannelPre, params }, { errorMessageMode: 'message' });
 
 export const updateChannelShop = (params: ChannelShopParams) =>
   defHttp.put({ url: Api.OperationChannelShop, params }, { errorMessageMode: 'message' });
