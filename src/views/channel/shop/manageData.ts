@@ -52,7 +52,7 @@ export const columns: BasicColumn[] = [
             .then(() => {
               record.status = newStatus;
               createMessage.success(`已成功修改商铺状态`);
-              location.reload();
+              // location.reload();
             })
             .catch(() => {
               createMessage.error('修改商铺状态失败');

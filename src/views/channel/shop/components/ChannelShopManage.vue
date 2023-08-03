@@ -109,6 +109,7 @@
           updateChannelShop(record)
             .then(() => {
               createMessage.success(`修改配置成功`);
+              console.log('修改配置成功');
               location.reload();
             })
             .catch(() => {
@@ -148,6 +149,7 @@
       }
 
       function handleSuccess() {
+        console.log('修改配置成功-1');
         reload();
       }
       function handleDelete(record: Recordable) {
