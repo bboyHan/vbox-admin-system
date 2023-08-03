@@ -10,6 +10,11 @@
             <TableAction
               :actions="[
                 {
+                  icon: 'clarity:list-line',
+                  label: '管理',
+                  onClick: handleManage.bind(null, record),
+                },
+                {
                   icon: 'clarity:note-edit-line',
                   label: '修改',
                   onClick: handleEdit.bind(null, record),
@@ -32,6 +37,7 @@
       </BasicTable>
       <ChannelShop @register="registerModal" />
       <ChannelShopUpd @register="registerUpdModal" />
+      <ChannelShopManage @register="registerListManageModal" />
     </div>
   </PageWrapper>
 </template>
@@ -41,19 +47,32 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useModal } from '/@/components/Modal';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { deleteChannelShop, getChannelShopList } from '/@/api/channel/channel';
+  import {
+    deleteChannelShop,
+    getChannelShopList,
+    getMultiChannelShopList,
+  } from '/@/api/channel/channel';
   import { columns } from '/@/views/channel/shop/data';
   import ChannelShop from '/@/views/channel/shop/components/ChannelShop.vue';
   import ChannelShopUpd from '/@/views/channel/shop/components/ChannelShopUpd.vue';
+  import ChannelShopManage from '/@/views/channel/shop/components/ChannelShopManage.vue';
+
   const { createMessage } = useMessage();
   export default defineComponent({
-    components: { ChannelShop, ChannelShopUpd, PageWrapper, BasicTable, TableAction },
+    components: {
+      ChannelShop,
+      ChannelShopUpd,
+      PageWrapper,
+      BasicTable,
+      TableAction,
+      ChannelShopManage,
+    },
     setup() {
       const [registerModal, { openModal: openM }] = useModal();
       const [registerUpdModal, { openModal: openMUpd }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '商铺列表',
-        api: getChannelShopList,
+        api: getMultiChannelShopList,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -68,6 +87,8 @@
           fixed: undefined,
         },
       });
+      const [registerListManageModal, { openModal: openManageM }] = useModal();
+
       function handleSuccess() {
         reload();
       }
@@ -96,13 +117,21 @@
           reload();
         }
       }
+      function handleManage(record: Recordable) {
+        openManageM(true, {
+          record,
+          isUpdate: true,
+        });
+      }
       return {
         handleCreate,
         handleDelete,
         handleEdit,
+        handleManage,
         registerTable,
         registerModal,
         registerUpdModal,
+        registerListManageModal,
         handleSuccess,
       };
     },

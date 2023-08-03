@@ -20,6 +20,8 @@ import { UploadFileParams } from '/#/axios';
 enum Api {
   UploadChannelPre = '/channel/pre/upload',
   OperationChannelShop = '/channel/shop',
+  OperationManageChannelShop = '/channel/shop/remark',
+  OperationMultiChannelShop = '/channel/shop/multi/remark',
   OperationChannelPre = '/channel/pre',
   CountChannelPreList = '/channel/pre/unUsedCount',
   GetChannelPreAccount = '/channel/pre/account',
@@ -67,6 +69,18 @@ export const getChannelShopTypes = (params?: ChannelShopPageParams) =>
 export const getChannelShopList = (params?: ChannelShopPageParams) =>
   defHttp.get<ChannelShopListGetResultModel>(
     { url: Api.OperationChannelShop, params },
+    { errorMessageMode: 'message' },
+  );
+
+export const getManageChannelShopList = (shopRemark?: string) =>
+  defHttp.get<ChannelShopListGetResultModel>(
+    { url: Api.OperationManageChannelShop, params: { shopRemark } },
+    { errorMessageMode: 'message' },
+  );
+
+export const getMultiChannelShopList = (params?: ChannelShopPageParams) =>
+  defHttp.get<ChannelShopListGetResultModel>(
+    { url: Api.OperationMultiChannelShop, params },
     { errorMessageMode: 'message' },
   );
 
