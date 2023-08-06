@@ -126,7 +126,11 @@
                   </div>
                   <hr class="my-4" />
                 </div>
+                <hr class="my-4" />
               </Button>
+              <div style="color: red; font-size: 15px; margin: 10px">
+                温馨提示：1、支付宝付款，如下方出现"继续跳转"、"跳转"等字样，请根据提示【继续点击】，直至支付宝付款页面；
+              </div>
             </div>
           </template>
         </Result>

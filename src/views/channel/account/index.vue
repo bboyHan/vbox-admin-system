@@ -5,6 +5,19 @@
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <TableAction
+              :dropDownActions="[
+                {
+                  label: '修改',
+                  icon: 'clarity:note-edit-line',
+                  onClick: handleEdit.bind(null, record),
+                },
+                {
+                  label: '清码',
+                  icon: 'ic:outline-delete-outline',
+                  onClick: handleDeletePre.bind(null, record),
+                  divider: true,
+                },
+              ]"
               :actions="[
                 // {
                 //   label: '产码配置',
@@ -18,16 +31,10 @@
                 //   icon: 'ant-design:send-outlined',
                 //   onClick: mockCreateOrder.bind(null, record),
                 // },
-                
                 {
                   label: '预产',
                   icon: 'clarity:note-edit-line',
                   onClick: handleCreatePre.bind(null, record),
-                },
-                {
-                  label: '修改',
-                  icon: 'clarity:note-edit-line',
-                  onClick: handleEdit.bind(null, record),
                 },
                 {
                   label: '删除',
@@ -65,7 +72,11 @@
   import ChannelAccountUpd from '/@/views/channel/account/components/ChannelAccountUpd.vue';
   import ChannelTxAccountUpd from '/@/views/channel/account/components/ChannelTxAccountUpd.vue';
   import ChannelSdoAccountUpd from '/@/views/channel/account/components/ChannelSdoAccountUpd.vue';
-  import { deleteCAccount, getCAccountListByPage } from '/@/api/channel/channel';
+  import {
+    deleteCAccount,
+    getCAccountListByPage,
+    deleteChannelPreByACID,
+  } from '/@/api/channel/channel';
   import MockCreateOrder from '/@/views/channel/account/components/MockCreateOrder.vue';
   import PreCreateOrder from '/@/views/channel/account/components/PreCreateOrder.vue';
 
@@ -144,7 +155,10 @@
           createMessage.error(`该账户未正常开启，无法预产`);
           return;
         }
-        if (record.c_channel_id.includes('jx3_alipay_pre')) {
+        if (
+          record.c_channel_id.includes('jx3_alipay_pre') ||
+          record.c_channel_id.includes('sdo_alipay')
+        ) {
           openPreM(true, {
             title: titleDesc,
             id: record.id,
@@ -200,6 +214,22 @@
         reload();
       }
 
+      function handleDeletePre(record: Recordable) {
+        const { createMessage } = useMessage();
+        try {
+          console.log(record);
+          deleteChannelPreByACID(record.acid)
+            .then((ret) => {
+              createMessage.success(`账户清码成功` + ret);
+            })
+            .catch((e) => {
+              createMessage.error('账户清码失败' + e);
+            });
+        } finally {
+          reload();
+        }
+      }
+
       function handleDelete(record: Recordable) {
         const { createMessage } = useMessage();
         try {
@@ -226,6 +256,7 @@
         handleEdit,
         handleCreatePre,
         handleDelete,
+        handleDeletePre,
         handleSuccess,
         prodCodeSetting,
       };

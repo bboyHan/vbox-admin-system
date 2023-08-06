@@ -79,6 +79,7 @@ export type CAccountPageParams = {
 };
 
 export interface CAccountItem {
+  acRemark: any;
   id: string;
   acid: string;
   acAccount: string;

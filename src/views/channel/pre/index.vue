@@ -4,6 +4,7 @@
       <div class="py-8 bg-white flex flex-col justify-center items-center">
         <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5">
           <template #toolbar>
+            <a-button type="primary" @click="batchPre"> 批量产码 </a-button>
             <a-button type="primary" @click="batchCreate"> 批量导入 </a-button>
             <a-button type="primary" @click="handleCreate"> 预产添加 </a-button>
           </template>
@@ -35,6 +36,7 @@
 
         <ChannelPre @register="registerModal" />
         <ChannelPreBatch @register="registerBatchModal" />
+        <ChannelPreBatchPre @register="registerBatchPreModal" />
         <ChannelPreUpd @register="registerUpdModal" />
       </div>
     </PageWrapper>
@@ -51,12 +53,15 @@
   import { columns, countPreColums } from '/@/views/channel/pre/data';
   import ChannelPre from '/@/views/channel/pre/components/ChannelPre.vue';
   import ChannelPreBatch from '/@/views/channel/pre/components/ChannelPreBatch.vue';
+  import ChannelPreBatchPre from '/src/views/channel/pre/components/ChannelPreBatchAcList.vue';
   import ChannelPreUpd from '/@/views/channel/pre/components/ChannelPreUpd.vue';
+  import { searchFormPre } from '/@/views/channel/pre/data';
   const { createMessage } = useMessage();
   export default defineComponent({
     components: {
       ChannelPre,
       ChannelPreBatch,
+      ChannelPreBatchPre,
       ChannelPreUpd,
       PageWrapper,
       BasicTable,
@@ -65,6 +70,7 @@
     setup() {
       const [registerModal, { openModal: openM }] = useModal();
       const [registerBatchModal, { openModal: openBatchM }] = useModal();
+      const [registerBatchPreModal, { openModal: openBatchPreM }] = useModal();
       const [registerUpdModal, { openModal: openMUpd }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '预产列表',
@@ -72,7 +78,9 @@
         columns,
         formConfig: {
           labelWidth: 120,
+          schemas: searchFormPre,
         },
+        useSearchForm: true,
         showTableSetting: true,
         bordered: true,
         showIndexColumn: true,
@@ -99,7 +107,7 @@
 
       function handleSummary(tableData: Recordable[]) {
         const totalNo = tableData.reduce((prev, next) => {
-          console.log(next);
+          // console.log(next);
           prev += next.count;
           return prev;
         }, 0);
@@ -120,6 +128,9 @@
       onMounted(() => {
         // getUser();
       });
+      function batchPre() {
+        openBatchPreM(true, {});
+      }
       function batchCreate() {
         openBatchM(true, {});
       }
@@ -145,6 +156,7 @@
         }
       }
       return {
+        batchPre,
         batchCreate,
         handleCreate,
         handleDelete,
@@ -153,6 +165,7 @@
         registerCountTable,
         registerModal,
         registerBatchModal,
+        registerBatchPreModal,
         registerUpdModal,
         handleSuccess,
       };

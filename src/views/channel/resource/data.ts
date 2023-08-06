@@ -337,6 +337,19 @@ export const columnsSdo: FormSchema[] = [
     required: true,
   },
   {
+    field: 'ac_pwd',
+    component: 'InputPassword',
+    label: '充值密码',
+    helpMessage: ['充值密码, 用于账户充值的密码确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实密码，务必核对正确',
+    },
+    required: true,
+  },
+  {
     field: 'ck',
     component: 'InputTextArea',
     label: 'CK',

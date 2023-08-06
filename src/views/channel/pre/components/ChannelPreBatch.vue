@@ -6,7 +6,6 @@
     @visible-change="handleVisibleChange"
     @ok="customSubmitFunc"
     width="1000px"
-    :footer="false"
   >
     <div class="pt-3px pr-3px">
       <BasicForm @register="registerForm" :model="model" />

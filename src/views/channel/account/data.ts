@@ -204,44 +204,56 @@ export const preOrderColumn: FormSchema[] = [
     component: 'Input',
     span: 24,
   },
+  // {
+  //   field: 'money',
+  //   label: '金额',
+  //   component: 'Slider',
+  //   span: 24,
+  //   componentProps: {
+  //     min: 10,
+  //     max: 2000,
+  //     step: 10,
+  //     marks: {
+  //       100: '￥100',
+  //       1000: '￥1000',
+  //     },
+  //   },
+  //   colProps: {
+  //     span: 18,
+  //   },
+  //   defaultValue: 100,
+  // },
   {
     field: 'money',
     label: '金额',
-    component: 'Slider',
-    span: 24,
-    componentProps: {
-      min: 10,
-      max: 2000,
-      step: 10,
-      marks: {
-        100: '￥100',
-        1000: '￥1000',
-      },
-    },
-    colProps: {
-      span: 18,
-    },
-    defaultValue: 100,
+    component: 'InputNumber',
+    defaultValue: 200,
   },
   {
     field: 'count',
     label: '数量',
-    component: 'Slider',
-    span: 24,
-    componentProps: {
-      min: 1,
-      max: 20,
-      step: 1,
-      marks: {
-        3: '3个',
-        10: '10个',
-      },
-    },
-    colProps: {
-      span: 18,
-    },
+    component: 'InputNumber',
     defaultValue: 3,
   },
+  // {
+  //   field: 'count',
+  //   label: '数量',
+  //   component: 'Slider',
+  //   span: 24,
+  //   componentProps: {
+  //     min: 1,
+  //     max: 20,
+  //     step: 1,
+  //     marks: {
+  //       3: '3个',
+  //       10: '10个',
+  //     },
+  //   },
+  //   colProps: {
+  //     span: 18,
+  //   },
+  //   defaultValue: 3,
+  // },
   {
     field: 'acid',
     label: '账户id',
@@ -604,30 +616,18 @@ export const caUpdSdoColumn: FormSchema[] = [
     dynamicDisabled: true,
     // required: true,
   },
-  // {
-  //   field: 'openId',
-  //   component: 'Input',
-  //   label: 'openId',
-  //   helpMessage: ['从ck工具中获取查看'],
-  //   colProps: {
-  //     span: 24,
-  //   },
-  //   componentProps: {
-  //     placeholder: '请输入ck工具中的openID，务必核对正确',
-  //   },
-  // },
-  // {
-  //   field: 'openKey',
-  //   component: 'Input',
-  //   label: 'openKey',
-  //   helpMessage: ['从ck工具中获取查看'],
-  //   colProps: {
-  //     span: 24,
-  //   },
-  //   componentProps: {
-  //     placeholder: '请输入ck工具中的openKey，务必核对正确',
-  //   },
-  // },
+  {
+    field: 'ac_pwd',
+    component: 'InputPassword',
+    label: '充值密码',
+    helpMessage: ['充值账户密码, 用于账户充值的密码确认'],
+    colProps: {
+      span: 24,
+    },
+    componentProps: {
+      placeholder: '请输入用于账户充值的真实密码，务必核对正确',
+    },
+  },
   {
     field: 'ck',
     component: 'InputTextArea',
