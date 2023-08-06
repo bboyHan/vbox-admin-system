@@ -23,6 +23,7 @@ enum Api {
   OperationManageChannelShop = '/channel/shop/remark',
   OperationMultiChannelShop = '/channel/shop/multi/remark',
   OperationChannelPre = '/channel/pre',
+  OperationChannelAddress = '/channel/shop/address',
   CountChannelPreList = '/channel/pre/unUsedCount',
   GetChannelPreAccount = '/channel/pre/account',
   GetChannelPreTypes = '/channel/pre/types',
@@ -32,6 +33,7 @@ enum Api {
   OperateTxCAccount = '/channel/txCAccount',
   OperateSdoCAccount = '/channel/sdoCAccount',
   SetChannelShopStatus = '/channel/shop/enable',
+  SetMultiChannelShopStatus = '/channel/shop/multi/enable',
   SetCAccountStatus = '/channel/CAccount/enable',
 }
 
@@ -107,6 +109,18 @@ export const updateChannelShop = (params: ChannelShopParams) =>
 
 export const updateChannelPre = (params: ChannelPreParams) =>
   defHttp.put({ url: Api.OperationChannelPre, params }, { errorMessageMode: 'message' });
+
+export const updateShopAddress = (id: number, address: string) =>
+  defHttp.put(
+    { url: Api.OperationChannelAddress, params: { id, address } },
+    { errorMessageMode: 'message' },
+  );
+
+export const setMultiChannelShopStatus = (shopRemark: string, status: number) =>
+  defHttp.put(
+    { url: Api.SetMultiChannelShopStatus, params: { shopRemark, status } },
+    { errorMessageMode: 'message' },
+  );
 
 export const setChannelShopStatus = (id: number, status: number) =>
   defHttp.put(

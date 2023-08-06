@@ -10,7 +10,13 @@
     :height="500"
   >
     <div class="py-8 bg-white flex flex-col justify-center items-center">
-      <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5">
+      <BasicTable
+        @register="registerTable"
+        @edit-end="handleEditEnd"
+        @edit-cancel="handleEditCancel"
+        :beforeEditSubmit="beforeEditSubmit"
+        class="w-4/4 xl:w-5/5"
+      >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <TableAction
@@ -46,6 +52,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import {
     updateChannelShop,
+    updateShopAddress,
     getManageChannelShopList,
     deleteChannelShop,
   } from '/@/api/channel/channel';
@@ -127,6 +134,7 @@
         formTitle.value = data.record.title;
         shopRemark.value = data.record.shopRemark;
         console.log('shuchu ' + data.record.shopRemark);
+        // debugger;
         reload(); // 重新加载表格数据
       }
       const [register] = useModalInner((data) => {
@@ -164,6 +172,65 @@
           reload();
         }
       }
+
+      function handleEditEnd({ record, index, key, value }: Recordable) {
+        console.log(record, index, key, value);
+        return false;
+      }
+
+      // 模拟将指定数据保存
+      function feakSave({ value, key, id }) {
+        // debugger;
+        createMessage.loading({
+          content: `正在保存${key}`,
+          key: '_save_fake_data',
+          duration: 0,
+        });
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log(resolve);
+            if (value === '') {
+              createMessage.error({
+                content: '保存失败：不能为空',
+                key: '_save_fake_data',
+                duration: 2,
+              });
+              resolve(false);
+            } else {
+              createMessage.success({
+                content: `记录${id}的${key}已保存`,
+                key: '_save_fake_data',
+                duration: 2,
+              });
+              resolve(true);
+            }
+          }, 2000);
+        });
+      }
+
+      async function beforeEditSubmit({ record, index, key, value }) {
+        console.log('单元格数据正在准备提交', { record, index, key, value });
+        console.log('record.id:' + record.id);
+        try {
+          updateShopAddress(record.id, value)
+            .then(() => {
+              createMessage.success(`修改地址成功`);
+              console.log('修改地址成功');
+            })
+            .catch(() => {
+              createMessage.error('修改地址失败');
+              emit('register');
+            });
+        } catch (e) {
+          createMessage.error('修改地址失败');
+        } finally {
+        }
+        return await feakSave({ id: record.id, key, value });
+      }
+
+      function handleEditCancel() {
+        console.log('cancel');
+      }
       return {
         register,
         registerForm,
@@ -175,6 +242,10 @@
         registerTable,
         handleSuccess,
         handleDelete,
+
+        handleEditEnd,
+        handleEditCancel,
+        beforeEditSubmit,
       };
     },
   });
