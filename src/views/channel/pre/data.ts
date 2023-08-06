@@ -4,6 +4,64 @@ import { getChannelPreTypes, getChannelPreAccount, uploadChannelPre } from '/@/a
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 
+export const searchFormPre: FormSchema[] = [
+  {
+    field: 'money',
+    label: '金额',
+    component: 'Input',
+    colProps: { span: 6 },
+  },
+  {
+    field: 'status',
+    label: '取码状态',
+    component: 'Select',
+    colProps: { span: 4 },
+    componentProps: {
+      options: [
+        {
+          label: '已取码',
+          value: '1',
+          key: '1',
+        },
+        {
+          label: '未取码',
+          value: '2',
+          key: '2',
+        },
+        {
+          label: '置灰',
+          value: '3',
+          key: '3',
+        },
+        {
+          label: '取码超时',
+          value: '4',
+          key: '4',
+        },
+      ],
+    },
+  },
+  {
+    field: 'channel',
+    label: '通道',
+    component: 'Select',
+    colProps: { span: 4 },
+    componentProps: {
+      options: [
+        {
+          label: '剑三',
+          value: 'jx3_alipay_pre',
+          key: '1',
+        },
+        {
+          label: '盛趣',
+          value: 'sdo_alipay',
+          key: '2',
+        },
+      ],
+    },
+  },
+];
 export const preBatchColumns: FormSchema[] = [
   {
     field: 'file1',
@@ -22,11 +80,115 @@ export const preBatchColumns: FormSchema[] = [
     component: 'Input',
     label: '格式说明',
     required: true,
-    defaultValue: 'test@example.com',
+    defaultValue: '联系管理员要上传模板',
     colProps: {
       span: 24,
     },
     dynamicDisabled: true,
+  },
+];
+
+export const preBatchPreAcListColumns: FormSchema[] = [
+  {
+    field: 'money',
+    component: 'InputNumber',
+    label: '设定金额',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+    defaultValue: 100,
+  },
+  {
+    field: 'count',
+    component: 'InputNumber',
+    label: '产码数量',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+    defaultValue: 3,
+  },
+  {
+    label: '引导方式',
+    field: 'channel',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getChannelPreTypes,
+      labelField: 'cchannelName',
+      valueField: 'cchannelId',
+      immediate: false,
+    },
+    // required: true,
+    colProps: {
+      span: 24,
+    },
+    // rules: [{ required: true, trigger: 'blur' }],
+  },
+  {
+    label: '充值账户',
+    field: 'acidList',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: [
+        {
+          label: '选项1',
+          value: '1',
+        },
+        {
+          label: '选项2',
+          value: '2',
+        },
+      ],
+    },
+    // required: true,
+    colProps: {
+      span: 24,
+    },
+    // rules: [{ required: true, trigger: 'blur' }],
+  },
+];
+
+export const preBatchPreColumns: FormSchema[] = [
+  {
+    field: 'money',
+    component: 'InputNumber',
+    label: '设定金额',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+    defaultValue: 100,
+  },
+  {
+    field: 'count',
+    component: 'InputNumber',
+    label: '产码数量',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+    defaultValue: 3,
+  },
+  {
+    label: '引导方式',
+    field: 'channel',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getChannelPreTypes,
+      labelField: 'cchannelName',
+      valueField: 'cchannelId',
+      immediate: false,
+    },
+    // required: true,
+    colProps: {
+      span: 24,
+    },
+    // rules: [{ required: true, trigger: 'blur' }],
   },
 ];
 
@@ -128,6 +290,10 @@ export const countPreColums: BasicColumn[] = [
         text = '未取码';
       }
       if (status == 3) {
+        color = '#a5abb4';
+        text = '取码置灰';
+      }
+      if (status == 4) {
         color = '#108ee9';
         text = '取码超时';
       }
@@ -175,7 +341,7 @@ export const columns: BasicColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
-    width: 80,
+    width: 40,
     customRender: ({ record }) => {
       const status = record.status;
       let color, text;
@@ -189,9 +355,13 @@ export const columns: BasicColumn[] = [
       }
       if (status == 2) {
         color = '#E99D10FF';
-        text = '未取码';
+        text = '等待取码';
       }
       if (status == 3) {
+        color = '#a5abb4';
+        text = '取码置灰';
+      }
+      if (status == 4) {
         color = '#108ee9';
         text = '取码超时';
       }

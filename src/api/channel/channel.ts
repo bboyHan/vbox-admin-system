@@ -24,8 +24,10 @@ enum Api {
   OperationMultiChannelShop = '/channel/shop/multi/remark',
   OperationChannelPre = '/channel/pre',
   BatchCreateChannelPre = '/channel/pre/batch',
+  BatchCreateChannelPreAcList = '/channel/pre/batch/acList',
   OperationChannelAddress = '/channel/shop/address',
   CountChannelPreList = '/channel/pre/unUsedCount',
+  ClearChannelPre = '/channel/pre/clear',
   GetChannelPreAccount = '/channel/pre/account',
   GetChannelPreTypes = '/channel/pre/types',
   GetChannelShopTypes = '/channel/shop/types',
@@ -54,6 +56,12 @@ export function uploadChannelPre(
 export const getChannelPreAccount = (params?: ChannelShopPageParams) =>
   defHttp.get<ChannelAccountListGetResultModel>(
     { url: Api.GetChannelPreAccount, params },
+    { errorMessageMode: 'message' },
+  );
+
+export const getChannelPreAccountByChannel = (params?: string) =>
+  defHttp.get<ChannelAccountListGetResultModel>(
+    { url: Api.GetChannelPreAccount + '/' + params },
     { errorMessageMode: 'message' },
   );
 
@@ -108,6 +116,9 @@ export const createChannelPre = (params?: ChannelPreParams) =>
 export const batchCreateChannelPre = (params?: ChannelPreParams) =>
   defHttp.post({ url: Api.BatchCreateChannelPre, params }, { errorMessageMode: 'message' });
 
+export const batchCreateChannelPreAcList = (params?: ChannelPreParams) =>
+  defHttp.post({ url: Api.BatchCreateChannelPreAcList, params }, { errorMessageMode: 'message' });
+
 export const updateChannelShop = (params: ChannelShopParams) =>
   defHttp.put({ url: Api.OperationChannelShop, params }, { errorMessageMode: 'message' });
 
@@ -152,6 +163,10 @@ export const getCAccountListByPage = (params?: CAccountPageParams) =>
 
 export const deleteCAccount = (id: number) =>
   defHttp.delete({ url: Api.OperateCAccount + '/' + id });
+
+export const deleteChannelPreByACID = (acid: string) =>
+  defHttp.delete({ url: Api.ClearChannelPre + '/' + acid });
+
 export const createCAccount = (params?: CAccountParams) =>
   defHttp.post({ url: Api.OperateCAccount, params }, { errorMessageMode: 'message' });
 

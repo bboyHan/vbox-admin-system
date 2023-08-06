@@ -57,7 +57,6 @@
           .then((res) => {
             console.log(res);
             createMessage.success(`预产建单成功`);
-
           })
           .catch(() => {
             createMessage.error('预产建单失败');

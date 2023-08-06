@@ -248,14 +248,14 @@
             <img :src="SDO" alt="" style="height: 150px" />
           </template>
           <template #actions>
-            <a-button type="text" @click="sendSdo('测试（支付宝）', 'sdo_alipay')">
+            <a-button type="text" @click="sendSdo('盛趣（支付宝）', 'sdo_alipay')">
               添加帐号
             </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="测试（支付宝）" description="预产类支付，固额50，100，200，300，500">
+          <CardMeta title="盛趣（支付宝）" description="预产类支付，固额50，100，200，300，500">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
@@ -268,14 +268,14 @@
             <img :src="SDO" alt="" style="height: 150px" />
           </template>
           <template #actions>
-            <a-button type="text" @click="sendSdo('测试2（支付宝）', 'cy_alipay')">
+            <a-button type="text" @click="sendSdo('畅游（支付宝）', 'cy_alipay')">
               添加帐号
             </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="测试2（支付宝）" description="预产类支付，固额100-1000">
+          <CardMeta title="畅游（支付宝）" description="预产类支付，固额100-1000">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
