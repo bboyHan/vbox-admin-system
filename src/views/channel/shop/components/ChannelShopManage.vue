@@ -152,7 +152,6 @@
       });
 
       function handleVisibleChange(v) {
-        console.log(v);
         v && props.userData && nextTick(() => onDataReceive(props.userData));
       }
 

@@ -63,7 +63,7 @@ export const columns: BasicColumn[] = [
   {
     title: '金额',
     dataIndex: 'money',
-    width: 80,
+    width: 100,
   },
   // {
   //   title: '商铺地址',
@@ -73,7 +73,7 @@ export const columns: BasicColumn[] = [
   {
     title: '商铺备注',
     dataIndex: 'shopRemark',
-    width: 50,
+    width: 80,
   },
   // {
   //   title: '创建时间',
@@ -83,7 +83,7 @@ export const columns: BasicColumn[] = [
   {
     title: '开关',
     dataIndex: 'status',
-    width: 120,
+    width: 80,
     customRender: ({ record }) => {
       if (!Reflect.has(record, 'pendingStatus')) {
         record.pendingStatus = false;
@@ -115,6 +115,35 @@ export const columns: BasicColumn[] = [
         },
       });
     },
+  },
+  {
+    title: '开启个数',
+    dataIndex: 'openAndClose',
+    width: 80,
+    // customRender: ({ record }) => {
+    //   const count = ref('');
+    //   const { createMessage } = useMessage();
+    //   watch(
+    //     () => record.shopRemark,
+    //     () => {
+    //       fetchDataCount(record.shopRemark);
+    //     },
+    //   );
+
+    //   const fetchDataCount = (shopRemark) => {
+    //     // 调用接口获取数据条数
+    //     // 这里假设调用的接口为getDataCount
+    //     getOpenMarkDataCount(shopRemark)
+    //       .then((response) => {
+    //         count.value = response.data.count;
+    //       })
+    //       .catch(() => {
+    //         createMessage.error('获取数据条数失败');
+    //       });
+    //   };
+
+    //   return count;
+    // },
   },
 ];
 

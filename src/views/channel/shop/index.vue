@@ -14,11 +14,11 @@
                   label: '管理',
                   onClick: handleManage.bind(null, record),
                 },
-                {
-                  icon: 'clarity:note-edit-line',
-                  label: '修改',
-                  onClick: handleEdit.bind(null, record),
-                },
+                // {
+                //   icon: 'clarity:note-edit-line',
+                //   label: '修改',
+                //   onClick: handleEdit.bind(null, record),
+                // },
                 {
                   icon: 'ant-design:delete-outlined',
                   color: 'error',
@@ -48,7 +48,7 @@
   import { useModal } from '/@/components/Modal';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import {
-    deleteChannelShop,
+    deleteChannelShopByShopRemark,
     getChannelShopList,
     getMultiChannelShopList,
   } from '/@/api/channel/channel';
@@ -108,9 +108,10 @@
       function handleDelete(record: Recordable) {
         try {
           console.log(record);
-          let ret = deleteChannelShop(record.id);
+          let ret = deleteChannelShopByShopRemark(record.shopRemark);
           console.log(ret);
           createMessage.success(`删除商铺成功`);
+          reload();
         } catch (e) {
           createMessage.error('删除商铺失败');
         } finally {

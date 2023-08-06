@@ -131,6 +131,12 @@ export const setChannelShopStatus = (id: number, status: number) =>
 export const deleteChannelShop = (id: number) =>
   defHttp.delete({ url: Api.OperationChannelShop + '/' + id }, { errorMessageMode: 'message' });
 
+export const deleteChannelShopByShopRemark = (shopRemark: string) =>
+  defHttp.delete(
+    { url: Api.OperationChannelShop + '/mark/' + shopRemark },
+    { errorMessageMode: 'message' },
+  );
+
 export const deleteChannelPre = (id: number) =>
   defHttp.delete({ url: Api.OperationChannelPre + '/' + id }, { errorMessageMode: 'message' });
 
