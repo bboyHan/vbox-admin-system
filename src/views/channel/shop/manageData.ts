@@ -6,6 +6,12 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 export const columns: BasicColumn[] = [
   {
+    title: 'ID',
+    dataIndex: 'id',
+    // ifShow: false,
+    width: 40,
+  },
+  {
     title: '通道',
     dataIndex: 'channel',
     width: 40,
@@ -18,8 +24,10 @@ export const columns: BasicColumn[] = [
   {
     title: '商铺地址',
     dataIndex: 'address',
+    edit: true,
     width: 120,
   },
+
   {
     title: '商铺备注',
     dataIndex: 'shopRemark',
