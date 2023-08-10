@@ -3,7 +3,12 @@ import { setChannelShopStatus } from '/@/api/channel/channel';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
 import { useMessage } from '/@/hooks/web/useMessage';
-
+const channelMapping: Record<string, string> = {
+  tx_tb: '淘宝',
+  tx_dy: '抖音',
+  tx_jd: '京东',
+  tx_zfb: '支付宝小程序',
+};
 export const columns: BasicColumn[] = [
   {
     title: 'ID',
@@ -14,6 +19,7 @@ export const columns: BasicColumn[] = [
   {
     title: '通道',
     dataIndex: 'channel',
+    customRender: ({ text }) => channelMapping[text] || text,
     width: 40,
   },
   {

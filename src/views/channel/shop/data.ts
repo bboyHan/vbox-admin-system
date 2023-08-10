@@ -5,6 +5,35 @@ import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
 import { useMessage } from '/@/hooks/web/useMessage';
 
+export const shopBasicColumns: FormSchema[] = [
+  {
+    label: '商铺名称',
+    field: 'shopRemark',
+    component: 'Input',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+  },
+  {
+    label: '引导方式',
+    field: 'channel',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getChannelShopTypes,
+      labelField: 'cchannelName',
+      valueField: 'cchannelId',
+      immediate: false,
+    },
+    // required: true,
+    colProps: {
+      span: 24,
+    },
+    // rules: [{ required: true, trigger: 'blur' }],
+  },
+];
+
 export const shopColumns: FormSchema[] = [
   {
     field: 'money',
@@ -58,7 +87,8 @@ export const columns: BasicColumn[] = [
   {
     title: '通道',
     dataIndex: 'channel',
-    width: 40,
+    customRender: ({ text }) => channelMapping[text] || text,
+    width: 50,
   },
   {
     title: '金额',
@@ -146,7 +176,20 @@ export const columns: BasicColumn[] = [
     // },
   },
 ];
+// enum Channel {
+//   TX = 'tx',
+//   CH1 = '1',
+//   CH2 = '2',
+//   CH3 = '3',
+// }
 
+// 创建一个映射对象
+const channelMapping: Record<string, string> = {
+  tx_tb: '淘宝',
+  tx_dy: '抖音',
+  tx_jd: '京东',
+  tx_zfb: '支付宝小程序',
+};
 export const channelShopUpdColumn: FormSchema[] = [
   {
     field: 'id',
@@ -200,3 +243,74 @@ export const channelShopUpdColumn: FormSchema[] = [
     },
   },
 ];
+
+export function getBasicColumns(): BasicColumn[] {
+  return [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      fixed: 'left',
+      width: 200,
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      width: 150,
+      filters: [
+        { text: 'Male', value: 'male' },
+        { text: 'Female', value: 'female' },
+      ],
+    },
+    {
+      title: '地址',
+      dataIndex: 'address',
+    },
+    // {
+    //   title: '编号',
+    //   dataIndex: 'no',
+    //   width: 150,
+    //   sorter: true,
+    //   defaultHidden: true,
+    // },
+    {
+      title: '开始时间',
+      width: 150,
+      sorter: true,
+      dataIndex: 'beginTime',
+    },
+    {
+      title: '结束时间',
+      width: 150,
+      sorter: true,
+      dataIndex: 'endTime',
+    },
+  ];
+}
+export function getTreeTableData() {
+  return (() => {
+    const arr: any = [];
+    for (let index = 0; index < 40; index++) {
+      arr.push({
+        id: `${index}`,
+        name: 'John Brown',
+        age: `1${index}`,
+        // no: `${index + 10}`,
+        address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
+        beginTime: new Date().toLocaleString(),
+        endTime: new Date().toLocaleString(),
+        children: [
+          {
+            id: `l2-${index}`,
+            name: 'John Brown',
+            age: `1${index}`,
+            no: `${index + 10}`,
+            address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
+            beginTime: new Date().toLocaleString(),
+            endTime: new Date().toLocaleString(),
+          },
+        ],
+      });
+    }
+    return arr;
+  })();
+}

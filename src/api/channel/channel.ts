@@ -22,6 +22,7 @@ enum Api {
   OperationChannelShop = '/channel/shop',
   OperationManageChannelShop = '/channel/shop/remark',
   OperationMultiChannelShop = '/channel/shop/multi/remark',
+  OperationMultiTreeChannelShop = '/channel/shop/multi/tree/remark',
   OperationChannelPre = '/channel/pre',
   BatchCreateChannelPre = '/channel/pre/batch',
   BatchCreateChannelPreAcList = '/channel/pre/batch/acList',
@@ -92,6 +93,12 @@ export const getManageChannelShopList = (shopRemark?: string) =>
 export const getMultiChannelShopList = (params?: ChannelShopPageParams) =>
   defHttp.get<ChannelShopListGetResultModel>(
     { url: Api.OperationMultiChannelShop, params },
+    { errorMessageMode: 'message' },
+  );
+
+export const getMultiTreeChannelShopList = (params?: ChannelShopPageParams) =>
+  defHttp.get<ChannelShopListGetResultModel>(
+    { url: Api.OperationMultiTreeChannelShop, params },
     { errorMessageMode: 'message' },
   );
 
