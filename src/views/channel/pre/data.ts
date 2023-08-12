@@ -1,6 +1,11 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { getChannelPreTypes, getChannelPreAccount, uploadChannelPre } from '/@/api/channel/channel';
+import {
+  getChannelPreTypes,
+  getChannelPreAccount,
+  uploadChannelPre,
+  uploadChannelAccount,
+} from '/@/api/channel/channel';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 
@@ -88,6 +93,33 @@ export const preBatchColumns: FormSchema[] = [
   },
 ];
 
+export const accountBatchColumns: FormSchema[] = [
+  {
+    field: 'file1',
+    component: 'Upload',
+    label: '点它上传',
+    colProps: {
+      span: 24,
+    },
+    rules: [{ required: true, message: '请选择上传文件，仅支持excel格式' }],
+    componentProps: {
+      api: uploadChannelAccount,
+    },
+  },
+  {
+    field: 'fac',
+    component: 'Input',
+    label: '格式说明',
+    required: true,
+    defaultValue: '联系管理员要上传模板',
+    colProps: {
+      span: 24,
+    },
+    dynamicDisabled: true,
+  },
+];
+
+
 export const preBatchPreAcListColumns: FormSchema[] = [
   {
     field: 'money',
@@ -151,38 +183,22 @@ export const preBatchPreAcListColumns: FormSchema[] = [
   },
 ];
 
-export const preBatchPreColumns: FormSchema[] = [
+export const delBatchAcListColumns: FormSchema[] = [
   {
-    field: 'money',
-    component: 'InputNumber',
-    label: '设定金额',
-    // helpMessage: ['积分充值, 最小为100的倍数'],
-    colProps: {
-      span: 24,
-    },
-    required: false,
-    defaultValue: 100,
-  },
-  {
-    field: 'count',
-    component: 'InputNumber',
-    label: '产码数量',
-    // helpMessage: ['积分充值, 最小为100的倍数'],
-    colProps: {
-      span: 24,
-    },
-    required: false,
-    defaultValue: 3,
-  },
-  {
-    label: '引导方式',
-    field: 'channel',
-    component: 'ApiSelect',
+    label: '充值账户',
+    field: 'acidList',
+    component: 'CheckboxGroup',
     componentProps: {
-      api: getChannelPreTypes,
-      labelField: 'cchannelName',
-      valueField: 'cchannelId',
-      immediate: false,
+      options: [
+        {
+          label: '选项1',
+          value: '1',
+        },
+        {
+          label: '选项2',
+          value: '2',
+        },
+      ],
     },
     // required: true,
     colProps: {
@@ -194,7 +210,7 @@ export const preBatchPreColumns: FormSchema[] = [
 
 export const preColumns: FormSchema[] = [
   {
-    label: '充值账户',
+    label: '通道账户',
     field: 'acid',
     component: 'Input',
     componentProps: {

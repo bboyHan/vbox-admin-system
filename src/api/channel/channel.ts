@@ -18,6 +18,7 @@ import {
 import { UploadFileParams } from '/#/axios';
 
 enum Api {
+  UploadChannelAccount = '/channel/CAccount/upload',
   UploadChannelPre = '/channel/pre/upload',
   OperationChannelShop = '/channel/shop',
   BatchCreateChannelShop = '/channel/shop/batch',
@@ -26,10 +27,11 @@ enum Api {
   OperationMultiTreeChannelShop = '/channel/shop/multi/tree/remark',
   OperationChannelPre = '/channel/pre',
   BatchCreateChannelPre = '/channel/pre/batch',
-  BatchCreateChannelPreAcList = '/channel/pre/batch/acList',
+  BatchCreateChannelPreAcList = '/channel/CAccount/batch/acList',
   OperationChannelAddress = '/channel/shop/address',
   CountChannelPreList = '/channel/pre/unUsedCount',
   ClearChannelPre = '/channel/pre/clear',
+  GetChannelAccount = '/channel/all/CAccount',
   GetChannelPreAccount = '/channel/pre/account',
   GetChannelPreTypes = '/channel/pre/types',
   GetChannelShopTypes = '/channel/shop/types',
@@ -40,6 +42,19 @@ enum Api {
   SetChannelShopStatus = '/channel/shop/enable',
   SetMultiChannelShopStatus = '/channel/shop/multi/enable',
   SetCAccountStatus = '/channel/CAccount/enable',
+}
+
+export function uploadChannelAccount(
+  params: UploadFileParams,
+  onUploadProgress: (progressEvent: ProgressEvent) => void,
+) {
+  return defHttp.uploadFile(
+    {
+      url: Api.UploadChannelAccount,
+      onUploadProgress,
+    },
+    params,
+  );
 }
 
 export function uploadChannelPre(
@@ -54,6 +69,12 @@ export function uploadChannelPre(
     params,
   );
 }
+
+export const getChannelAccount = (params?: ChannelShopPageParams) =>
+  defHttp.get<ChannelAccountListGetResultModel>(
+    { url: Api.GetChannelAccount, params },
+    { errorMessageMode: 'message' },
+  );
 
 export const getChannelPreAccount = (params?: ChannelShopPageParams) =>
   defHttp.get<ChannelAccountListGetResultModel>(
@@ -129,6 +150,9 @@ export const batchCreateChannelPre = (params?: ChannelPreParams) =>
 
 export const batchCreateChannelPreAcList = (params?: ChannelPreParams) =>
   defHttp.post({ url: Api.BatchCreateChannelPreAcList, params }, { errorMessageMode: 'message' });
+
+export const batchDeleteChannelAcList = (params?: ChannelPreParams) =>
+  defHttp.delete({ url: Api.BatchCreateChannelPreAcList, params }, { errorMessageMode: 'message' });
 
 export const updateChannelShop = (params: ChannelShopParams) =>
   defHttp.put({ url: Api.OperationChannelShop, params }, { errorMessageMode: 'message' });

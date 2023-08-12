@@ -30,9 +30,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="JX3" alt="" style="height: 150px" />
+<!--            <img :src="JX3" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑网3（微信端）', 'jx3_weixin')">
               添加帐号
             </a-button>
@@ -50,9 +51,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="JX3" alt="" style="height: 150px" />
+<!--            <img :src="JX3" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑网3（支付宝端）', 'jx3_alipay')">
               添加帐号
             </a-button>
@@ -70,9 +72,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="JX3" alt="" style="height: 150px" />
+<!--            <img :src="JX3" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑网3（京东端）', 'jx3_jd')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -88,9 +91,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="TH" alt="" style="height: 150px" />
+<!--            <img :src="TH" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑网3（特惠礼盒）', 'jx3_ali_gift')">
               添加帐号
             </a-button>
@@ -108,9 +112,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="TH" alt="" style="height: 150px" />
+<!--            <img :src="TH" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑网3（特惠礼盒）', 'jx3_wx_gift')">
               添加帐号
             </a-button>
@@ -128,9 +133,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="JX3" alt="" style="height: 150px" />
+<!--            <img :src="JX3" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑网3（微信扫码端）', 'jx3_weixin_qr')">
               添加帐号
             </a-button>
@@ -148,9 +154,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="QQ" alt="" style="height: 150px" />
+<!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="sendTx('腾讯QB（交易猫）', 'tx_jym')">
               添加帐号
             </a-button>
@@ -168,9 +175,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="QQ" alt="" style="height: 150px" />
+<!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="sendTx('腾讯QB（淘宝）', 'tx_tb')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -186,9 +194,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="QQ" alt="" style="height: 150px" />
+<!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="sendTx('腾讯QB（抖音）', 'tx_dy')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -204,9 +213,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="QQ" alt="" style="height: 150px" />
+<!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="sendTx('腾讯QB（京东）', 'tx_jd')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -222,9 +232,10 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="QQ" alt="" style="height: 150px" />
+<!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="sendTx('腾讯QB（支付宝小程序）', 'tx_zfb')">
               添加帐号
             </a-button>
@@ -245,24 +256,25 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="SDO" alt="" style="height: 150px" />
+<!--            <img :src="SDO" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="sendSdo('盛趣（支付宝）', 'sdo_alipay')">
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+            <a-button type="text" @click="sendSdo('测试（支付宝）', 'sdo_alipay')">
               添加帐号
             </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="盛趣（支付宝）" description="预产类支付，固额50，100，200，300，500">
+          <CardMeta title="测试（支付宝）" description="预产类支付，固额50，100，200，300，500">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>
       </Col>
-      <Col :span="6">
+      <!--<Col :span="6">
         <Card hoverable>
           <template #cover>
             <img :src="SDO" alt="" style="height: 150px" />
@@ -281,13 +293,14 @@
             </template>
           </CardMeta>
         </Card>
-      </Col>
+      </Col>-->
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="JX3" alt="" style="height: 150px" />
+<!--            <img :src="JX3" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
             <a-button type="text" @click="send('剑三预产（支付宝）', 'jx3_alipay_pre')">
               添加帐号
             </a-button>
@@ -302,11 +315,33 @@
           </CardMeta>
         </Card>
       </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+            <!--            <img :src="JX3" alt="" style="height: 150px" />-->
+          </template>
+          <template #actions>
+            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+            <a-button type="text" @click="send('测试3（支付宝）', 'wme_alipay')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="测试3（支付宝）" description="普通支付，固额10-10000">
+            <template #avatar>
+              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
     </Row>
 
     <CreateU @register="register" />
     <CreateTxU @register="registerTx" />
     <CreateSdoU @register="registerSdo" />
+    <ChannelAccountBatchUpload @register="registerBatchAC" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -317,6 +352,7 @@
   import CreateU from '/@/views/channel/resource/components/CreateU.vue';
   import CreateTxU from '/@/views/channel/resource/components/CreateTxU.vue';
   import CreateSdoU from '/@/views/channel/resource/components/CreateSdoU.vue';
+  import ChannelAccountBatchUpload from '/@/views/channel/account/components/ChannelAccountBatchUpload.vue';
   import { PageWrapper } from '/@/components/Page';
 
   import JX3 from '/@/assets/images/jx3.jpg';
@@ -335,6 +371,7 @@
       Row,
       Col,
       Alert,
+      ChannelAccountBatchUpload,
       CreateU,
       CreateTxU,
       CreateSdoU,
@@ -344,6 +381,7 @@
     },
     setup() {
       const [register, { openModal: openM }] = useModal();
+      const [registerBatchAC, { openModal: openBatchM }] = useModal();
       const [registerTx, { openModal: openTxM }] = useModal();
       const [registerSdo, { openModal: openSdoM }] = useModal();
 
@@ -352,6 +390,9 @@
           title: title,
           channel_id: channel_id,
         });
+      }
+      function batchUpload() {
+        openBatchM(true, {});
       }
       function sendTx(title, channel_id) {
         openTxM(true, {
@@ -368,9 +409,11 @@
 
       return {
         items: channelItems,
+        batchUpload,
         send,
         sendTx,
         sendSdo,
+        registerBatchAC,
         register,
         registerTx,
         registerSdo,

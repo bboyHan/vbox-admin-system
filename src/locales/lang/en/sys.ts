@@ -99,6 +99,7 @@ export default {
     confirmPassword: 'Confirm Password',
     email: 'Email',
     smsCode: 'SMS code',
+    gooCode: 'Captcha Code',
     mobile: 'Mobile',
   },
 };

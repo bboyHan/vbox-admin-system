@@ -85,6 +85,14 @@
       <div class="m-5 result-success">
         <Result>
           <template #icon>
+            <div v-if="isTX">
+              <div style="color: red; font-size: 15px; margin: 10px">
+                重要提示：核对充值金额！点击复制并核对需要充值的QQ！充错金额或充错账号，不退不补！
+              </div>
+            </div>
+          </template>
+          <div v-if="!isTX">
+            <hr class="my-4" />
             <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
             <!--<Alert type="info" message="无法充值或者提示错误，请联系客服!" />-->
             <hr class="my-4" />
@@ -92,7 +100,7 @@
               {{ titlePay }}
             </div>
             <hr class="my-4" />
-          </template>
+          </div>
           <template #extra>
             <div v-if="isQR">
               <QrCode :value="payUrl" />
@@ -105,18 +113,17 @@
             <div v-if="!isQR">
               <div v-if="isTX">
                 <hr class="my-4" />
-                <div style="color: red; font-size: 15px; margin: 10px">
-                  充值账号： {{ QQ }}
-                </div>
+                <div style="color: blue; font-size: 20px; margin: 10px"> {{ titlePay }} </div>
+                <div style="color: blue; font-size: 20px; margin: 10px"> 充值账号： {{ QQ }} </div>
                 <Button size="large" type="primary" @click="copy(QQ)" block>
                   <div style="font-size: 20px"> 点此复制 </div>
                 </Button>
                 <hr class="my-4" />
-                <div style="color: red; font-size: 15px; margin: 10px">
-                  重要提示：核对充值金额！点击复制并核对需要充值的QQ！充错金额或充错账号，不退不补！
-                </div>
-                <hr class="my-4" />
               </div>
+              <div style="color: blue; font-size: 15px; margin: 10px">
+                👇👇👇点此跳转支付👇👇👇
+              </div>
+              <hr class="my-4" />
               <Button size="large" type="primary" @click="jumpTo(payUrl, cid, QQ)" block>
                 <div style="font-size: 20px"> 点此跳转付款 </div>
                 <div v-if="isJD">
@@ -128,8 +135,15 @@
                 </div>
                 <hr class="my-4" />
               </Button>
-              <div style="color: red; font-size: 15px; margin: 10px">
-                温馨提示：1、支付宝付款，如下方出现"继续跳转"、"跳转"等字样，请根据提示【继续点击】，直至支付宝付款页面；
+              <div v-if="isTX">
+                <hr class="my-4" />
+                <div style="color: blue; font-size: 15px; margin: 10px">
+                  👇👇👇流程指南👇👇👇
+                </div>
+                <Image :src="TxImg" :style="imgStyle" alt="操作提示" />
+                <!--<div style="color: red; font-size: 15px; margin: 10px">
+                  温馨提示：1、支付宝付款，如下方出现"继续跳转"、"跳转"等字样，请根据提示【继续点击】，直至支付宝付款页面；
+                </div>-->
               </div>
             </div>
           </template>
@@ -155,7 +169,7 @@
 <script lang="ts">
   import { onMounted, computed, defineComponent, ref, unref, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
-  import { Empty, Result, Button, Card, Image, Alert } from 'ant-design-vue';
+  import { Modal, Empty, Result, Button, Card, Image, Alert } from 'ant-design-vue';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { wechat } from '/@/assets/js/wx2.js';
@@ -166,7 +180,11 @@
   import qqImg from '/@/assets/images/qq.jpg';
   import wxImg from '/@/assets/images/wxpay-logo.png';
   import aliImg from '/@/assets/images/alipay-logo.png';
-  import { useGo } from '/@/hooks/web/usePage';
+  import jym_Img from '/@/assets/images/JYM_.png';
+  import jd_Img from '/@/assets/images/JD_.jpg';
+  import zfb_Img from '/@/assets/images/ZFB_.png';
+  import dy_Img from '/@/assets/images/DY_.png';
+  import tb_Img from '/@/assets/images/TB_.jpg';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isFunction } from '/@/utils/is';
   import { tryOnUnmounted } from '@vueuse/core';
@@ -180,9 +198,15 @@
     },
   };
 
+  const imgStyle = ref({
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'contain',
+  });
+
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Empty, Result, Button, Card, Image, Alert, QrCode },
+    components: { Modal, Empty, Result, Button, Card, Image, Alert, QrCode },
     props,
     setup(props) {
       const { t } = useI18n();
@@ -193,7 +217,6 @@
       const route = useRoute();
       const { clipboardRef, copiedRef } = useCopyToClipboard();
       const { createMessage } = useMessage();
-      const go = useGo();
       // 此处可以得到用户ID
       console.log(route.query);
       const orderId = ref(route.query?.orderId);
@@ -203,11 +226,13 @@
       let payUrl = ref('');
       let QQ = ref('');
       let Img = ref();
+      let TxImg = ref();
       let PayGif = ref();
       let payStatus = ref(0);
       let cid = ref('');
       let isPending = ref(true);
       let isPaying = ref(false);
+      let visible = ref(true);
       let isJD = ref(false);
       let isTX = ref(false);
       let isQR = ref(false);
@@ -242,6 +267,21 @@
               Img.value = qqImg;
               isTX.value = true;
               QQ.value = res.platformOid;
+              if (cid.value == 'tx_jym') {
+                TxImg.value = jym_Img;
+              }
+              if (cid.value == 'tx_zfb') {
+                TxImg.value = zfb_Img;
+              }
+              if (cid.value == 'tx_tb') {
+                TxImg.value = tb_Img;
+              }
+              if (cid.value == 'tx_dy') {
+                TxImg.value = dy_Img;
+              }
+              if (cid.value == 'tx_jd') {
+                TxImg.value = jd_Img;
+              }
             }
             if (cid.value == 'jx3_weixin') {
               Img.value = wxImg;
@@ -262,7 +302,11 @@
             if (cid.value == 'jx3_alipay') {
               Img.value = aliImg;
             }
-            if (cid.value.includes('sdo') || cid.value.includes('cy') || cid.value == 'jx3_alipay_pre') {
+            if (
+              cid.value.includes('sdo') ||
+              cid.value.includes('cy') ||
+              cid.value == 'jx3_alipay_pre'
+            ) {
               Img.value = aliImg;
             }
             if (cid.value == 'jx3_ali_gift') {
@@ -306,7 +350,6 @@
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + val);
         }
-        // test(val);
       }
 
       function test(val) {
@@ -373,6 +416,7 @@
             createMessage.warning('复制成功: ' + qq);
           }
         }
+
         // if (cid == 'jx3_weixin') {
         //   go('/code/pay/detail?orderId=' + oid);
         //   return;
@@ -463,6 +507,7 @@
       });
 
       return {
+        visible,
         width,
         copy,
         renew,
@@ -476,6 +521,7 @@
         PayGif,
         jumpTo,
         Img,
+        TxImg,
         cid,
         oid,
         handleStart,
@@ -491,6 +537,7 @@
         isJD,
         isError,
         isFinished,
+        imgStyle,
       };
     },
   });

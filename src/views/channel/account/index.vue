@@ -2,6 +2,10 @@
   <div>
     <PageWrapper title="通道账号" contentFullHeight contentBackground>
       <BasicTable @register="registerTable">
+        <template #toolbar>
+          <a-button type="primary" @click="batchCreate"> 批量导号 </a-button>
+          <a-button type="primary" @click="batchDelete"> 批量删除 </a-button>
+        </template>
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'action'">
             <TableAction
@@ -58,6 +62,8 @@
     <ChannelAccountUpd @register="registerUpdModal" />
     <ChannelTxAccountUpd @register="registerUpdTxModal" />
     <ChannelSdoAccountUpd @register="registerUpdSdoModal" />
+    <ChannelAccountBatchUpload @register="registerBatchAddModal" />
+    <ChannelBatchDelAcList @register="registerBatchDelModal" />
   </div>
 </template>
 <script lang="ts">
@@ -69,9 +75,11 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useModal } from '/@/components/Modal';
   import ProdCodeSetting from '/@/views/channel/account/components/ProdCodeSetting.vue';
+  import ChannelAccountBatchUpload from '/@/views/channel/account/components/ChannelAccountBatchUpload.vue';
   import ChannelAccountUpd from '/@/views/channel/account/components/ChannelAccountUpd.vue';
   import ChannelTxAccountUpd from '/@/views/channel/account/components/ChannelTxAccountUpd.vue';
   import ChannelSdoAccountUpd from '/@/views/channel/account/components/ChannelSdoAccountUpd.vue';
+  import ChannelBatchDelAcList from '/@/views/channel/account/components/ChannelBatchDelAcList.vue';
   import {
     deleteCAccount,
     getCAccountListByPage,
@@ -89,11 +97,15 @@
       TableAction,
       ProdCodeSetting,
       ChannelAccountUpd,
+      ChannelAccountBatchUpload,
       ChannelTxAccountUpd,
       ChannelSdoAccountUpd,
+      ChannelBatchDelAcList,
     },
     setup() {
       const { createMessage } = useMessage();
+      const [registerBatchAddModal, { openModal: openBatchAddM }] = useModal();
+      const [registerBatchDelModal, { openModal: openBatchDelM }] = useModal();
       const [registerPCModal, { openModal: openPCM }] = useModal();
       const [registerMockModal, { openModal: openMockM }] = useModal();
       const [registerPreModal, { openModal: openPreM }] = useModal();
@@ -121,6 +133,13 @@
           fixed: 'right',
         },
       });
+
+      function batchDelete() {
+        openBatchDelM(true, {});
+      }
+      function batchCreate() {
+        openBatchAddM(true, {});
+      }
 
       function prodCodeSetting(record: Recordable) {
         const titleDesc = '产码设置：' + record.ac_remark + '（当前帐号）';
@@ -234,11 +253,13 @@
         const { createMessage } = useMessage();
         try {
           console.log(record);
-          let ret = deleteCAccount(record.id);
-          console.log(ret);
-          createMessage.success(`删除账户成功`);
-        } catch (e) {
-          createMessage.error('删除账户失败');
+          deleteCAccount(record.id)
+            .then((ret) => {
+              createMessage.success(`删除账户成功` + ret);
+            })
+            .catch((e) => {
+              createMessage.error('删除账户失败' + e);
+            });
         } finally {
           reload();
         }
@@ -252,7 +273,11 @@
         registerUpdModal,
         registerUpdTxModal,
         registerUpdSdoModal,
+        registerBatchAddModal,
+        registerBatchDelModal,
         mockCreateOrder,
+        batchDelete,
+        batchCreate,
         handleEdit,
         handleCreatePre,
         handleDelete,

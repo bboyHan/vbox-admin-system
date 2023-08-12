@@ -76,7 +76,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'cChannelId',
     label: '所属通道',
     component: 'Select',
-    colProps: { span: 4 },
+    colProps: { span: 8 },
     componentProps: {
       options: [
         {
@@ -143,11 +143,16 @@ export const searchFormSchema: FormSchema[] = [
           label: '3007-测试2（支付宝)',
           value: 'cy_alipay',
           key: '13',
-        }, 
+        },
         {
           label: '3008-剑三预产（支付宝)',
           value: 'jx3_alipay_pre',
           key: '14',
+        },
+        {
+          label: '3009-测试3（支付宝)',
+          value: 'wme_alipay',
+          key: '15',
         },
       ],
     },

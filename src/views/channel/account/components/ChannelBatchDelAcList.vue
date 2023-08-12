@@ -24,10 +24,9 @@
   import { defineComponent, ref, nextTick, reactive, toRefs, watch, onMounted } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form';
-  import { preBatchPreAcListColumns } from '/@/views/channel/pre/data';
+  import { delBatchAcListColumns } from '/@/views/channel/pre/data';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { batchCreateChannelPreAcList } from '/@/api/channel/channel';
-  import { getChannelPreAccount } from '/@/api/channel/channel';
+  import { batchDeleteChannelAcList, getChannelAccount } from '/@/api/channel/channel';
   import { Checkbox } from 'ant-design-vue';
 
   export default defineComponent({
@@ -72,7 +71,7 @@
       const balance = ref('');
       const [registerForm, { resetFields, updateSchema, validate }] = useForm({
         layout: 'horizontal',
-        schemas: preBatchPreAcListColumns,
+        schemas: delBatchAcListColumns,
         showActionButtonGroup: false,
         showSubmitButton: true,
         labelAlign: 'left',
@@ -82,10 +81,12 @@
       const [register, { setModalProps, closeModal }] = useModalInner((data) => {
         data && onDataReceive(data);
         setModalProps({ confirmLoading: false });
-        getChannelPreAccount()
+        getChannelAccount()
           .then((acList) => {
             console.log(acList.length);
             plainOptions = [];
+
+            // let acList = rs.data;
             for (let index = 0; index < acList.length; index++) {
               let ac = acList[index];
               let acid = ac.acid;
@@ -113,7 +114,7 @@
           const values = await validate();
           console.log(values);
           setModalProps({ confirmLoading: true });
-          handleBatchChannelPre(values);
+          handleBatchChannelAccount(values);
           closeModal();
         } catch (error) {
           console.log(error);
@@ -122,15 +123,15 @@
         }
       }
 
-      function handleBatchChannelPre(record: Recordable) {
+      function handleBatchChannelAccount(record: Recordable) {
         console.log(record);
-        batchCreateChannelPreAcList(record)
+        batchDeleteChannelAcList(record)
           .then((ret) => {
             console.log(ret);
-            createMessage.success(`预产创建成功`);
+            createMessage.success(`批量删除成功`);
           })
           .catch(() => {
-            createMessage.error('预产创建失败');
+            createMessage.error('批量删除失败');
           });
       }
 

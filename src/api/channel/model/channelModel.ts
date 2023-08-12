@@ -84,6 +84,7 @@ export interface CAccountItem {
   acid: string;
   acAccount: string;
   status: number;
+  count: number;
   createTime: string;
 }
 

@@ -73,7 +73,12 @@
             defaultValue: '3',
           });
         }
-        if (channelId.value == 'jx3_alipay' || channelId.value == 'jx3_ali_gift' || channelId.value == 'jx3_alipay_pre') {
+        if (
+          channelId.value == 'wme_alipay' ||
+          channelId.value == 'jx3_alipay' ||
+          channelId.value == 'jx3_ali_gift' ||
+          channelId.value == 'jx3_alipay_pre'
+        ) {
           updateSchema({
             field: 'payType',
             componentProps: {
@@ -137,16 +142,16 @@
       }
 
       function handleCreate(record: Recordable) {
-        try {
-          record.c_channel_id = channelId.value;
-          console.log(record);
-          let ret = createCAccount(record);
-          console.log(ret);
-          createMessage.success(`添加通道账户成功`);
-        } catch (e) {
-          createMessage.error('添加通道账户失败');
-        } finally {
-        }
+        record.c_channel_id = channelId.value;
+        console.log(record);
+        createCAccount(record)
+          .then((ret) => {
+            console.log(ret);
+            createMessage.success(`添加通道账户成功`);
+          })
+          .catch(() => {
+            createMessage.error('添加通道账户失败');
+          });
       }
 
       // const [register] = useModalInner((data) => {

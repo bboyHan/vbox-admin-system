@@ -29,25 +29,21 @@
               <TableAction
                 :actions="[
                   // {
-                  //   icon: 'ant-design:copy-outlined',
-                  //   label: '链接复制',
-                  //   onClick: copyLink.bind(null, record),
+                  //   icon: 'ant-design:thunderbolt-outlined',
+                  //   label: '测试',
+                  //   popConfirm: {
+                  //     title: '测试回调',
+                  //     confirm: mockCallback.bind(null, record),
+                  //   },
                   // },
                   {
                     icon: 'ant-design:thunderbolt-outlined',
-                    label: '测试',
-                    popConfirm: {
-                      title: '测试回调',
-                      confirm: mockCallback.bind(null, record),
-                    },
-                  },
-                  {
-                    icon: 'ant-design:thunderbolt-outlined',
                     label: '强补',
-                    popConfirm: {
-                      title: '回调补单',
-                      confirm: confirmOrder.bind(null, record),
-                    },
+                    onClick: confirmOrder.bind(null, record),
+                    // popConfirm: {
+                    //   title: '回调补单',
+                    //   confirm: confirmOrder.bind(null, record),
+                    // },
                   },
                   {
                     icon: 'ant-design:sound-outlined',
@@ -66,12 +62,19 @@
                   //   },
                   // },
                 ]"
+                :dropDownActions="[
+                  {
+                    icon: 'ant-design:copy-outlined',
+                    label: '链接',
+                    onClick: copyLink.bind(null, record),
+                  },
+                ]"
               />
             </template>
           </template>
         </BasicTable>
       </div>
-<!--      <div>
+      <div>
         <BasicTable @register="registerTableWait">
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">
@@ -79,29 +82,17 @@
                 :actions="[
                   {
                     icon: 'ant-design:copy-outlined',
+                    label: '取码',
                     onClick: copyLink.bind(null, record),
                   },
-                  {
-                    icon: 'ant-design:thunderbolt-outlined',
-                    popConfirm: {
-                      title: '测试回调',
-                      confirm: mockCallback.bind(null, record),
-                    },
-                  },
-                  // {
-                  //   icon: 'ant-design:sound-outlined',
-                  //   popConfirm: {
-                  //     title: '手动回调',
-                  //     confirm: checkAndCallback.bind(null, record),
-                  //   },
-                  // },
                 ]"
               />
             </template>
           </template>
         </BasicTable>
-      </div>-->
+      </div>
       <TXQueryModal @register="registerModal" />
+      <CallBackOrder @register="registerCBModal" />
     </PageWrapper>
   </div>
 </template>
@@ -110,13 +101,14 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { columnsWait, columns, searchFormSchema } from '/@/views/order/resource/data';
   import TXQueryModal from '/@/views/order/resource/components/TXQueryModal.vue';
+  import CallBackOrder from '/@/views/order/resource/components/CallBackOrder.vue';
   import {
     getOrderList,
     testCallback,
     queryAndCallback,
     getOrderListWait,
     getTxQuery,
-    callbackOrder,
+    // callbackOrder,
   } from '/@/api/channel/pay';
   import { PageWrapper } from '/@/components/Page';
   import { getVboxUserInfo } from '/@/api/channel/user';
@@ -138,6 +130,7 @@
   const { getFormRules } = useFormRules(formData);
   const { validForm } = useFormValid(formRef);
   const [registerModal, { openModal: openModal }] = useModal();
+  const [registerCBModal, { openModal: openCBModal }] = useModal();
   export default defineComponent({
     components: {
       BasicTable,
@@ -145,6 +138,7 @@
       // QrCode,
       PageWrapper,
       TXQueryModal,
+      CallBackOrder,
       // SelfIndex,
     },
     setup() {
@@ -194,7 +188,7 @@
         });
       }
       const [registerTableWait] = useTable({
-        title: '订单列表（待取码）',
+        title: '订单列表（未取码）',
         api: getOrderListWait,
         columns: columnsWait,
         // scroll: { x: 1800, y: 500 },
@@ -207,7 +201,7 @@
         bordered: true,
         showIndexColumn: true,
         actionColumn: {
-          width: 140,
+          width: 100,
           title: '操作',
           dataIndex: 'action',
           // fixed: 'right',
@@ -251,21 +245,25 @@
        * 强补回调
        */
       function confirmOrder(record: Recordable) {
-        callbackOrder(record.orderId)
-          .then((res) => {
-            createMessage.info('补单回调成功，谨慎操作' + res.toString());
-          })
-          .catch(() => {
-            createMessage.error('补单回调失败');
-          });
+        // callbackOrder(record.orderId)
+        //   .then((res) => {
+        //     createMessage.info('补单回调成功，谨慎操作' + res.toString());
+        //   })
+        //   .catch(() => {
+        //     createMessage.error('补单回调失败');
+        //   });
+        openCBModal(true, {
+          orderId: record.orderId,
+        });
       }
       function copyLink(record) {
         let orderId = record.orderId;
-        // clipboardRef.value = 'http://101.42.16.241:10717/#/code/pay?orderId=' + orderId;
-        clipboardRef.value = 'http://121.225.97.101:10818/#/code/pay?orderId=' + orderId;
+        clipboardRef.value = 'http://101.42.16.241:10996/#/code/pay?orderId=' + orderId;
+        // clipboardRef.value = 'http://121.225.97.101:10818/#/code/pay?orderId=' + orderId;
         // clipboardRef.value = 'http://127.0.0.1:3100/#/code/pay?orderId=' + orderId;
         if (unref(copiedRef)) {
           createMessage.warning('复制成功: ' + clipboardRef.value);
+          location.href = clipboardRef.value;
         }
       }
       function queryTX(record) {
@@ -310,6 +308,7 @@
         registerTableWait,
         registerTable,
         registerModal,
+        registerCBModal,
         ct,
         dateFormat,
         copyLink,

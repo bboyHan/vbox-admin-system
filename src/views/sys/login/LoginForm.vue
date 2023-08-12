@@ -24,7 +24,14 @@
         :placeholder="t('sys.login.password')"
       />
     </FormItem>
-
+    <FormItem name="captcha" class="enter-x">
+      <Input
+        size="large"
+        v-model:value="formData.captcha"
+        :placeholder="t('sys.login.gooCode')"
+        class="fix-auto-fill"
+      />
+    </FormItem>
     <!--<ARow class="enter-x">
       <ACol :span="12">
         <FormItem>
@@ -122,6 +129,7 @@
   const formData = reactive({
     account: '',
     password: '',
+    captcha: '',
     loginType: '0',
   });
 
@@ -139,8 +147,9 @@
       const userInfo = await userStore.login({
         password: data.password,
         username: data.account,
+        captcha: data.captcha,
         loginType: 0,
-        mode: 'none', //不要默认的错误提示
+        mode: 'message', //不要默认的错误提示
       });
       if (userInfo) {
         notification.success({
@@ -150,11 +159,11 @@
         });
       }
     } catch (error) {
-      createErrorModal({
-        title: t('sys.api.errorTip'),
-        content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
-        getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-      });
+      // createErrorModal({
+      //   title: t('sys.api.errorTip'),
+      //   content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
+      //   getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
+      // });
     } finally {
       loading.value = false;
     }

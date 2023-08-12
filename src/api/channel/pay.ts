@@ -15,7 +15,7 @@ enum Api {
   SysOrder = '/sys/order',
   SysOrderWait = '/sys/order/wait',
   TestCallback = '/channel/order/callback/test/',
-  CallbackOrder = '/channel/order/callback/confirm/',
+  CallbackOrder = '/chan/order/callback/confirm/',
   HandleOrder = '/channel/order/handle/',
   GetTxQuery = '/channel/txQuery/',
 
@@ -61,8 +61,16 @@ export const getOrderListWait = (params: OrderPageParams) =>
 export const testCallback = (id: string) =>
   defHttp.get({ url: Api.TestCallback + id }, { errorMessageMode: 'message' });
 
-export const callbackOrder = (id: string) =>
-  defHttp.get({ url: Api.CallbackOrder + id }, { errorMessageMode: 'message' });
+export const callbackOrder = (id: string, captcha: string) =>
+  defHttp.get(
+    {
+      url: Api.CallbackOrder + id,
+      params: {
+        captcha: captcha,
+      },
+    },
+    { errorMessageMode: 'message' },
+  );
 
 export const handleOrder = (id: string) =>
   defHttp.get({ url: Api.HandleOrder + id }, { errorMessageMode: 'message' });

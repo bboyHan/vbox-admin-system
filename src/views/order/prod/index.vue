@@ -164,6 +164,11 @@
           value: 'jx3_alipay_pre',
           key: '14',
         },
+        {
+          label: '3009-测试3（支付宝)',
+          value: 'wme_alipay',
+          key: '15',
+        },
       ];
       return {
         registerModal,

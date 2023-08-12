@@ -72,6 +72,10 @@
                   </Row>
                 </Col>
               </Row>
+              <Row :gutter="16">
+                <BasicTable :columns="columns" :dataSource="item.detailVOList"
+                            :canResize="false" :scroll="{ y: 100 }" />
+              </Row>
             </Card>
           </Col>
         </template>
@@ -91,19 +95,27 @@
   import { PageWrapper } from '/@/components/Page';
   import { Pagination, Card, Row, Col, Statistic } from 'ant-design-vue';
   import { listPAccountOverview } from '/@/api/channel/payer';
+  import { columns } from '/@/views/payer/overview/data';
+  import { BasicTable, useTable } from '/@/components/Table';
   export default defineComponent({
-    components: { Pagination, PageWrapper, Card, Row, Col, Statistic },
+    components: { BasicTable, Pagination, PageWrapper, Card, Row, Col, Statistic },
     setup() {
       let itemList = ref([]);
-      // function listPAOverview() {
-      //   listPAccountOverview()
-      //     .then((res) => {
-      //       console.log(res);
-      //     })
-      //     .catch((e) => {
-      //       console.log(e);
-      //     });
-      // }
+      let itemDetailList = ref([]);
+      const [registerTable] = useTable({
+        title: '通道统计',
+        dataSource: itemDetailList.value,
+        columns,
+        // columns: getBasicColumns(),
+        // dataSource: getTreeTableData(),
+        rowKey: 'id',
+        formConfig: {
+          labelWidth: 120,
+        },
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: true,
+      });
       const total = ref(0);
       const pageSize = ref(10);
       const currentPage = ref(1);
@@ -129,13 +141,14 @@
           pageSize: pageSize.value,
         };
         listPAccountOverview(param).then((res) => {
-          console.log(res);
           total.value = res.total;
           itemList.value = res.items;
         });
       });
 
       return {
+        registerTable,
+        columns,
         itemList,
         total,
         currentPage,
