@@ -6,6 +6,7 @@
     @visible-change="handleVisibleChange"
     @ok="customSubmitFunc"
     class="custom-modal"
+    handleSubmit
     :width="1200"
     :height="500"
   >

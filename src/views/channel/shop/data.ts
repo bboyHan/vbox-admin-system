@@ -1,9 +1,14 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { getChannelShopTypes, setMultiChannelShopStatus } from '/@/api/channel/channel';
+import {
+  getChannelShopTypes,
+  setMultiChannelShopStatus,
+  getMultiTreeChannelShopList,
+} from '/@/api/channel/channel';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
 import { useMessage } from '/@/hooks/web/useMessage';
+import { stringify } from 'crypto-js/enc-utf8';
 
 export const shopBasicColumns: FormSchema[] = [
   {
@@ -31,6 +36,28 @@ export const shopBasicColumns: FormSchema[] = [
       span: 24,
     },
     // rules: [{ required: true, trigger: 'blur' }],
+  },
+  {
+    field: 'money',
+    component: 'InputNumber',
+    label: '设定金额',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+    show: false,
+  },
+  {
+    label: '商铺地址',
+    field: 'address',
+    component: 'Input',
+    // helpMessage: ['积分充值, 最小为100的倍数'],
+    colProps: {
+      span: 24,
+    },
+    required: false,
+    show: false,
   },
 ];
 
@@ -84,6 +111,12 @@ export const shopColumns: FormSchema[] = [
 ];
 
 export const columns: BasicColumn[] = [
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    fixed: 'left',
+    width: 50,
+  },
   {
     title: '通道',
     dataIndex: 'channel',
@@ -286,31 +319,183 @@ export function getBasicColumns(): BasicColumn[] {
     },
   ];
 }
+
 export function getTreeTableData() {
   return (() => {
-    const arr: any = [];
-    for (let index = 0; index < 40; index++) {
-      arr.push({
-        id: `${index}`,
-        name: 'John Brown',
-        age: `1${index}`,
-        // no: `${index + 10}`,
-        address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
-        beginTime: new Date().toLocaleString(),
-        endTime: new Date().toLocaleString(),
-        children: [
-          {
-            id: `l2-${index}`,
-            name: 'John Brown',
-            age: `1${index}`,
-            no: `${index + 10}`,
-            address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
-            beginTime: new Date().toLocaleString(),
-            endTime: new Date().toLocaleString(),
-          },
-        ],
-      });
-    }
-    return arr;
+    // const arr = [
+    //   {
+    //     id: 1,
+    //     uid: 28,
+    //     status: 1,
+    //     channel: 'tx_zfb',
+    //     shopRemark: '鼎信',
+    //     money: '5-10-20-30-50-100',
+    //     openAndClose: '已启用【6】个 , 共【6】个',
+    //     children: [
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_zfb',
+    //         shopRemark: '西藏福禄',
+    //         money: '5-10-20-30-50-100',
+    //         openAndClose: '已启用【0】个 , 共【6】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_zfb',
+    //         shopRemark: '鼎信黄钻',
+    //         money: '10-20-30-50-100',
+    //         openAndClose: '已启用【0】个 , 共【5】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_zfb',
+    //         shopRemark: '西藏福禄无溢价',
+    //         money: '5-10-20-30-50-100',
+    //         openAndClose: '已启用【0】个 , 共【6】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_zfb',
+    //         shopRemark: '武汉福禄',
+    //         money: '5-10-20-30-50-100',
+    //         openAndClose: '已启用【0】个 , 共【6】个',
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     id: 2,
+    //     uid: 28,
+    //     status: 1,
+    //     channel: 'tx_tb',
+    //     shopRemark: '蜀沃淘宝',
+    //     money: '30-50-100-200-500',
+    //     openAndClose: '已启用【5】个 , 共【5】个',
+    //     children: null,
+    //   },
+    //   {
+    //     id: 3,
+    //     uid: 28,
+    //     status: 1,
+    //     channel: 'tx_dy',
+    //     shopRemark: '快节奏',
+    //     money: '30-100-200',
+    //     openAndClose: '已启用【3】个 , 共【3】个',
+    //     children: [
+    //       {
+    //         uid: 28,
+    //         status: 1,
+    //         channel: 'tx_dy',
+    //         shopRemark: '好速度',
+    //         money: '30-50-200',
+    //         openAndClose: '已启用【3】个 , 共【3】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_dy',
+    //         shopRemark: '续听',
+    //         money: '30-50-100-200',
+    //         openAndClose: '已启用【0】个 , 共【4】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 1,
+    //         channel: 'tx_dy',
+    //         shopRemark: '杭州龙诗',
+    //         money: '50-100-200',
+    //         openAndClose: '已启用【3】个 , 共【3】个',
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     id: 4,
+    //     uid: 28,
+    //     status: 0,
+    //     channel: 'tx_jd',
+    //     shopRemark: '京东蜀沃',
+    //     money: '30-50-100-200-300-500',
+    //     openAndClose: '已启用【0】个 , 共【6】个',
+    //     children: [
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_jd',
+    //         shopRemark: '蜀沃京东',
+    //         money: '30-50-100-200-300-500',
+    //         openAndClose: '已启用【0】个 , 共【6】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_jd',
+    //         shopRemark: '氪金京东',
+    //         money: '30-50-100-200-500',
+    //         openAndClose: '已启用【0】个 , 共【5】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_jd',
+    //         shopRemark: '氪金网游',
+    //         money: '50-100-200',
+    //         openAndClose: '已启用【0】个 , 共【4】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_jd',
+    //         shopRemark: '行走',
+    //         money: '50-100-200-300',
+    //         openAndClose: '已启用【0】个 , 共【4】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_jd',
+    //         shopRemark: 'QQ旗舰店',
+    //         money: '50-100-200-300-500',
+    //         openAndClose: '已启用【0】个 , 共【7】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 0,
+    //         channel: 'tx_jd',
+    //         shopRemark: '黄钻贵族',
+    //         money: '50-100-200-300-500',
+    //         openAndClose: '已启用【0】个 , 共【14】个',
+    //       },
+    //       {
+    //         uid: 28,
+    //         status: 1,
+    //         channel: 'tx_jd',
+    //         shopRemark: '蓝箭京东',
+    //         money: '30-50-100-200-300-500',
+    //         openAndClose: '已启用【6】个 , 共【6】个',
+    //       },
+    //     ],
+    //   },
+    // ];
+    // const arr: any[] = []; // 定义并赋初始值一个空数组
+    // 调用 getMultiTreeChannelShopList 接口
+    // return getMultiTreeChannelShopList()
+    //   .then((response) => {
+    //     // 处理接口返回的数据，并将其添加到 arr 数组中
+    //     // console.log('==>' + JSON.stringify(response.items));
+    //     const data: any = response.items;
+    //     console.log('data ==>' + data);
+    //     const arr: any[] = [];
+    //     arr.push(...data);
+    //     return arr;
+    //   })
+    //   .catch((error) => {
+    //     console.error('Failed to fetch data:', error);
+    //   });
+    // console.log('=>' + arr);
+    // console.log('===>' + JSON.stringify(arr));
+    // return arr;
   })();
 }

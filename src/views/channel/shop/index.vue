@@ -4,7 +4,7 @@
       <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5">
         <template #toolbar>
           <a-button type="primary" @click="handleCreate"> 添加商铺 </a-button>
-          <!-- <a-button type="primary" @click="handleMultiCreate"> 批量添加商铺 </a-button> -->
+          <a-button type="primary" @click="handleMultiCreate"> 批量添加商铺 </a-button>
           <a-button type="primary" @click="expandAll">展开全部</a-button>
           <a-button type="primary" @click="collapseAll">折叠全部</a-button>
         </template>
@@ -56,7 +56,7 @@
     deleteChannelShopByShopRemark,
     getMultiTreeChannelShopList,
   } from '/@/api/channel/channel';
-  import { columns, getBasicColumns, getTreeTableData } from '/@/views/channel/shop/data';
+  import { columns, getTreeTableData } from '/@/views/channel/shop/data';
   import ChannelShop from '/@/views/channel/shop/components/ChannelShop.vue';
   import ChannelShopMultiCreate from '/@/views/channel/shop/components/ChannelShopMultiCreate.vue';
   import ChannelShopUpd from '/@/views/channel/shop/components/ChannelShopUpd.vue';
@@ -79,6 +79,7 @@
       const [registerMultiModal, { openModal: openMulti }] = useModal();
 
       const [registerUpdModal, { openModal: openMUpd }] = useModal();
+      // debugger;
       const [registerTable, { reload, expandAll, collapseAll }] = useTable({
         title: '商铺列表',
         // api: getMultiChannelShopList,
