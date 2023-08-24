@@ -1,8 +1,9 @@
 import { BasicColumn } from '/@/components/Table';
 import { setChannelShopStatus } from '/@/api/channel/channel';
 import { h } from 'vue';
-import { Switch } from 'ant-design-vue';
+import { Switch, Tooltip } from 'ant-design-vue';
 import { useMessage } from '/@/hooks/web/useMessage';
+
 const channelMapping: Record<string, string> = {
   tx_tb: '淘宝',
   tx_dy: '抖音',
@@ -14,13 +15,13 @@ export const columns: BasicColumn[] = [
     title: 'ID',
     dataIndex: 'id',
     // ifShow: false,
-    width: 40,
+    width: 30,
   },
   {
     title: '通道',
     dataIndex: 'channel',
     customRender: ({ text }) => channelMapping[text] || text,
-    width: 40,
+    width: 60,
   },
   {
     title: '金额',
@@ -31,13 +32,24 @@ export const columns: BasicColumn[] = [
     title: '商铺地址',
     dataIndex: 'address',
     edit: true,
-    width: 120,
+    // editDynamicDisabled: true,
+    width: 150,
+    customRender: ({ text }) => {
+      const fullAddress = text; // 获取完整的地址
+      return h(Tooltip, { title: fullAddress }, () => text); // 使用Tooltip组件包裹地址文本，并设置title属性为完整的地址
+      // return h(Tooltip, { title: fullAddress }, () =>
+      //   h(Input.TextArea, {
+      //     value: text,
+      //     autoSize: { minRows: 3, maxRows: 6 }, // 设置自动换行和高度增加的条件
+      //   }),
+      // );
+    },
   },
 
   {
     title: '商铺备注',
     dataIndex: 'shopRemark',
-    width: 80,
+    width: 50,
   },
   {
     title: '创建时间',
