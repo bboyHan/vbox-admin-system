@@ -270,8 +270,14 @@
         let oid = record.orderId;
         getTxQuery(oid).then((res) => {
           console.log(res);
+          let jsRs = JSON.stringify(res);
+          let isUrl = false;
+          if (jsRs.includes('http')) {
+            isUrl = true;
+          }
           openModal(true, {
             content: res,
+            isUrl: isUrl,
           });
         });
       }

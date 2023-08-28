@@ -94,36 +94,36 @@
       }
 
       const options = [
-        {
-          label: '1001-jx3微信',
-          value: 'jx3_weixin',
-          key: '1',
-        },
-        {
-          label: '1002-jx3支付宝',
-          value: 'jx3_alipay',
-          key: '2',
-        },
-        {
-          label: '1003-jx3京东',
-          value: 'jx3_jd',
-          key: '3',
-        },
-        {
-          label: '1004-jx3支付宝(特惠活动)',
-          value: 'jx3_ali_gift',
-          key: '4',
-        },
-        {
-          label: '1005-jx3微信(特惠活动)',
-          value: 'jx3_wx_gift',
-          key: '5',
-        },
-        {
-          label: '1006-jx3微信扫码',
-          value: 'jx3_weixin_qr',
-          key: '6',
-        },
+        // {
+        //   label: '1001-jx3微信',
+        //   value: 'jx3_weixin',
+        //   key: '1',
+        // },
+        // {
+        //   label: '1002-jx3支付宝',
+        //   value: 'jx3_alipay',
+        //   key: '2',
+        // },
+        // {
+        //   label: '1003-jx3京东',
+        //   value: 'jx3_jd',
+        //   key: '3',
+        // },
+        // {
+        //   label: '1004-jx3支付宝(特惠活动)',
+        //   value: 'jx3_ali_gift',
+        //   key: '4',
+        // },
+        // {
+        //   label: '1005-jx3微信(特惠活动)',
+        //   value: 'jx3_wx_gift',
+        //   key: '5',
+        // },
+        // {
+        //   label: '1006-jx3微信扫码',
+        //   value: 'jx3_weixin_qr',
+        //   key: '6',
+        // },
         {
           label: '2001-tx腾讯（支付宝-JYM)',
           value: 'tx_jym',
@@ -150,25 +150,45 @@
           key: '11',
         },
         {
-          label: '3006-测试（支付宝)',
-          value: 'sdo_alipay',
-          key: '12',
+          label: '2006-tx腾讯（支付宝无溢价)',
+          value: 'tx_zfb_2',
+          key: '18',
         },
         {
-          label: '3007-测试2（支付宝)',
-          value: 'cy_alipay',
-          key: '13',
+          label: '2006-tx腾讯（拼多多)',
+          value: 'tx_pdd',
+          key: '19',
         },
-        {
-          label: '3008-剑三预产（支付宝)',
-          value: 'jx3_alipay_pre',
-          key: '14',
-        },
-        {
-          label: '3009-测试3（支付宝)',
-          value: 'wme_alipay',
-          key: '15',
-        },
+        // {
+        //   label: '3006-测试（支付宝)',
+        //   value: 'sdo_alipay',
+        //   key: '12',
+        // },
+        // {
+        //   label: '3007-测试2（支付宝)',
+        //   value: 'cy_alipay',
+        //   key: '13',
+        // },
+        // {
+        //   label: '3008-剑三预产（支付宝)',
+        //   value: 'jx3_alipay_pre',
+        //   key: '14',
+        // },
+        // {
+        //   label: '3009-测试3（支付宝)',
+        //   value: 'wme_alipay',
+        //   key: '15',
+        // },
+        // {
+        //   label: '4001-剑三（淘宝)',
+        //   value: 'xoy_tb',
+        //   key: '16',
+        // },
+        // {
+        //   label: '4002-剑三（京东)',
+        //   value: 'xoy_jd',
+        //   key: '17',
+        // },
       ];
       return {
         registerModal,

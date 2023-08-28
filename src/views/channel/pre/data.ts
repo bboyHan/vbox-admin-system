@@ -208,6 +208,64 @@ export const delBatchAcListColumns: FormSchema[] = [
   },
 ];
 
+export const enableBatchAcListColumns: FormSchema[] = [
+  {
+    label: '充值账户',
+    field: 'acidList',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: [
+        {
+          label: '选项1',
+          value: '1',
+        },
+      ],
+    },
+    colProps: {
+      span: 24,
+    },
+  },
+  {
+    label: '状态开启',
+    field: 'status',
+    component: 'RadioButtonGroup',
+    defaultValue: '1',
+    componentProps: {
+      options: [{ label: '启用', value: '1' }],
+    },
+    colProps: { span: 8 },
+  },
+];
+
+export const disableBatchAcListColumns: FormSchema[] = [
+  {
+    label: '充值账户',
+    field: 'acidList',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: [
+        {
+          label: '选项1',
+          value: '1',
+        },
+      ],
+    },
+    colProps: {
+      span: 24,
+    },
+  },
+  {
+    label: '状态开启',
+    field: 'status',
+    component: 'RadioButtonGroup',
+    defaultValue: '0',
+    componentProps: {
+      options: [{ label: '关闭', value: '0' }],
+    },
+    colProps: { span: 8 },
+  },
+];
+
 export const preColumns: FormSchema[] = [
   {
     label: '通道账户',

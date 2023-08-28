@@ -38,10 +38,12 @@ enum Api {
   OperationGateway = '/channel/gateway',
   OperateCAccount = '/channel/CAccount',
   OperateTxCAccount = '/channel/txCAccount',
+  OperateXoyCAccount = '/channel/xoyCAccount',
   OperateSdoCAccount = '/channel/sdoCAccount',
   SetChannelShopStatus = '/channel/shop/enable',
   SetMultiChannelShopStatus = '/channel/shop/multi/enable',
   SetCAccountStatus = '/channel/CAccount/enable',
+  BatchSetCAccountStatus = '/channel/CAccount/acList/enable',
 }
 
 export function uploadChannelAccount(
@@ -70,7 +72,7 @@ export function uploadChannelPre(
   );
 }
 
-export const getChannelAccount = (params?: ChannelShopPageParams) =>
+export const getChannelAccount = (params?: CAccountParam) =>
   defHttp.get<ChannelAccountListGetResultModel>(
     { url: Api.GetChannelAccount, params },
     { errorMessageMode: 'message' },
@@ -151,7 +153,7 @@ export const batchCreateChannelPre = (params?: ChannelPreParams) =>
 export const batchCreateChannelPreAcList = (params?: ChannelPreParams) =>
   defHttp.post({ url: Api.BatchCreateChannelPreAcList, params }, { errorMessageMode: 'message' });
 
-export const batchDeleteChannelAcList = (params?: ChannelPreParams) =>
+export const batchDeleteChannelAcList = (params?: CAccountParam) =>
   defHttp.delete({ url: Api.BatchCreateChannelPreAcList, params }, { errorMessageMode: 'message' });
 
 export const updateChannelShop = (params: ChannelShopParams) =>
@@ -222,9 +224,13 @@ export const setCAccountStatus = (id: number, status: string) =>
     { errorMessageMode: 'message' },
   );
 
+export const batchSetCAccountStatus = (params?: CAccountParams) =>
+  defHttp.put({ url: Api.BatchSetCAccountStatus, params }, { errorMessageMode: 'message' });
+
 export const updateCAccount = (params: CAccountParam) =>
   defHttp.put({ url: Api.OperateCAccount, params }, { errorMessageMode: 'message' });
-
+export const updateXoyCAccount = (params: CAccountParam) =>
+  defHttp.put({ url: Api.OperateXoyCAccount, params }, { errorMessageMode: 'message' });
 export const updateTxCAccount = (params: CAccountParam) =>
   defHttp.put({ url: Api.OperateTxCAccount, params }, { errorMessageMode: 'message' });
 export const updateSdoCAccount = (params: CAccountParam) =>

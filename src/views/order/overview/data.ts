@@ -26,10 +26,14 @@ export const columns: BasicColumn[] = [
     ifShow: false,
   },
   {
+    title: '核销',
+    dataIndex: 'username',
+    width: 80,
+  },
+  {
     title: '帐号备注',
     dataIndex: 'acRemark',
     width: 80,
-    // fixed: 'left',
   },
   {
     title: '充值帐号',

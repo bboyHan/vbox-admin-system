@@ -82,73 +82,99 @@
       </div>
     </div>
     <div v-if="isPaying">
-      <div class="m-5 result-success">
-        <Result>
-          <template #icon>
-            <div v-if="isTX">
-              <div style="color: red; font-size: 15px; margin: 10px">
-                重要提示：核对充值金额！点击复制并核对需要充值的QQ！充错金额或充错账号，不退不补！
-              </div>
+<!--      <div class="m-5 result-success">-->
+      <Result>
+        <template #icon>
+          <div v-if="isTX">
+            <!--<div style="color: red; font-size: 15px; text-align: left">
+              重要提示：支付时，复制【充值账号】！核对【充值金额】！充错不退不补！
             </div>
-          </template>
-          <div v-if="!isTX">
+            <div style="color: red; font-size: 15px; margin: 10px; text-align: left">
+              点击复制并核对需要充值的【QQ】！充错金额或充错账号，不退不补！
+            </div>-->
+          </div>
+          <div v-if="isXOY">
+            <div style="color: red; font-size: 15px; text-align: left">
+              重要提示：支付时，复制【充值账号】！充错不退不补！
+            </div>
+            <!--<div style="color: red; font-size: 15px; margin: 10px 0 0 0; text-align: left">
+              点击复制并核对需要充值的【充值账号】！未选择通宝、选错游戏大区、充错金额或充错账号，不退不补！
+            </div>-->
+          </div>
+          <div v-if="isXOY">
+<!--              <hr class="my-4" />-->
+            <div style="color: blue; font-size: 15px; margin: 10px"> 👇👇👇流程指南👇👇👇 </div>
+            <Image :src="XOYImg" :style="imgStyle" alt="操作提示" />
+          </div>
+          <div v-if="isTX">
+<!--              <hr class="my-4" />-->
+            <div style="color: blue; font-size: 15px; margin: 10px"> 👇👇👇流程指南👇👇👇 </div>
+            <Image :src="TxImg" :style="imgStyle" alt="操作提示" />
+            <!--<div style="color: red; font-size: 15px; margin: 10px">
+              温馨提示：1、支付宝付款，如下方出现"继续跳转"、"跳转"等字样，请根据提示【继续点击】，直至支付宝付款页面；
+            </div>-->
+          </div>
+        </template>
+        <div v-if="!isTX && !isXOY">
+          <hr class="my-4" />
+          <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
+          <!--<Alert type="info" message="无法充值或者提示错误，请联系客服!" />-->
+          <hr class="my-4" />
+          <div style="color: black; font-size: 25px; margin: 10px">
+            {{ titlePay }}
+          </div>
+          <hr class="my-4" />
+        </div>
+        <template #extra>
+          <div v-if="isQR">
+            <QrCode :value="payUrl" />
             <hr class="my-4" />
-            <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
-            <!--<Alert type="info" message="无法充值或者提示错误，请联系客服!" />-->
-            <hr class="my-4" />
-            <div style="color: black; font-size: 25px; margin: 10px">
-              {{ titlePay }}
+            <div style="color: red; font-size: 15px; margin: 10px">
+              温馨提示：1、在电脑端打此链接，使用手机设备识别二维码进行扫码支付；2、在手机端打开此链接，需使用另一台手机进行扫码支付；
             </div>
             <hr class="my-4" />
           </div>
-          <template #extra>
-            <div v-if="isQR">
-              <QrCode :value="payUrl" />
+          <div v-if="!isQR">
+            <div v-if="isTX">
               <hr class="my-4" />
-              <div style="color: red; font-size: 15px; margin: 10px">
-                温馨提示：1、在电脑端打此链接，使用手机设备识别二维码进行扫码支付；2、在手机端打开此链接，需使用另一台手机进行扫码支付；
-              </div>
-              <hr class="my-4" />
-            </div>
-            <div v-if="!isQR">
-              <div v-if="isTX">
-                <hr class="my-4" />
-                <div style="color: blue; font-size: 20px; margin: 10px"> {{ titlePay }} </div>
-                <div style="color: blue; font-size: 20px; margin: 10px"> 充值账号： {{ QQ }} </div>
-                <Button size="large" type="primary" @click="copy(QQ)" block>
-                  <div style="font-size: 20px"> 点此复制 </div>
-                </Button>
-                <hr class="my-4" />
-              </div>
-              <div style="color: blue; font-size: 15px; margin: 10px">
-                👇👇👇点此跳转支付👇👇👇
-              </div>
-              <hr class="my-4" />
-              <Button size="large" type="primary" @click="jumpTo(payUrl, cid, QQ)" block>
-                <div style="font-size: 20px"> 点此跳转付款 </div>
-                <div v-if="isJD">
-                  <hr class="my-4" />
-                  <div style="color: red; font-size: 15px; margin: 10px">
-                    温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
-                  </div>
-                  <hr class="my-4" />
-                </div>
-                <hr class="my-4" />
+              <div style="font-size: 20px; margin: 10px"> {{ titlePay }} </div>
+              <div style="font-size: 20px; margin: 10px"> 充值账号： {{ QQ }} </div>
+              <Button size="large" shape="round" type="primary" @click="copy(QQ)" block>
+                <div style="font-size: 20px"> 先点复制账号 </div>
               </Button>
-              <div v-if="isTX">
-                <hr class="my-4" />
-                <div style="color: blue; font-size: 15px; margin: 10px">
-                  👇👇👇流程指南👇👇👇
-                </div>
-                <Image :src="TxImg" :style="imgStyle" alt="操作提示" />
-                <!--<div style="color: red; font-size: 15px; margin: 10px">
-                  温馨提示：1、支付宝付款，如下方出现"继续跳转"、"跳转"等字样，请根据提示【继续点击】，直至支付宝付款页面；
-                </div>-->
-              </div>
+              <hr class="my-4" />
             </div>
-          </template>
-        </Result>
-      </div>
+            <div v-if="isXOY">
+              <hr class="my-4" />
+              <div style="color: blue; font-size: 15px; margin: 10px"> {{ titlePay }} </div>
+              <div style="color: blue; font-size: 15px; margin: 10px"> 充值账号： {{ ACC }} </div>
+              <!--<div style="color: blue; font-size: 15px; margin: 10px">
+                充值大区： {{ ACC_GW }}
+              </div>-->
+              <Button size="large" shape="round" type="primary" @click="copy(ACC)" block>
+                <div style="font-size: 20px"> 先点复制账号 </div>
+              </Button>
+              <hr class="my-4" />
+            </div>
+            <div style="color: blue; font-size: 15px; margin: 10px">
+              👇👇👇点此跳转支付👇👇👇
+            </div>
+            <hr class="my-4" />
+            <Button size="large" shape="round" type="primary" @click="jumpTo(payUrl, cid, QQ)" block>
+              <div style="font-size: 20px"> 再点跳转付款 </div>
+              <div v-if="isJD">
+                <hr class="my-4" />
+                <div style="color: red; font-size: 15px; margin: 10px">
+                  温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
+                </div>
+                <hr class="my-4" />
+              </div>
+              <hr class="my-4" />
+            </Button>
+          </div>
+        </template>
+      </Result>
+<!--      </div>-->
     </div>
     <div v-if="isFinished">
       <div class="m-5 result-success">
@@ -169,7 +195,7 @@
 <script lang="ts">
   import { onMounted, computed, defineComponent, ref, unref, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
-  import { Modal, Empty, Result, Button, Card, Image, Alert } from 'ant-design-vue';
+  import { Empty, Result, Button, Card, Image, Alert } from 'ant-design-vue';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { wechat } from '/@/assets/js/wx2.js';
@@ -178,13 +204,16 @@
   import jdGif from '/@/assets/images/jd_pay.gif';
   import jdImg from '/@/assets/images/jdpay-logo.png';
   import qqImg from '/@/assets/images/qq.jpg';
+  import tbLogoImg from '/@/assets/images/taobao-logo.png';
   import wxImg from '/@/assets/images/wxpay-logo.png';
   import aliImg from '/@/assets/images/alipay-logo.png';
   import jym_Img from '/@/assets/images/JYM_.png';
   import jd_Img from '/@/assets/images/JD_.jpg';
-  import zfb_Img from '/@/assets/images/ZFB_.png';
-  import dy_Img from '/@/assets/images/DY_.png';
+  import zfb_Img from '/@/assets/images/zfb_yd.png';
+  import pdd_Img from '/@/assets/images/pdd_yd.png';
+  import dy_Img from '/@/assets/images/DY_yd.png';
   import tb_Img from '/@/assets/images/TB_.jpg';
+  import tb_yd_Img from '/@/assets/images/JX_tb_yd.jpg';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isFunction } from '/@/utils/is';
   import { tryOnUnmounted } from '@vueuse/core';
@@ -206,7 +235,7 @@
 
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Modal, Empty, Result, Button, Card, Image, Alert, QrCode },
+    components: { Empty, Result, Button, Card, Image, Alert, QrCode },
     props,
     setup(props) {
       const { t } = useI18n();
@@ -225,8 +254,11 @@
       let titlePay = ref('');
       let payUrl = ref('');
       let QQ = ref('');
+      let ACC = ref('');
+      let ACC_GW = ref('');
       let Img = ref();
       let TxImg = ref();
+      let XOYImg = ref();
       let PayGif = ref();
       let payStatus = ref(0);
       let cid = ref('');
@@ -235,6 +267,7 @@
       let visible = ref(true);
       let isJD = ref(false);
       let isTX = ref(false);
+      let isXOY = ref(false);
       let isQR = ref(false);
       let isError = ref(false);
       let isFinished = ref(false);
@@ -270,7 +303,7 @@
               if (cid.value == 'tx_jym') {
                 TxImg.value = jym_Img;
               }
-              if (cid.value == 'tx_zfb') {
+              if (cid.value == 'tx_zfb' || cid.value == 'tx_zfb_2') {
                 TxImg.value = zfb_Img;
               }
               if (cid.value == 'tx_tb') {
@@ -281,6 +314,26 @@
               }
               if (cid.value == 'tx_jd') {
                 TxImg.value = jd_Img;
+              }
+              if (cid.value == 'tx_pdd') {
+                TxImg.value = pdd_Img;
+              }
+            }
+            if (cid.value.includes('xoy')) {
+              if (cid.value == 'xoy_tb') {
+                Img.value = tbLogoImg;
+              }
+              if (cid.value == 'xoy_jd') {
+                Img.value = jdImg;
+              }
+              isXOY.value = true;
+              ACC_GW.value = res.platformOid.split(',')[0];
+              ACC.value = res.platformOid.split(',')[1];
+              if (cid.value == 'xoy_tb') {
+                XOYImg.value = tb_yd_Img;
+              }
+              if (cid.value == 'xoy_jd') {
+                XOYImg.value = jdImg;
               }
             }
             if (cid.value == 'jx3_weixin') {
@@ -410,7 +463,7 @@
       }
 
       function jumpTo(url, cid, qq) {
-        if (cid.includes('tx')) {
+        if (cid.includes('tx') || cid.includes('xoy')) {
           clipboardRef.value = qq;
           if (unref(copiedRef)) {
             createMessage.warning('复制成功: ' + qq);
@@ -522,6 +575,7 @@
         jumpTo,
         Img,
         TxImg,
+        XOYImg,
         cid,
         oid,
         handleStart,
@@ -533,7 +587,10 @@
         isPaying,
         isQR,
         isTX,
+        isXOY,
         QQ,
+        ACC,
+        ACC_GW,
         isJD,
         isError,
         isFinished,
@@ -552,5 +609,39 @@
       padding: 14px 30px;
       background-color: @background-color-light;
     }
+  }
+  .ripple-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 50px;
+    background-color: #009688;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .ripple-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    pointer-events: none;
+  }
+
+  .ripple-effect.active {
+    width: 200px;
+    height: 200px;
+    opacity: 1;
   }
 </style>

@@ -118,17 +118,17 @@ export const columns: FormSchema[] = [
     defaultValue: '99999',
     required: true,
   },
-  // {
-  //   field: 'ck',
-  //   component: 'InputTextArea',
-  //   label: 'CK',
-  //   helpMessage: ['请填写用户CK'],
-  //   colProps: { span: 24 },
-  //   componentProps: {
-  //     placeholder: '请输入用户CK',
-  //   },
-  //   required: true,
-  // },
+  {
+    field: 'ck',
+    component: 'InputTextArea',
+    label: 'CK',
+    helpMessage: ['请填写用户CK'],
+    colProps: { span: 24 },
+    componentProps: {
+      placeholder: '请输入用户CK',
+    },
+    required: true,
+  },
   {
     label: '选择大区',
     field: 'c_gateway',

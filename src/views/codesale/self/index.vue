@@ -10,34 +10,7 @@
           class="md:w-1/1 w-full"
         />
       </template>
-      <!--<BasicTable @register="registerTable">
-          <template #bodyCell="{ column, record }">
-            <template v-if="column.key === 'action'">
-              <TableAction
-                :actions="[
-                  {
-                    icon: 'clarity:note-edit-line',
-                    onClick: handleEdit.bind(null, record),
-                  },
-                  /*{
-                    icon: 'ant-design:delete-outlined',
-                    color: 'error',
-                    popConfirm: {
-                      title: '是否测试产码',
-                      placement: 'left',
-                      confirm: handleTestProdCode.bind(null, record),
-                    },
-                  },*/
-                  {
-                    label: '查询订单',
-                    icon: 'clarity:note-edit-line',
-                    onClick: handleCheck.bind(null, record),
-                  },
-                ]"
-              />
-            </template>
-          </template>
-        </BasicTable>-->
+<!--      <BasicTable @register="registerTable" />-->
     </div>
   </div>
 </template>
@@ -174,7 +147,6 @@
         //   render: commonTagRender('red'),
         // },
       ];
-
 
       /*function handleTestProdCode() {
         const { createMessage } = useMessage();

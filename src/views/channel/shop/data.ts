@@ -218,10 +218,11 @@ export const columns: BasicColumn[] = [
 
 // 创建一个映射对象
 const channelMapping: Record<string, string> = {
-  tx_tb: '淘宝',
-  tx_dy: '抖音',
-  tx_jd: '京东',
-  tx_zfb: '支付宝小程序',
+  tx_tb: '腾讯(淘宝)',
+  tx_dy: '腾讯(抖音)',
+  tx_jd: '腾讯(京东)',
+  tx_zfb: '腾讯(支付宝小程序)',
+  tx_zfb_2: '腾讯(支付宝无溢价)',
 };
 export const channelShopUpdColumn: FormSchema[] = [
   {

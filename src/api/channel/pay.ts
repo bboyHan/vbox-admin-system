@@ -18,6 +18,7 @@ enum Api {
   CallbackOrder = '/chan/order/callback/confirm/',
   HandleOrder = '/channel/order/handle/',
   GetTxQuery = '/channel/txQuery/',
+  GetAccQuery = '/channel/accQuery/',
 
   QueryAndCallback = '/channel/order/queryAndCallback/',
   TestCreateOrder = '/channel/order/create/test/',
@@ -77,6 +78,9 @@ export const handleOrder = (id: string) =>
 
 export const getTxQuery = (id: string) =>
   defHttp.get({ url: Api.GetTxQuery + id }, { errorMessageMode: 'message' });
+
+export const getAccQuery = (id: string) =>
+  defHttp.get({ url: Api.GetAccQuery + id }, { errorMessageMode: 'message' });
 
 export const queryAndCallback = (id: string) =>
   defHttp.get({ url: Api.QueryAndCallback + id }, { errorMessageMode: 'message' });

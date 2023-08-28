@@ -100,6 +100,7 @@ export type CAccountParam = {
   totalLimit?: number;
   payType?: number;
   payDesc?: string;
+  status?: number;
 };
 
 export type CAccountParams = {

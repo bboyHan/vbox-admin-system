@@ -74,6 +74,8 @@
           });
         }
         if (
+          channelId.value == 'xoy_tb' ||
+          channelId.value == 'xoy_jd' ||
           channelId.value == 'wme_alipay' ||
           channelId.value == 'jx3_alipay' ||
           channelId.value == 'jx3_ali_gift' ||

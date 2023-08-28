@@ -8,7 +8,12 @@
     okText="复制"
   >
     <div class="pt-3px pr-3px">
-      <iframe :src="htmlStr" border="0" width="100%" height="600px"></iframe>
+      <div v-if="isUrl">
+        <iframe :src="htmlStr" border="0" width="100%" height="600px"></iframe>
+      </div>
+      <div v-if="!isUrl">
+        <iframe :srcdoc="htmlStr" border="0" width="100%" height="600px"></iframe>
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -33,6 +38,7 @@
     },
     setup(props) {
       const htmlStr = ref('');
+      const isUrl = ref(false);
       const [
         registerForm,
         {
@@ -67,7 +73,10 @@
         // });
         // // 方式2
         htmlStr.value = data.content;
-
+        isUrl.value = data.isUrl;
+        if (!isUrl.value) {
+          htmlStr.value = JSON.stringify(data.content);
+        }
         // setProps({
         //   model:{ field2: data.data, field1: data.info }
         // })
@@ -83,6 +92,7 @@
         schemas,
         registerForm,
         htmlStr,
+        isUrl,
         handleVisibleChange,
       };
     },
