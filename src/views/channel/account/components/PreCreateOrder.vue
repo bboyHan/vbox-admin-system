@@ -76,7 +76,6 @@
         //     emit('register');
         //   });
         // }
-        
       }
 
       const [register] = useModalInner((data) => {

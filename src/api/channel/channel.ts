@@ -27,7 +27,7 @@ enum Api {
   OperationMultiTreeChannelShop = '/channel/shop/multi/tree/remark',
   OperationChannelPre = '/channel/pre',
   BatchCreateChannelPre = '/channel/pre/batch',
-  BatchCreateChannelPreAcList = '/channel/CAccount/batch/acList',
+  BatchCreateChannelPreAcList = '/channel/pre/batch/acList',
   OperationChannelAddress = '/channel/shop/address',
   CountChannelPreList = '/channel/pre/unUsedCount',
   ClearChannelPre = '/channel/pre/clear',

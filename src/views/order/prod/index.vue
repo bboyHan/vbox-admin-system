@@ -94,11 +94,11 @@
       }
 
       const options = [
-        // {
-        //   label: '1001-jx3微信',
-        //   value: 'jx3_weixin',
-        //   key: '1',
-        // },
+        {
+          label: '1001-jx3微信',
+          value: 'jx3_weixin',
+          key: '1',
+        },
         // {
         //   label: '1002-jx3支付宝',
         //   value: 'jx3_alipay',
@@ -119,11 +119,11 @@
         //   value: 'jx3_wx_gift',
         //   key: '5',
         // },
-        // {
-        //   label: '1006-jx3微信扫码',
-        //   value: 'jx3_weixin_qr',
-        //   key: '6',
-        // },
+        {
+          label: '1006-jx3微信扫码',
+          value: 'jx3_weixin_qr',
+          key: '6',
+        },
         {
           label: '2001-tx腾讯（支付宝-JYM)',
           value: 'tx_jym',
@@ -160,12 +160,12 @@
           key: '19',
         },
         // {
-        //   label: '3006-测试（支付宝)',
+        //   label: '3006-盛趣（支付宝)',
         //   value: 'sdo_alipay',
         //   key: '12',
         // },
         // {
-        //   label: '3007-测试2（支付宝)',
+        //   label: '3007-畅游（支付宝)',
         //   value: 'cy_alipay',
         //   key: '13',
         // },
@@ -175,15 +175,15 @@
         //   key: '14',
         // },
         // {
-        //   label: '3009-测试3（支付宝)',
+        //   label: '3009-完美（支付宝)',
         //   value: 'wme_alipay',
         //   key: '15',
         // },
-        // {
-        //   label: '4001-剑三（淘宝)',
-        //   value: 'xoy_tb',
-        //   key: '16',
-        // },
+        {
+          label: '4001-剑三（淘宝)',
+          value: 'xoy_tb',
+          key: '16',
+        },
         // {
         //   label: '4002-剑三（京东)',
         //   value: 'xoy_jd',

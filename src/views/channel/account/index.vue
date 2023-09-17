@@ -313,7 +313,7 @@
             isUrl = true;
           }
           openModal(true, {
-            content: res,
+            content: jsRs,
             isUrl: isUrl,
           });
         });

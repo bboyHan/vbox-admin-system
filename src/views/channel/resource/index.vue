@@ -1,7 +1,7 @@
 <template>
   <PageWrapper title="通道管理" contentFullHeight contentBackground>
     <Alert
-      message="通道列表内容管理，可在此添加通道帐号，目前只支持剑网情缘3"
+      message="通道列表内容管理，可在此添加通道帐号，目前只支持剑网情缘3、腾讯QB"
       show-icon
       style="margin-bottom: 10px"
     />
@@ -27,28 +27,8 @@
       </CardGrid>
     </Card>-->
     <Row :gutter="[6, 6]">
-<!--      <Col :span="6">
-        <Card hoverable>
-          <template #cover>
-&lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
-          </template>
-          <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
-            <a-button type="text" @click="send('剑网3（微信端）', 'jx3_weixin')">
-              添加帐号
-            </a-button>
-            <a-button type="text">
-              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
-            </a-button>
-          </template>
-          <CardMeta title="剑网3（微信端）" description="wechat pay">
-            <template #avatar>
-              <img :src="WeChat" style="width: 30px; height: 30px" alt="" />
-            </template>
-          </CardMeta>
-        </Card>
-      </Col>
-      <Col :span="6">
+
+      <!--<Col :span="6">
         <Card hoverable>
           <template #cover>
 &lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
@@ -129,15 +109,51 @@
             </template>
           </CardMeta>
         </Card>
+      </Col>-->
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover> </template>
+          <template #actions>
+            <!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
+            <a-button type="text" @click="send('剑三（淘宝）', 'xoy_tb')"> 添加帐号 </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="剑三（淘宝）" description="引导类支付，固额50，100，200，300，500">
+            <template #avatar>
+              <img :src="TaoBaoLogo" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
       </Col>
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-&lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
-            <a-button type="text" @click="send('剑网3（微信扫码端）', 'jx3_weixin_qr')">
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
+            <a-button type="text" @click="send('剑3（微信端）', 'jx3_weixin')">
+              添加帐号
+            </a-button>
+            <a-button type="text">
+              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
+            </a-button>
+          </template>
+          <CardMeta title="剑网3（微信端）" description="wechat pay">
+            <template #avatar>
+              <img :src="WeChat" style="width: 30px; height: 30px" alt="" />
+            </template>
+          </CardMeta>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card hoverable>
+          <template #cover>
+          </template>
+          <template #actions>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
+            <a-button type="text" @click="send('剑3（微信扫码端）', 'jx3_weixin_qr')">
               添加帐号
             </a-button>
             <a-button type="text">
@@ -150,14 +166,14 @@
             </template>
           </CardMeta>
         </Card>
-      </Col>-->
+      </Col>
       <Col :span="6">
         <Card hoverable>
           <template #cover>
 <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
             <a-button type="text" @click="sendTx('QB（交易猫）', 'tx_jym')">
               添加帐号
             </a-button>
@@ -178,7 +194,7 @@
 <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
             <a-button type="text" @click="sendTx('QB（淘宝）', 'tx_tb')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -197,7 +213,7 @@
 <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
             <a-button type="text" @click="sendTx('QB（抖音）', 'tx_dy')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -216,7 +232,7 @@
 <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
             <a-button type="text" @click="sendTx('QB（京东）', 'tx_jd')"> 添加帐号 </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
@@ -235,7 +251,7 @@
 <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
             <a-button type="text" @click="sendTx('QB（支付宝小程序）', 'tx_zfb')">
               添加帐号
             </a-button>
@@ -259,7 +275,7 @@
             <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
             <a-button type="text" @click="sendTx('QB（支付宝无溢价）', 'tx_zfb_2')">
               添加帐号
             </a-button>
@@ -283,46 +299,47 @@
             <!--            <img :src="QQ" alt="" style="height: 150px" />-->
           </template>
           <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
-            <a-button type="text" @click="sendTx('QB（抖音）', 'tx_pdd')">
+<!--            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>-->
+            <a-button type="text" @click="sendTx('QB（拼多多）', 'tx_pdd')">
               添加帐号
             </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="QB（抖音）" description="引导类支付">
+          <CardMeta title="QB（拼多多）" description="引导类支付">
             <template #avatar>
-              <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
+              <img :src="PDD" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>
       </Col>
+
 <!--      <Col :span="6">
         <Card hoverable>
           <template #cover>
-&lt;!&ndash;            <img :src="SDO" alt="" style="height: 150px" />&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;            <img :src="SDO" alt="" style="height: 150px" />&ndash;&gt;&ndash;&gt;
           </template>
           <template #actions>
             <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
-            <a-button type="text" @click="sendSdo('测试（支付宝）', 'sdo_alipay')">
+            <a-button type="text" @click="sendSdo('盛趣（支付宝）', 'sdo_alipay')">
               添加帐号
             </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="测试（支付宝）" description="预产类支付，固额50，100，200，300，500">
+          <CardMeta title="盛趣（支付宝）" description="预产类支付，固额50，100，200，300，500">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
           </CardMeta>
         </Card>
       </Col>
-      &lt;!&ndash;<Col :span="6">
+      <Col :span="6">
         <Card hoverable>
           <template #cover>
-            <img :src="SDO" alt="" style="height: 150px" />
+&lt;!&ndash;            <img :src="SDO" alt="" style="height: 150px" />&ndash;&gt;
           </template>
           <template #actions>
             <a-button type="text" @click="sendSdo('畅游（支付宝）', 'cy_alipay')">
@@ -338,11 +355,11 @@
             </template>
           </CardMeta>
         </Card>
-      </Col>&ndash;&gt;
+      </Col>
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-&lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
+&lt;!&ndash;&lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;&ndash;&gt;
           </template>
           <template #actions>
             <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
@@ -360,29 +377,11 @@
           </CardMeta>
         </Card>
       </Col>
+
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            &lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
-          </template>
-          <template #actions>
-            <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
-            <a-button type="text" @click="send('剑三（淘宝）', 'xoy_tb')"> 添加帐号 </a-button>
-            <a-button type="text">
-              <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
-            </a-button>
-          </template>
-          <CardMeta title="剑三（淘宝）" description="引导类支付，固额50，100，200，300，500">
-            <template #avatar>
-              <img :src="TaoBaoLogo" style="width: 30px; height: 30px" alt="" />
-            </template>
-          </CardMeta>
-        </Card>
-      </Col>
-      <Col :span="6">
-        <Card hoverable>
-          <template #cover>
-            &lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
+&lt;!&ndash;            &lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;&ndash;&gt;
           </template>
           <template #actions>
             <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
@@ -401,18 +400,18 @@
       <Col :span="6">
         <Card hoverable>
           <template #cover>
-            &lt;!&ndash;            <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
+&lt;!&ndash;                       <img :src="JX3" alt="" style="height: 150px" />&ndash;&gt;
           </template>
           <template #actions>
             <a-button type="text" @click="batchUpload()"> 批量导入 </a-button>
-            <a-button type="text" @click="send('测试3（支付宝）', 'wme_alipay')">
+            <a-button type="text" @click="send('完美（支付宝）', 'wme_alipay')">
               添加帐号
             </a-button>
             <a-button type="text">
               <router-link to="/channel/channelAccount"> 帐号管理 </router-link>
             </a-button>
           </template>
-          <CardMeta title="测试3（支付宝）" description="普通支付，固额10-10000">
+          <CardMeta title="完美（支付宝）" description="普通支付，固额10-10000">
             <template #avatar>
               <img :src="AliPay" style="width: 30px; height: 30px" alt="" />
             </template>
@@ -447,6 +446,7 @@
   import SDO from '/@/assets/images/test.png';
   import TaoBaoLogo from '/@/assets/images/taobao.png';
   import DouYin from '/@/assets/images/douyin.png';
+  import PDD from '/@/assets/images/pdd_logo.png';
 
   // const go = useGo();
   export default defineComponent({
@@ -502,6 +502,7 @@
         registerSdo,
         QQ,
         SDO,
+        PDD,
         JX3,
         WeChat,
         AliPay,

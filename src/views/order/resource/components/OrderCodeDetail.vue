@@ -60,9 +60,6 @@
               大约需等待15-30秒，请客官喝口茶耐心等待...
             </div>
             <hr class="my-4" />
-            <div style="color: red; font-size: 15px; margin: 10px">
-              禁止使用任何外网、翻墙工具，请注意！
-            </div>
           </template>
           <template #extra>
             <!--<hr class="my-4" />
@@ -86,12 +83,22 @@
       <Result>
         <template #icon>
           <div v-if="isTX">
-            <!--<div style="color: red; font-size: 15px; text-align: left">
+            <div style="color: red; font-size: 15px; text-align: left">
               重要提示：支付时，复制【充值账号】！核对【充值金额】！充错不退不补！
             </div>
-            <div style="color: red; font-size: 15px; margin: 10px; text-align: left">
+            <!--<div style="color: red; font-size: 15px; margin: 10px; text-align: left">
               点击复制并核对需要充值的【QQ】！充错金额或充错账号，不退不补！
             </div>-->
+            <Modal v-model:visible="isYD" :show-footer="false">
+              <div style="color: blue; font-size: 15px; margin: 10px"> 👇👇👇流程指南根据图片提示操作！👇👇👇 </div>
+              <Image :src="TxImg" :style="imgStyle" alt="操作提示" />
+              <div style="color: red; font-size: 15px; text-align: left">
+                重要提示：支付时，复制【充值账号】！核对【充值金额】！充错不退不补！
+              </div>
+              <template #footer>
+                <a-button type="primary" @click="closeYDwin">我知道了</a-button>
+              </template>
+            </Modal>
           </div>
           <div v-if="isXOY">
             <div style="color: red; font-size: 15px; text-align: left">
@@ -103,6 +110,16 @@
           </div>
           <div v-if="isXOY">
 <!--              <hr class="my-4" />-->
+            <Modal v-model:visible="isYD" :show-footer="false">
+              <div style="color: blue; font-size: 15px; margin: 10px"> 👇👇👇流程指南（根据图片提示操作！）👇👇👇 </div>
+              <Image :src="XOYImg" :style="imgStyle" alt="操作提示" />
+              <div style="color: red; font-size: 15px; text-align: left">
+                重要提示：支付时，复制【充值账号】！核对【充值金额】！充错不退不补！
+              </div>
+              <template #footer>
+                <a-button type="primary" @click="closeYDwin">我知道了</a-button>
+              </template>
+            </Modal>
             <div style="color: blue; font-size: 15px; margin: 10px"> 👇👇👇流程指南👇👇👇 </div>
             <Image :src="XOYImg" :style="imgStyle" alt="操作提示" />
           </div>
@@ -114,17 +131,17 @@
               温馨提示：1、支付宝付款，如下方出现"继续跳转"、"跳转"等字样，请根据提示【继续点击】，直至支付宝付款页面；
             </div>-->
           </div>
-        </template>
-        <div v-if="!isTX && !isXOY">
-          <hr class="my-4" />
-          <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
-          <!--<Alert type="info" message="无法充值或者提示错误，请联系客服!" />-->
-          <hr class="my-4" />
-          <div style="color: black; font-size: 25px; margin: 10px">
-            {{ titlePay }}
+          <div v-if="!isTX && !isXOY">
+            <hr class="my-4" />
+            <Image :src="Img" style="margin: 20px 20px; width: 150px; height: 50px" />
+            <!--<Alert type="info" message="无法充值或者提示错误，请联系客服!" />-->
+            <hr class="my-4" />
+            <div style="color: black; font-size: 25px; margin: 10px">
+              {{ titlePay }}
+            </div>
+            <hr class="my-4" />
           </div>
-          <hr class="my-4" />
-        </div>
+        </template>
         <template #extra>
           <div v-if="isQR">
             <QrCode :value="payUrl" />
@@ -133,16 +150,45 @@
               温馨提示：1、在电脑端打此链接，使用手机设备识别二维码进行扫码支付；2、在手机端打开此链接，需使用另一台手机进行扫码支付；
             </div>
             <hr class="my-4" />
+            <Modal v-model:visible="visibleQRcode" :show-footer="false">
+              <div style="font-size: 10px; margin: 10px; color: red; text-align: center"> 店小二提示： </div>
+              <div>1、在电脑端打此链接，<span style="font-size: 20px; color: blue; text-align: center"> 使用手机设备识别二维码进行扫码支付； </span></div>
+              <div>2、在手机端打开此链接，<span style="font-size: 20px; color: blue; text-align: center"> 需使用另一台手机</span>进行扫码支付;</div>
+              <div>3、<span style="font-size: 20px; color: blue; text-align: center"> 不要保存二维码 </span>,否则支付失败！！！</div>
+              <div style="margin-top: 20px; text-align: center">温馨提示：请在 <span style="font-size: 20px; color: red; text-align: center"> 3分钟  </span>扫码支付！</div>
+              <template #footer>
+                <a-button type="primary" @click="closeQRcode">我知道了</a-button>
+              </template>
+            </Modal>
           </div>
           <div v-if="!isQR">
             <div v-if="isTX">
               <hr class="my-4" />
               <div style="font-size: 20px; margin: 10px"> {{ titlePay }} </div>
               <div style="font-size: 20px; margin: 10px"> 充值账号： {{ QQ }} </div>
-              <Button size="large" shape="round" type="primary" @click="copy(QQ)" block>
-                <div style="font-size: 20px"> 先点复制账号 </div>
+<!--              <Button size="large" shape="round" type="primary" @click="copyText(QQ)" block>-->
+<!--                <div style="font-size: 20px"> 先点复制账号 </div>-->
+<!--              </Button>-->
+<!--              <hr class="my-4" />-->
+              <Button size="large" shape="round" type="primary" @click="jumpTo(payUrl, cid, QQ)" block>
+<!--              <Button size="large" shape="round" type="primary" @click="openRedirect(payUrl)" block>-->
+                <div style="font-size: 20px"> 点这里付款 </div>
+                <hr class="my-4" />
               </Button>
-              <hr class="my-4" />
+            </div>
+            <div v-if="!isXOY && !isTX">
+<!--              <Button size="large" shape="round" type="primary" @click="jumpTo(payUrl, cid, ACC)" block>-->
+              <Button size="large" shape="round" type="primary" @click="openRedirect(payUrl)" block>
+                <div style="font-size: 20px"> 点这里付款 </div>
+                <div v-if="isJD">
+                  <hr class="my-4" />
+                  <div style="color: red; font-size: 15px; margin: 10px">
+                    温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
+                  </div>
+                  <hr class="my-4" />
+                </div>
+                <hr class="my-4" />
+              </Button>
             </div>
             <div v-if="isXOY">
               <hr class="my-4" />
@@ -151,26 +197,31 @@
               <!--<div style="color: blue; font-size: 15px; margin: 10px">
                 充值大区： {{ ACC_GW }}
               </div>-->
-              <Button size="large" shape="round" type="primary" @click="copy(ACC)" block>
-                <div style="font-size: 20px"> 先点复制账号 </div>
+<!--              <Button size="large" shape="round" type="primary" @click="copyText(ACC)" block>-->
+<!--                <div style="font-size: 20px"> 先点复制账号 </div>-->
+<!--              </Button>-->
+<!--              <hr class="my-4" />-->
+              <Button size="large" shape="round" type="primary" @click="jumpTo(payUrl, cid, ACC)" block>
+                <!--              <Button size="large" shape="round" type="primary" @click="openRedirect(payUrl)" block>-->
+                <div style="font-size: 20px"> 点这里付款 </div>
+                <hr class="my-4" />
               </Button>
-              <hr class="my-4" />
             </div>
-            <div style="color: blue; font-size: 15px; margin: 10px">
-              👇👇👇点此跳转支付👇👇👇
-            </div>
+<!--            <div style="color: blue; font-size: 15px; margin: 10px">-->
+<!--              👇👇👇点此跳转支付👇👇👇-->
+<!--            </div>-->
             <hr class="my-4" />
-            <Button size="large" shape="round" type="primary" @click="jumpTo(payUrl, cid, QQ)" block>
-              <div style="font-size: 20px"> 再点跳转付款 </div>
-              <div v-if="isJD">
-                <hr class="my-4" />
-                <div style="color: red; font-size: 15px; margin: 10px">
-                  温馨提示：点击上方按钮后，长按识别二维码或截图保存至相册进行扫码，根据提示登录京东账户进行支付付款即可！
-                </div>
-                <hr class="my-4" />
-              </div>
-              <hr class="my-4" />
-            </Button>
+
+            <Modal v-model:visible="visibleRedirect" :show-footer="false">
+              <div style="font-size: 20px; margin: 10px; text-align: center"> {{ titlePay }} </div>
+              <div style="font-size: 10px; margin: 10px; color: red; text-align: center"> 充值账号如下：</div>
+              <div style="font-size: 20px; margin: 10px; text-align: center" v-if="isXOY"> {{ ACC }} </div>
+              <div style="font-size: 20px; margin: 10px; text-align: center" v-if="isTX"> {{ QQ }} </div>
+              <div style="font-size: 10px; margin: 10px; color: red; text-align: center"> 店小二提示：记得复制此账号，并牢记充值金额噢~ </div>
+              <template #footer>
+                <a-button type="primary" @click="openRedirect(payUrl)">复制并跳转</a-button>
+              </template>
+            </Modal>
           </div>
         </template>
       </Result>
@@ -193,7 +244,7 @@
 </template>
 
 <script lang="ts">
-  import { onMounted, computed, defineComponent, ref, unref, watchEffect } from 'vue';
+  import { onMounted, computed, defineComponent, ref, unref, watchEffect, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { Empty, Result, Button, Card, Image, Alert } from 'ant-design-vue';
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
@@ -218,6 +269,7 @@
   import { isFunction } from '/@/utils/is';
   import { tryOnUnmounted } from '@vueuse/core';
   import { QrCode } from '/@/components/Qrcode';
+  import { Modal } from 'ant-design-vue';
   const props = {
     value: { type: [Object, Number, String, Array] },
     count: { type: Number, default: 90 },
@@ -228,16 +280,25 @@
   };
 
   const imgStyle = ref({
-    maxWidth: '100%',
-    maxHeight: '100%',
+    maxWidth: '50%',
+    maxHeight: '50%',
     objectFit: 'contain',
+    marginLeft: '25%',
   });
 
   export default defineComponent({
     name: 'OrderCodeDetail',
-    components: { Empty, Result, Button, Card, Image, Alert, QrCode },
+    components: { Empty, Result, Button, Card, Image, Alert, QrCode, Modal },
     props,
     setup(props) {
+      function showModal() {
+        visible.value = true;
+      }
+
+      function handleOk() {
+        visible.value = false;
+      }
+
       const { t } = useI18n();
       const loading = ref(false);
       const getButtonText = computed(() => {
@@ -267,10 +328,12 @@
       let visible = ref(true);
       let isJD = ref(false);
       let isTX = ref(false);
+      let isYD = ref(false);
       let isXOY = ref(false);
       let isQR = ref(false);
       let isError = ref(false);
       let isFinished = ref(false);
+      const visibleQRcode = ref(false);
       function getOrder() {
         getOrderCode(oid)
           .then((res) => {
@@ -299,6 +362,7 @@
             if (cid.value.includes('tx')) {
               Img.value = qqImg;
               isTX.value = true;
+              isYD.value = true;
               QQ.value = res.platformOid;
               if (cid.value == 'tx_jym') {
                 TxImg.value = jym_Img;
@@ -320,6 +384,7 @@
               }
             }
             if (cid.value.includes('xoy')) {
+              isYD.value = true;
               if (cid.value == 'xoy_tb') {
                 Img.value = tbLogoImg;
               }
@@ -351,6 +416,8 @@
             if (cid.value == 'jx3_weixin_qr') {
               Img.value = wxImg;
               isQR.value = true;
+              visibleQRcode.value = true;
+              console.log(visibleQRcode.value);
             }
             if (cid.value == 'jx3_alipay') {
               Img.value = aliImg;
@@ -374,6 +441,12 @@
           });
       }
 
+      watch(visibleQRcode, (newValue) => {
+        if (newValue && newValue.channelId === 'jx3_weixin_qr') {
+          visibleQRcode.value = true;
+        }
+      });
+
       let width = ref(300);
       console.log(payUrl);
       // //模拟点击事件
@@ -396,6 +469,27 @@
           cost.value = res.cost;
           titlePay.value = '微信支付：' + cost.value + '元';
         });
+      }
+
+      function copyText(text) {
+        clipboardRef.value = text;
+        if (unref(copiedRef)) {
+          createMessage.warning('复制成功: ' + text);
+        }
+        const tempInput = document.createElement('textarea');
+        tempInput.style.position = 'absolute';
+        tempInput.style.left = '-9999px';
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, tempInput.value.length);
+
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+        }
+
+        document.body.removeChild(tempInput);
       }
 
       function copy(val) {
@@ -462,18 +556,35 @@
         }, t);
       }
 
+      const visibleRedirect = ref(false);
       function jumpTo(url, cid, qq) {
         if (cid.includes('tx') || cid.includes('xoy')) {
           clipboardRef.value = qq;
           if (unref(copiedRef)) {
             createMessage.warning('复制成功: ' + qq);
           }
+          const tempInput = document.createElement('textarea');
+          tempInput.style.position = 'absolute';
+          tempInput.style.left = '-9999px';
+          tempInput.value = qq;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          tempInput.setSelectionRange(0, tempInput.value.length);
+
+          try {
+            document.execCommand('copy');
+          } catch (err) {
+          }
+
+          document.body.removeChild(tempInput);
+
+          visibleRedirect.value = true;
         }
 
-        // if (cid == 'jx3_weixin') {
-        //   go('/code/pay/detail?orderId=' + oid);
-        //   return;
-        // }
+        // window.open(url, '_blank');
+      }
+
+      function openRedirect(url) {
         window.open(url, '_blank');
       }
 
@@ -485,6 +596,13 @@
       watchEffect(() => {
         // props.value === undefined && handleStart();
       });
+
+      function closeYDwin() {
+        isYD.value = false;
+      }
+      function closeQRcode() {
+        visibleQRcode.value = false;
+      }
 
       async function handleStart() {
         const { beforeStartFunc } = props;
@@ -560,8 +678,14 @@
       });
 
       return {
+        openRedirect,
+        showModal,
+        handleOk,
+        visibleRedirect,
+        visibleQRcode,
         visible,
         width,
+        copyText,
         copy,
         renew,
         wechat,
@@ -587,6 +711,9 @@
         isPaying,
         isQR,
         isTX,
+        isYD,
+        closeYDwin,
+        closeQRcode,
         isXOY,
         QQ,
         ACC,
